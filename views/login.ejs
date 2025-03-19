@@ -1,0 +1,78 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="login-container">
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="extra-text">
+        Don't have an account? <a href="/signup">Sign Up</a>
+    </div>
+</div>
+
+<style>
+.login-container {
+    width: 50%;
+    margin: 100px auto;
+    background-color: #ecf0f1;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.login-container button:hover {
+    background-color: #34495e;
+}
+
+.extra-text {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.extra-text a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.extra-text a:hover {
+    text-decoration: underline;
+}
+</style>

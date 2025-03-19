@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="marketplace">
+    <h1 class="text-center my-4">Buy Crops</h1>
+
+    <div class="listings-container">
+        <% listings.forEach(listing => { %>
+            <div class="listing-card">
+                <img src="<%= listing.image %>" alt="<%= listing.title %>" class="listing-img">
+                <h3><%= listing.title %></h3>
+                <p><%= listing.description %></p>
+                <p><strong>Category:</strong> <%= listing.category %></p>
+                <p><strong>Location:</strong> <%= listing.location %></p>
+                <p><strong>Price:</strong> ₹<%= listing.price %> per kg</p>
+                <p><strong>Owner:</strong> <%= listing.owner %></p>
+                <button class="btn">Contact Seller</button>
+            </div>
+        <% }) %>
+    </div>
+</section>
+
+<style>
+.marketplace {
+    padding: 80px 5% 40px; /* extra top padding for navbar */
+}
+
+.listings-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.listing-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.listing-card:hover {
+    transform: translateY(-5px);
+}
+
+.listing-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.listing-card h3 {
+    margin-top: 15px;
+    font-size: 1.3rem;
+}
+
+.listing-card p {
+    margin: 8px 0;
+}
+
+.btn {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #f39c12;
+}
+</style>

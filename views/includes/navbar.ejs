@@ -1,0 +1,213 @@
+<header>
+    <div class="logo">🌾 Farmer's Marketplace </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/buy">Buy Crops</a></li>
+            <li><a href="/sell">Sell Crops</a></li>
+            <li><a href="/prices">Market Prices</a></li>
+            <% if (currentUser && currentUser.username) { %>
+
+                <li><a href="/profile">Profile</a></li> 
+            <% } else { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </ul>
+                </li>
+            <% } %>
+            
+        </ul>
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    </nav>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+    
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+     
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            height: 3px;
+            width: 30px;
+            background: white;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+   
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: #2c3e50;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+        .account-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.account-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    min-width: 170px;
+    right: 0;
+    top: 40px;
+    z-index: 999;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.account-dropdown .dropdown-content li {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    list-style: none;
+}
+
+.account-dropdown .dropdown-content li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    
+}
+.account-dropdown .dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+.account-dropdown .dropdown-content li a:hover {
+
+    background-color: #f39c12;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.account-dropdown.active .dropdown-content {
+    display: block;
+}
+
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hamburger = document.querySelector(".hamburger");
+            const navLinks = document.querySelector(".nav-links");
+
+            hamburger.addEventListener("click", () => {
+                navLinks.classList.toggle("active");
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        const accountDropdown = document.querySelector(".account-dropdown");
+
+        hamburger.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+        if (accountDropdown) {
+            const accountToggle = accountDropdown.querySelector(".account-toggle");
+            accountToggle.addEventListener("click", () => {
+                accountDropdown.classList.toggle("active");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!accountDropdown.contains(e.target)) {
+                    accountDropdown.classList.remove("active");
+                }
+            });
+        }
+    });
+    </script>
+</header>
