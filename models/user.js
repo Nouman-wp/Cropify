@@ -29,7 +29,15 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String
-    }
+    },
+    kycDocument: {
+        type: String
+    },
+    socialLinks: {
+        facebook: String,
+        twitter: String,
+        instagram: String
+    }        
 }, { timestamps: true });
 
 

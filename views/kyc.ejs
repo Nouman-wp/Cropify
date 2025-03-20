@@ -1,0 +1,111 @@
+<% layout("/layouts/boilerplate") %>
+
+<section class="kyc-container">
+  <div class="kyc-card">
+    <h1 class="kyc-title">KYC Verification</h1>
+    <p class="kyc-info">Upload your valid ID proof to get access to all buying & selling features on our platform.</p>
+
+    <form action="/kyc" method="POST" enctype="multipart/form-data" class="kyc-form">
+      <div class="kyc-form-group">
+        <label for="idProof">Upload ID Proof (PDF, JPG, JPEG, PNG)</label>
+        <input type="file" id="idProof" name="idProof" accept=".pdf, .jpg, .jpeg, .png" required>
+      </div>
+
+      <button type="submit" class="kyc-btn">Submit KYC</button>
+    </form>
+  </div>
+</section>
+
+<style>
+.kyc-container {
+  min-height: 100vh;
+  padding: 80px 20px;
+  background: #f4f7f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kyc-card {
+  background-color: #fff;
+  padding: 40px 30px;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.kyc-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.kyc-info {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.kyc-form-group {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.kyc-form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.kyc-form-group input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.kyc-form-group input[type="file"]::-webkit-file-upload-button {
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.kyc-form-group input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #f39c12;
+}
+
+.kyc-btn {
+  width: 100%;
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.kyc-btn:hover {
+  background-color: #f39c12;
+}
+
+@media (max-width: 600px) {
+  .kyc-title {
+    font-size: 2rem;
+  }
+
+  .kyc-card {
+    padding: 30px 20px;
+  }
+}
+</style>

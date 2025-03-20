@@ -13,8 +13,12 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const { isLoggedIn } = require('./middleware'); 
 const MONGO_URL = "mongodb://127.0.0.1:27017/farmers";
-const Crop = require('./models/crop');
 const dashboardRoutes = require('./routes/dashboard');
+const Listing = require("./models/listing");
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // You can configure storage later
+
+
 
 
 
@@ -52,6 +56,8 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+
+
 // Passport.js setup (order is important)
 app.use(passport.initialize());
 app.use(passport.session());
@@ -74,22 +80,110 @@ app.get("/", (req, res) => {
     res.render("home.ejs");
 });
 
-app.get('/buy', (req, res) => {
+app.get('/sell', isLoggedIn, (req, res) => {
+    res.render('sell.ejs');
+});
+
+
+app.get('/buy', async (req, res) => {
+    const listings = await Listing.find({});
     res.render('buy.ejs', { listings });
 });
 
 app.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile'); // profile.ejs
+    res.render('profile.ejs'); 
 });
 
 app.get('/signup', (req, res) => {
     res.render('signup.ejs');
 });
 
+app.get('/kyc', isLoggedIn, (req, res) => {
+    res.render('kyc.ejs');
+});
+
+
+app.post('/profile/edit', isLoggedIn, async (req, res) => {
+    const { username, email, phone, address } = req.body;
+    try {
+        const user = await User.findById(req.user._id);
+        user.username = username;
+        user.email = email;
+        user.phone = phone;
+        user.address = address;
+        await user.save();
+        req.flash('success', 'Profile updated successfully!');
+        res.redirect('/profile');
+    } catch (err) {
+        console.error('Error updating profile:', err);
+        req.flash('error', 'Failed to update profile');
+        res.redirect('/profile');
+    }
+});
+
+app.post('/profile/delete', isLoggedIn, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user._id);
+        req.logout(err => {
+            if (err) return next(err);
+            req.flash('success', 'Account deleted successfully.');
+            res.redirect('/');
+        });
+    } catch (err) {
+        console.error('Error deleting account:', err);
+        req.flash('error', 'Failed to delete account.');
+        res.redirect('/profile');
+    }
+});
+
+app.post('/kyc', isLoggedIn, upload.single('idProof'), (req, res) => {
+    if (!req.file) {
+        req.flash('error', 'Please upload a valid ID proof.');
+        return res.redirect('/kyc');
+    }
+    req.flash('success', 'KYC submitted successfully!');
+   
+    res.redirect('/profile');
+});
+
+
+
+
+app.post('/sell', isLoggedIn, async (req, res) => {
+    try {
+        const { title, description, category, location, price, image } = req.body;
+        const newListing = new Listing({
+            title,
+            description,
+            category,
+            location,
+            price: Number(price),
+            image,
+            owner: req.user.username  
+        });
+        await newListing.save();
+        req.flash('success', 'Your crop has been listed!');
+        res.redirect('/buy');
+    } catch (err) {
+        console.log("Error while selling:", err);
+        req.flash('error', 'Failed to list your crop.');
+        res.redirect('/sell');
+    }
+});
+
+
+
 app.post('/signup', async (req, res, next) => {
     try {
-        const { username, email, password, profileImage } = req.body;
-        const user = new User({ username, email, profileImage: profileImage || undefined });
+        const { username, email, password, profileImage, phone, address, role } = req.body;
+        const user = new User({ 
+            username, 
+            email, 
+            profileImage: profileImage || undefined,
+            phone,
+            address,
+            role
+        });
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, (err) => {
             if (err) return next(err);
