@@ -1,65 +1,125 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="signup-container">
-    <h1>Sign Up</h1>
+    <h1>Create Your Account</h1>
     <form action="" method="POST">
-        <label for="username">Username:</label>
+        <label for="username">Username <span>*</span></label>
         <input type="text" id="username" name="username" required>
 
-        <label for="email">Email:</label>
+        <label for="email">Email <span>*</span></label>
         <input type="email" id="email" name="email" required>
 
-        <label for="password">Password:</label>
+        <label for="password">Password <span>*</span></label>
         <input type="password" id="password" name="password" required>
 
-        <label for="profileImage">Profile Image URL (optional):</label>
+        <label for="profileImage">Profile Image URL (Optional)</label>
         <input type="url" id="profileImage" name="profileImage" placeholder="https://">
+
+        <label for="role">Register as <span>*</span></label>
+        <select id="role" name="role" required>
+            <option value="farmer">Farmer</option>
+            <option value="buyer" selected>Buyer</option>
+        </select>
+
+        <label for="phone">Phone Number (Optional)</label>
+        <input type="text" id="phone" name="phone" placeholder="Enter your phone number">
+
+        <h3>Address Details (Optional)</h3>
+        <label for="street">Street</label>
+        <input type="text" id="street" name="address[street]">
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="address[city]">
+
+        <label for="state">State</label>
+        <input type="text" id="state" name="address[state]">
+
+        <label for="country">Country</label>
+        <input type="text" id="country" name="address[country]">
+
+        <label for="pincode">Pincode</label>
+        <input type="text" id="pincode" name="address[pincode]">
 
         <button type="submit">Register</button>
     </form>
 </div>
 
 <style>
-.signup-container {
-    width: 50%;
-    margin: 100px auto;
-    background-color: #ecf0f1;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-}
+    body {
+        background-color: #f7f9fc;
+        font-family: 'Poppins', sans-serif;
+    }
 
-.signup-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .signup-container {
+        width: 60%;
+        max-width: 800px;
+        margin: 100px auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
 
-.signup-container label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
+    .signup-container h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
 
-.signup-container input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+    .signup-container h3 {
+        margin-top: 30px;
+        color: #34495e;
+    }
 
-.signup-container button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-}
+    .signup-container label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+        color: #34495e;
+    }
 
-.signup-container button:hover {
-    background-color: #34495e;
-}
+    .signup-container label span {
+        color: red;
+    }
+
+    .signup-container input,
+    .signup-container select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease;
+    }
+
+    .signup-container input:focus,
+    .signup-container select:focus {
+        border-color: #2c3e50;
+        outline: none;
+    }
+
+    .signup-container button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 30px;
+        background-color: #2c3e50;
+        color: #ffffff;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .signup-container button:hover {
+        background-color: #34495e;
+    }
+
+    @media (max-width: 768px) {
+        .signup-container {
+            width: 90%;
+            padding: 25px;
+        }
+    }
 </style>

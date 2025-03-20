@@ -6,9 +6,19 @@
             <li><a href="/buy">Buy Crops</a></li>
             <li><a href="/sell">Sell Crops</a></li>
             <li><a href="/prices">Market Prices</a></li>
-            <% if (currentUser && currentUser.username) { %>
 
-                <li><a href="/profile">Profile</a></li> 
+            <% if (currentUser && currentUser.username) { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <img src="<%= currentUser.profileImage %>" alt="Profile" class="profile-img">
+                        <%= currentUser.username %> <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/dashboard">My Dashboard</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
             <% } else { %>
                 <li class="account-dropdown">
                     <span class="account-toggle">
@@ -20,7 +30,6 @@
                     </ul>
                 </li>
             <% } %>
-            
         </ul>
 
         <div class="hamburger">
@@ -28,7 +37,6 @@
             <span></span>
             <span></span>
         </div>
-    </nav>
     </nav>
 
     <style>
@@ -176,19 +184,19 @@
     display: block;
 }
 
+.profile-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
     </style>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const hamburger = document.querySelector(".hamburger");
-            const navLinks = document.querySelector(".nav-links");
 
-            hamburger.addEventListener("click", () => {
-                navLinks.classList.toggle("active");
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
         const hamburger = document.querySelector(".hamburger");
         const navLinks = document.querySelector(".nav-links");
         const accountDropdown = document.querySelector(".account-dropdown");
@@ -196,6 +204,7 @@
         hamburger.addEventListener("click", () => {
             navLinks.classList.toggle("active");
         });
+
         if (accountDropdown) {
             const accountToggle = accountDropdown.querySelector(".account-toggle");
             accountToggle.addEventListener("click", () => {
@@ -209,5 +218,5 @@
             });
         }
     });
-    </script>
+</script>
 </header>

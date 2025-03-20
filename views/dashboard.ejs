@@ -1,0 +1,173 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    body {
+        background-color: #f5f7fa;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
+
+    .dashboard-container {
+        padding: 100px 30px 30px 30px;  /* Top padding added to avoid overlap with navbar */
+    }
+
+    .dashboard-header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 30px;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 25px;
+        margin-bottom: 30px;
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+
+    .card-content {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .btn-primary {
+        background-color: #38b000;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #2d9300;
+    }
+
+    .actions {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        background-color: #edf6f9;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1d3557;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header {
+            font-size: 2rem;
+        }
+
+        .btn-primary {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">Welcome, <%= currentUser.username %> 👋</div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Crops Listed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Items Purchased</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">₹15,000</div>
+            <div class="stat-label">Total Earnings</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Profile Information</div>
+        <div class="card-content">
+            <p><strong>Username:</strong> <%= currentUser.username %></p>
+            <p><strong>Email:</strong> <%= currentUser.email %></p>
+            <p><strong>Role:</strong> <%= currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) %></p>
+    
+            <% if (currentUser.phone) { %>
+                <p><strong>Phone:</strong> <%= currentUser.phone %></p>
+            <% } else { %>
+                <p><strong>Phone:</strong> Not Provided</p>
+            <% } %>
+    
+            <% if (currentUser.address && (currentUser.address.street || currentUser.address.city || currentUser.address.state || currentUser.address.country || currentUser.address.pincode)) { %>
+                <p><strong>Address:</strong></p>
+                <ul>
+                    <% if (currentUser.address.street) { %><li>Street: <%= currentUser.address.street %></li><% } %>
+                    <% if (currentUser.address.city) { %><li>City: <%= currentUser.address.city %></li><% } %>
+                    <% if (currentUser.address.state) { %><li>State: <%= currentUser.address.state %></li><% } %>
+                    <% if (currentUser.address.country) { %><li>Country: <%= currentUser.address.country %></li><% } %>
+                    <% if (currentUser.address.pincode) { %><li>Pincode: <%= currentUser.address.pincode %></li><% } %>
+                </ul>
+            <% } else { %>
+                <p><strong>Address:</strong> Not Provided</p>
+            <% } %>
+    
+            <p><strong>Profile Image:</strong></p> 
+            <img src="<%= currentUser.profileImage %>" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-top: 10px;">
+        </div>
+    </div>
+    
+
+    <div class="card">
+        <div class="card-title">Quick Actions</div>
+        <div class="actions">
+            <a href="/sell" class="btn-primary">Sell a Crop</a>
+            <a href="/buy" class="btn-primary">Browse Crops</a>
+            <a href="/profile" class="btn-primary">Edit Profile</a>
+            <a href="/logout" class="btn-primary">Logout</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Smooth Welcome Animation
+    window.onload = () => {
+        const header = document.querySelector('.dashboard-header');
+        setTimeout(() => header.style.opacity = 1, 300);
+    };
+</script>

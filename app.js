@@ -11,8 +11,12 @@ const { data: listings } = require("./ini/data");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-
+const { isLoggedIn } = require('./middleware'); 
 const MONGO_URL = "mongodb://127.0.0.1:27017/farmers";
+const Crop = require('./models/crop');
+const dashboardRoutes = require('./routes/dashboard');
+
+
 
 // Database connection
 async function main() {
@@ -64,6 +68,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use(dashboardRoutes);
+
 app.get("/", (req, res) => {
     res.render("home.ejs");
 });
@@ -111,24 +117,33 @@ app.post('/login', passport.authenticate('local', {
     res.redirect('/');
 });
 
-// Authentication check middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) return next();
-    res.redirect('/login');
-}
+app.get('/logout', (req, res, next) => {
+    req.logout(err => {
+        if (err) return next(err);
+        req.flash('success', 'Logged out successfully');
+        res.redirect('/');
+    });
+});
+
+
+
+// function isLoggedIn(req, res, next) {
+//     if (req.isAuthenticated()) return next();
+//     res.redirect('/login');
+// }
 
 // Catch all route for undefined paths
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 });
 
-// Error handling middleware
+
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something Went Wrong" } = err;
     res.status(statusCode).render("error.ejs", { message });
 });
 
-// Start server
+
 app.listen(3000, () => {
     console.log("Server is running on port http://localhost:3000");
 });

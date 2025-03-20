@@ -91,7 +91,7 @@
     #buy .listing button:hover {
     background-color: #45a049;
     }
-    /* Sell Crops Section */
+
     #sell .sell-form {
     max-width: 400px;
     margin: 0 auto;
@@ -113,7 +113,7 @@
     #sell .sell-form button:hover {
     background-color: #45a049;
     }
-    /* Market Prices Section */
+   
     #prices .price-table {
     max-width: 700px;
     margin: 0 auto;
@@ -131,7 +131,7 @@
     background-color: #4CAF50;
     color: white;
     }
-    /* Footer Section */
+    
     footer {
     background-color: #333;
     color: white;
