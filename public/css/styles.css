@@ -97,3 +97,30 @@ nav {
         display: flex;
     }
 }
+
+.flash-message {
+    position: fixed;
+    top: 80px; /* Adjust based on navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2001; /* Higher than navbar */
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    font-size: 1rem;
+    max-width: 80%;
+    text-align: center;
+}
+
+.flash-message.error {
+    background-color: #e74c3c;
+}
+
+.flash-message .close-btn {
+    margin-left: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+

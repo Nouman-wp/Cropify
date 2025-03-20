@@ -219,14 +219,14 @@ app.get('/logout', (req, res, next) => {
     });
 });
 
+// app.get('/test-flash', (req, res) => {
+//     req.flash('success', 'This is a test flash message!');
+//     res.redirect('/');
+// });
 
 
-// function isLoggedIn(req, res, next) {
-//     if (req.isAuthenticated()) return next();
-//     res.redirect('/login');
-// }
 
-// Catch all route for undefined paths
+
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 });
