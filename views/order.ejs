@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5" style="padding-top: 50px;">  
+  <div class="card shadow rounded p-4">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-5">
+        <img src="<%= crop.image || '/images/placeholder.png' %>" alt="<%= crop.title %>" 
+             class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
+      </div>
+
+      <div class="col-md-7">
+        <h2 class="fw-bold mb-3 text-success"><%= crop.title %></h2>
+        <p class="fs-5">💰 <strong>Price per kg:</strong> ₹<%= crop.price %></p>
+        <p class="text-muted">🚜 Fresh and quality guaranteed!</p>
+
+        <form action="/order/<%= crop._id %>" method="POST" class="mt-4">
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Enter Quantity (kg):</label>
+            <input type="number" name="quantity" id="quantity" class="form-control shadow-sm" 
+                   min="1" required placeholder="Eg: 10">
+          </div>
+
+          <button type="submit" class="btn btn-success px-4 py-2">
+            <i class="bi bi-cart-check-fill"></i> Confirm Order
+          </button>
+        </form>
+
+        <a href="/buy" class="btn btn-outline-secondary mt-3">
+          <i class="bi bi-arrow-left-circle"></i> Back to Market
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    background-color: #f9fdf9;
+  }
+  .form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+  .btn-success:hover {
+    background-color: #218838;
+  }
+</style>

@@ -13,7 +13,8 @@
                 <p><strong>Location:</strong> <%= listing.location %></p>
                 <p><strong>Price:</strong> ₹<%= listing.price %> per kg</p>
                 <p><strong>Owner:</strong> <%= listing.owner %></p>
-                <button class="btn">Contact Seller</button>
+                <a href="/ %>" class="btn btn-success mt-2">View Details</a>
+                <a href="/order/<%= listing._id %>" class="btn btn-success mt-2">Buy Now</a>
             </div>
         <% }) %>
     </div>

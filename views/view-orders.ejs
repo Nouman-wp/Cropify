@@ -1,0 +1,77 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+  <h2 class="text-center mb-5 fw-bold">🧾 My Orders</h2>
+
+  <% if (orders.length === 0) { %>
+    <div class="alert alert-info text-center shadow-sm p-4 rounded">
+      <i class="bi bi-bag-x-fill fs-3"></i><br>
+      You have not placed any orders yet.
+    </div>
+  <% } else { %>
+    <div class="table-responsive shadow-sm rounded">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Crop Image</th>
+            <th>Crop Name</th>
+            <th>Quantity (kg)</th>
+            <th>Unit Price (₹)</th>
+            <th>Total (₹)</th>
+            <th>Status</th>
+            <th>Ordered On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach((order, index) => { %>
+            <tr class="bg-white">
+              <td class="fw-semibold"><%= index + 1 %></td>
+              <td>
+                <img src="<%= order.crop ? order.crop.image : '/images/placeholder.png' %>" 
+                     alt="Crop Image" class="img-thumbnail" style="width: 70px; height: 70px; object-fit: cover;">
+              </td>
+              <td class="fw-semibold"><%= order.crop ? order.crop.title : 'N/A' %></td>
+              <td><%= order.quantity %> kg</td>
+              <td>₹ <%= order.crop ? order.crop.price : 'N/A' %></td>
+              <td class="fw-bold text-success">₹ <%= order.totalPrice %></td>
+              <td>
+                <% if (order.status === 'Completed') { %>
+                  <span class="badge bg-success">Completed</span>
+                <% } else if (order.status === 'Shipped') { %>
+                  <span class="badge bg-primary">Shipped</span>
+                <% } else if (order.status === 'Cancelled') { %>
+                  <span class="badge bg-danger">Cancelled</span>
+                <% } else { %>
+                  <span class="badge bg-warning text-dark">Pending</span>
+                <% } %>
+              </td>
+              <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+
+<style>
+    body{
+        padding-top: 30px;
+    }
+  .table th, .table td {
+    vertical-align: middle;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: 0.3s;
+  }
+
+  .badge {
+    font-size: 0.9rem;
+    padding: 0.6em 0.9em;
+  }
+</style>
+
+
