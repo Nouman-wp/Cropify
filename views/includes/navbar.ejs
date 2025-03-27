@@ -47,15 +47,17 @@
 
     <style>
         :root {
-            /* Vibrant Green Gradient Palette */
-            --gradient-start: #2ecc71;     /* Bright green */
-            --gradient-middle: #27ae60;    /* Deep green */
-            --gradient-end: #2c3e50;       /* Dark blue-green */
-            --text-primary: #ffffff;       /* White text */
-            --text-secondary: #f1f2f6;     /* Soft off-white */
-            --accent-color: #2ed573;       /* Bright highlight green */
-            --hover-color: #healthy-green;
-            --background-color: #f4f6f7;   /* Light gray background */
+            /* Sophisticated Teal Color Palette */
+            --primary-teal: #20b2aa;        /* Light Sea Green */
+            --secondary-teal: #008080;      /* Teal */
+            --dark-teal: #005f73;           /* Deep Teal */
+            --accent-green: #2ecc71;        /* Emerald Green */
+            --background-light: #f0f4f4;    /* Soft Teal Background */
+            --text-primary: #2c3e50;        /* Dark Blue-Gray */
+            --white: #ffffff;
+            
+            /* Transition and Animation */
+            --transition-speed: 0.3s;
         }
 
         * {
@@ -66,8 +68,8 @@
         }
 
         body {
-            background-color: var(--background-color);
-            color: #2c3e50;
+            background-color: var(--background-light);
+            color: var(--text-primary);
             line-height: 1.6;
             padding-top: 80px;
         }
@@ -76,23 +78,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle), var(--gradient-end));
-            background-size: 200% 200%;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+            color: var(--white);
             padding: 15px 5%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            animation: GradientBackground 10s ease infinite;
-            transition: all 0.3s ease;
-        }
-
-        @keyframes GradientBackground {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
+            box-shadow: 0 4px 15px rgba(0, 128, 128, 0.2);
+            transition: all var(--transition-speed) ease;
         }
 
         .logo {
@@ -101,7 +95,7 @@
             letter-spacing: 1.5px;
             display: flex;
             align-items: center;
-            color: var(--text-primary);
+            color: var(--white);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
@@ -123,10 +117,10 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-secondary);
+            color: rgba(255,255,255,0.9);
             font-size: 1rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             position: relative;
             padding-bottom: 8px;
             letter-spacing: 0.5px;
@@ -136,8 +130,8 @@
         }
 
         .nav-links a:hover {
-            color: var(--accent-color);
-            transform: scale(1.05);
+            color: var(--accent-green);
+            transform: translateY(-2px);
         }
 
         .nav-links a::after {
@@ -147,12 +141,27 @@
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
+            background-color: var(--accent-green);
+            transition: width var(--transition-speed) ease;
         }
 
         .nav-links a:hover::after {
             width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background: var(--white);
+            margin: 4px 0;
+            transition: 0.4s;
+            border-radius: 2px;
         }
 
         .account-dropdown {
@@ -163,9 +172,32 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color var(--transition-speed) ease;
             font-weight: 600;
             gap: 8px;
+        }
+
+        .account-toggle:hover {
+            color: var(--accent-green);
+        }
+
+        .profile-img, .profile-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(32, 178, 170, 0.6);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .profile-placeholder {
+            background-color: var(--white);
+            color: var(--dark-teal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
         }
 
         .account-dropdown .dropdown-content {
@@ -173,32 +205,33 @@
             position: absolute;
             right: 0;
             top: 100%;
-            background-color: var(--text-primary);
+            background-color: var(--white);
             min-width: 250px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 128, 128, 0.1);
             border-radius: 10px;
             overflow: hidden;
             z-index: 1000;
             margin-top: 15px;
+            border: 1px solid rgba(0, 128, 128, 0.1);
         }
 
         .account-dropdown.active .dropdown-content {
             display: block;
-            animation: dropdownSlideIn 0.3s ease;
+            animation: dropdownSlideIn var(--transition-speed) ease;
         }
 
         .dropdown-content li a {
-            color: var(--gradient-middle);
+            color: var(--dark-teal);
             padding: 12px 15px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
             gap: 10px;
         }
 
         .dropdown-content li a:hover {
             background-color: rgba(46, 204, 113, 0.1);
-            color: var(--gradient-start);
+            color: var(--primary-teal);
         }
 
         .dropdown-content .logout a {
@@ -209,6 +242,17 @@
             background-color: rgba(231, 76, 60, 0.1);
         }
 
+        @keyframes dropdownSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media screen and (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -217,34 +261,21 @@
                 position: absolute;
                 top: 60px;
                 left: 0;
-                background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle));
+                background: linear-gradient(135deg, var(--dark-teal), var(--secondary-teal));
                 text-align: center;
                 padding: 20px 0;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border-top: 1px solid rgba(255,255,255,0.1);
             }
 
             .nav-links.active {
                 display: flex;
             }
-        }
 
-        /* Hamburger Menu Styles */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
+            .nav-links li {
+                margin: 15px 0;
+            }
 
-        .hamburger span {
-            height: 3px;
-            width: 25px;
-            background: var(--text-primary);
-            margin: 4px 0;
-            transition: 0.4s;
-            border-radius: 2px;
-        }
-
-        @media screen and (max-width: 768px) {
             .hamburger {
                 display: flex;
             }
