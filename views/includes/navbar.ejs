@@ -1,19 +1,61 @@
+<!DOCTYPE html>
+<header>
+    <div class="logo">🌾 Farmer's Marketplace</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/buy">Buy Crops</a></li>
+            <li><a href="/sell">Sell Crops</a></li>
+            <li><a href="/prices">Market Prices</a></li>
 
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+            <% if (currentUser && currentUser.username) { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <% if (currentUser.profileImage) { %>
+                            <img src="<%= currentUser.profileImage %>" alt="Profile" class="profile-img">
+                        <% } else { %>
+                            <i class="fa fa-user-circle profile-placeholder"></i>
+                        <% } %>
+                        <%= currentUser.username %> <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/dashboard"><i class="fa fa-chart-line"></i> My Dashboard</a></li>
+                        <li><a href="/profile"><i class="fa fa-user-edit"></i> Profile</a></li>
+                        <li><a href="/orders"><i class="fa fa-shopping-basket"></i> My Orders</a></li>
+                        <li class="logout"><a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            <% } else { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+                        <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
+                    </ul>
+                </li>
+            <% } %>
+        </ul>
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
     <style>
         :root {
-            /* Enhanced Teal Color Palette */
-            --primary-color: #1abc9c;       /* Soft teal */
-            --secondary-color: #16a085;     /* Deep teal */
-            --accent-color: #2ecc71;        /* Bright green accent */
-            --text-color: #2c3e50;          /* Dark blue-gray */
-            --background-color: #f0f4f7;    /* Soft gray-blue */
-            --white: #ffffff;
-            --transition-speed: 0.3s;
-            --hover-color: #2ed573;         /* Bright green hover state */
-            --dropdown-bg: #e8f4f2;         /* Very soft teal background */
+            /* Vibrant Green Gradient Palette */
+            --gradient-start: #2ecc71;     /* Bright green */
+            --gradient-middle: #27ae60;    /* Deep green */
+            --gradient-end: #2c3e50;       /* Dark blue-green */
+            --text-primary: #ffffff;       /* White text */
+            --text-secondary: #f1f2f6;     /* Soft off-white */
+            --accent-color: #2ed573;       /* Bright highlight green */
+            --hover-color: #healthy-green;
+            --background-color: #f4f6f7;   /* Light gray background */
         }
 
         * {
@@ -25,7 +67,7 @@
 
         body {
             background-color: var(--background-color);
-            color: var(--text-color);
+            color: #2c3e50;
             line-height: 1.6;
             padding-top: 80px;
         }
@@ -34,15 +76,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--white);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle), var(--gradient-end));
+            background-size: 200% 200%;
+            color: var(--text-primary);
             padding: 15px 5%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 6px 20px rgba(22, 160, 133, 0.2);
-            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: GradientBackground 10s ease infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes GradientBackground {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
 
         .logo {
@@ -51,7 +101,7 @@
             letter-spacing: 1.5px;
             display: flex;
             align-items: center;
-            color: var(--white);
+            color: var(--text-primary);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
@@ -73,10 +123,10 @@
 
         .nav-links a {
             text-decoration: none;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-secondary);
             font-size: 1rem;
             font-weight: 500;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.3s ease;
             position: relative;
             padding-bottom: 8px;
             letter-spacing: 0.5px;
@@ -87,6 +137,7 @@
 
         .nav-links a:hover {
             color: var(--accent-color);
+            transform: scale(1.05);
         }
 
         .nav-links a::after {
@@ -97,26 +148,11 @@
             bottom: 0;
             left: 0;
             background-color: var(--accent-color);
-            transition: width var(--transition-speed) ease;
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover::after {
             width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            height: 3px;
-            width: 25px;
-            background: var(--white);
-            margin: 4px 0;
-            transition: 0.4s;
-            border-radius: 2px;
         }
 
         .account-dropdown {
@@ -127,36 +163,9 @@
             display: flex;
             align-items: center;
             cursor: pointer;
-            transition: color var(--transition-speed) ease;
+            transition: all 0.3s ease;
             font-weight: 600;
             gap: 8px;
-        }
-
-        .account-toggle:hover {
-            color: var(--accent-color);
-        }
-
-        .profile-img, .profile-placeholder {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(46, 204, 113, 0.6);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform var(--transition-speed) ease;
-        }
-
-        .profile-placeholder {
-            background-color: var(--white);
-            color: var(--secondary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-        }
-
-        .profile-img:hover, .profile-placeholder:hover {
-            transform: scale(1.1);
         }
 
         .account-dropdown .dropdown-content {
@@ -164,37 +173,32 @@
             position: absolute;
             right: 0;
             top: 100%;
-            background-color: var(--dropdown-bg);
+            background-color: var(--text-primary);
             min-width: 250px;
-            box-shadow: 0 10px 25px rgba(22, 160, 133, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             border-radius: 10px;
             overflow: hidden;
             z-index: 1000;
             margin-top: 15px;
-            border: 1px solid rgba(22, 160, 133, 0.1);
         }
 
         .account-dropdown.active .dropdown-content {
             display: block;
-            animation: dropdownSlideIn var(--transition-speed) ease;
-        }
-
-        .dropdown-content li {
-            margin: 0;
+            animation: dropdownSlideIn 0.3s ease;
         }
 
         .dropdown-content li a {
-            color: var(--secondary-color);
+            color: var(--gradient-middle);
             padding: 12px 15px;
             display: flex;
             align-items: center;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.3s ease;
             gap: 10px;
         }
 
         .dropdown-content li a:hover {
             background-color: rgba(46, 204, 113, 0.1);
-            color: var(--primary-color);
+            color: var(--gradient-start);
         }
 
         .dropdown-content .logout a {
@@ -205,17 +209,6 @@
             background-color: rgba(231, 76, 60, 0.1);
         }
 
-        @keyframes dropdownSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @media screen and (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -224,82 +217,39 @@
                 position: absolute;
                 top: 60px;
                 left: 0;
-                background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+                background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle));
                 text-align: center;
                 padding: 20px 0;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                border-top: 1px solid rgba(255,255,255,0.1);
             }
 
             .nav-links.active {
                 display: flex;
             }
+        }
 
-            .nav-links li {
-                margin: 15px 0;
-            }
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
 
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background: var(--text-primary);
+            margin: 4px 0;
+            transition: 0.4s;
+            border-radius: 2px;
+        }
+
+        @media screen and (max-width: 768px) {
             .hamburger {
                 display: flex;
             }
         }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
     </style>
-</head>
-<body>
-    <header>
-        <div class="logo">🌾 Farmer's Marketplace</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/buy">Buy Crops</a></li>
-                <li><a href="/sell">Sell Crops</a></li>
-                <li><a href="/prices">Market Prices</a></li>
-
-                <!-- Logged Out State -->
-                <li class="account-dropdown">
-                    <span class="account-toggle">
-                        <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
-                    </span>
-                    <ul class="dropdown-content">
-                        <li><a href="/signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-                        <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
-                    </ul>
-                </li>
-
-                <!-- Logged In State (uncomment to switch)
-                <li class="account-dropdown">
-                    <span class="account-toggle">
-                        <i class="fa fa-user-circle profile-placeholder"></i>
-                        John Farmer <i class="fa fa-caret-down"></i>
-                    </span>
-                    <ul class="dropdown-content">
-                        <li><a href="/dashboard"><i class="fa fa-chart-line"></i> My Dashboard</a></li>
-                        <li><a href="/profile"><i class="fa fa-user-edit"></i> Profile</a></li>
-                        <li><a href="/orders"><i class="fa fa-shopping-basket"></i> My Orders</a></li>
-                        <li class="logout"><a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
-                </li>
-                -->
-            </ul>
-
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <h1>Welcome to Farmer's Marketplace</h1>
-        <p>Connect with local farmers, buy fresh produce, and support your local agricultural community.</p>
-    </main>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -338,4 +288,4 @@
             }
         });
     </script>
-</body>
+</header>
