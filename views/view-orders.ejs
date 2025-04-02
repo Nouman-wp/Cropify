@@ -1,0 +1,1496 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="orders-container">
+  <div class="orders-header">
+    <h2 class="orders-title">
+      <i class="fas fa-shopping-basket"></i> My Orders
+    </h2>
+    
+    <div class="orders-filter-wrapper">
+      <div class="filter-controls">
+        <select id="status-filter" class="custom-select">
+          <option value="all" selected>All Orders</option>
+          <option value="Pending">Pending</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        
+        <div class="date-range">
+          <div class="date-picker">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="date" id="start-date" class="date-input">
+          </div>
+          <span class="date-separator">to</span>
+          <div class="date-picker">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="date" id="end-date" class="date-input">
+          </div>
+        </div>
+        
+        <button id="reset-filters" class="reset-btn">
+          <i class="fas fa-sync-alt"></i> Reset
+        </button>
+      </div>
+      
+      <div class="search-wrapper">
+        <input type="text" id="order-search" placeholder="Search by crop name..." class="search-input">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon completed">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value" id="completed-count"><%= orders.filter(order => order.status === 'Completed').length %></span>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon pending">
+        <i class="fas fa-hourglass-half"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Pending</span>
+        <span class="stat-value" id="pending-count"><%= orders.filter(order => order.status === 'Pending').length %></span>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon shipped">
+        <i class="fas fa-truck"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Shipped</span>
+        <span class="stat-value" id="shipped-count"><%= orders.filter(order => order.status === 'Shipped').length %></span>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon cancelled">
+        <i class="fas fa-ban"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Cancelled</span>
+        <span class="stat-value" id="cancelled-count"><%= orders.filter(order => order.status === 'Cancelled').length %></span>
+      </div>
+    </div>
+    
+    <div class="stat-card total-spent">
+      <div class="stat-icon money">
+        <i class="fas fa-rupee-sign"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Total Spent</span>
+        <span class="stat-value" id="total-spent">₹ <%= orders.reduce((total, order) => total + order.totalPrice, 0).toLocaleString('en-IN') %></span>
+      </div>
+    </div>
+  </div>
+
+  <% if (orders.length === 0) { %>
+    <div class="empty-orders">
+      <div class="empty-illustration">
+        <img src="/images/empty-cart.svg" alt="No Orders" onerror="this.src='/images/placeholder.png'">
+      </div>
+      <h3>You haven't placed any orders yet</h3>
+      <p>Browse our marketplace to find fresh produce directly from local farmers!</p>
+      <a href="/buy" class="browse-btn">
+        <i class="fas fa-shopping-cart"></i> Browse Marketplace
+      </a>
+    </div>
+  <% } else { %>
+    <div class="order-list" id="order-list">
+      <% orders.forEach((order, index) => { %>
+        <div class="order-card" data-status="<%= order.status %>" data-crop="<%= order.crop ? order.crop.title.toLowerCase() : '' %>" data-date="<%= order.createdAt.toISOString().split('T')[0] %>">
+          <div class="order-header">
+            <div class="order-id">
+              <h4>Order #<%= order._id.toString().substr(-6).toUpperCase() %></h4>
+              <span class="order-date">
+                <i class="far fa-calendar-alt"></i> <%= new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+              </span>
+            </div>
+            <div class="order-status <%= order.status.toLowerCase() %>">
+              <% if (order.status === 'Completed') { %>
+                <i class="fas fa-check-circle"></i>
+              <% } else if (order.status === 'Shipped') { %>
+                <i class="fas fa-truck"></i>
+              <% } else if (order.status === 'Cancelled') { %>
+                <i class="fas fa-times-circle"></i>
+              <% } else { %>
+                <i class="fas fa-clock"></i>
+              <% } %>
+              <%= order.status %>
+            </div>
+          </div>
+          
+          <div class="order-content">
+            <div class="crop-image">
+              <img src="<%= order.crop ? order.crop.image : '/images/placeholder.png' %>" alt="<%= order.crop ? order.crop.title : 'Crop' %>" onerror="this.src='/images/placeholder.png'">
+            </div>
+            
+            <div class="order-details">
+              <h3 class="crop-name"><%= order.crop ? order.crop.title : 'Product Unavailable' %></h3>
+              
+              <div class="order-info-grid">
+                <div class="info-item">
+                  <span class="info-label"><i class="fas fa-weight"></i> Quantity:</span>
+                  <span class="info-value"><%= order.quantity %> kg</span>
+                </div>
+                
+                <div class="info-item">
+                  <span class="info-label"><i class="fas fa-tag"></i> Unit Price:</span>
+                  <span class="info-value">₹ <%= order.crop ? order.crop.price : 'N/A' %></span>
+                </div>
+                
+                <div class="info-item">
+                  <span class="info-label"><i class="fas fa-user"></i> Seller:</span>
+                  <span class="info-value"><%= order.seller ? order.seller.username : 'Unknown' %></span>
+                </div>
+                
+                <div class="info-item">
+                  <span class="info-label"><i class="fas fa-money-bill-wave"></i> Total:</span>
+                  <span class="info-value total-price">₹ <%= order.totalPrice.toLocaleString('en-IN') %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="order-footer">
+            <% if (order.status === 'Pending') { %>
+              <button class="action-btn cancel-btn" data-order-id="<%= order._id %>">
+                <i class="fas fa-ban"></i> Cancel Order
+              </button>
+            <% } %>
+            
+            <% if (order.status === 'Completed') { %>
+              <button class="action-btn review-btn" data-order-id="<%= order._id %>" data-bs-toggle="modal" data-bs-target="#reviewModal" data-crop-id="<%= order.crop ? order.crop._id : '' %>" data-crop-name="<%= order.crop ? order.crop.title : 'Product' %>">
+                <i class="fas fa-star"></i> Write Review
+              </button>
+            <% } %>
+            
+            <button class="action-btn contact-btn" data-seller-id="<%= order.seller ? order.seller._id : '' %>">
+              <i class="fas fa-comment-alt"></i> Contact Seller
+            </button>
+            
+            <button class="action-btn track-btn" data-order-id="<%= order._id %>" data-bs-toggle="modal" data-bs-target="#trackingModal">
+              <i class="fas fa-truck"></i> Track Order
+            </button>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    
+    <div class="pagination-controls">
+      <button id="prev-page" class="page-btn" disabled>
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+      <div id="page-numbers" class="page-numbers">
+        <!-- Page numbers will be inserted here by JavaScript -->
+      </div>
+      <button id="next-page" class="page-btn">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  <% } %>
+</div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewModalLabel">Write a Review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="review-form">
+          <input type="hidden" id="review-crop-id" name="cropId">
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <div class="rating-container">
+              <i class="far fa-star rating-star" data-rating="1"></i>
+              <i class="far fa-star rating-star" data-rating="2"></i>
+              <i class="far fa-star rating-star" data-rating="3"></i>
+              <i class="far fa-star rating-star" data-rating="4"></i>
+              <i class="far fa-star rating-star" data-rating="5"></i>
+              <input type="hidden" id="rating-value" name="rating" value="0">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="review-text" class="form-label">Your Review</label>
+            <textarea class="form-control" id="review-text" name="review" rows="4" placeholder="Share your experience with this product..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submit-review">Submit Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="trackingModal" tabindex="-1" aria-labelledby="trackingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="trackingModalLabel">Track Your Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="tracking-timeline">
+          <div class="timeline-item active">
+            <div class="timeline-icon">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <div class="timeline-content">
+              <h4>Order Placed</h4>
+              <p id="order-placed-date"></p>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="payment-step">
+            <div class="timeline-icon">
+              <i class="fas fa-rupee-sign"></i>
+            </div>
+            <div class="timeline-content">
+              <h4>Payment Confirmed</h4>
+              <p id="payment-date"></p>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="processing-step">
+            <div class="timeline-icon">
+              <i class="fas fa-box"></i>
+            </div>
+            <div class="timeline-content">
+              <h4>Processing</h4>
+              <p id="processing-date"></p>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="shipped-step">
+            <div class="timeline-icon">
+              <i class="fas fa-truck"></i>
+            </div>
+            <div class="timeline-content">
+              <h4>Shipped</h4>
+              <p id="shipped-date"></p>
+            </div>
+          </div>
+          
+          <div class="timeline-item" id="delivery-step">
+            <div class="timeline-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="timeline-content">
+              <h4>Delivered</h4>
+              <p id="delivery-date"></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="estimated-delivery mt-4">
+          <h5>Estimated Delivery Date</h5>
+          <div class="delivery-date" id="estimated-date">Calculating...</div>
+        </div>
+        
+        <div class="delivery-address mt-4">
+          <h5>Delivery Address</h5>
+          <div class="address-card" id="delivery-address-display">
+            Loading address information...
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --primary-teal: #20b2aa;
+    --secondary-teal: #008080;
+    --dark-teal: #005f73;
+    --light-teal: #e0f7fa;
+    --accent-green: #2ecc71;
+    --background-light: #f0f4f4;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --white: #ffffff;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --success: #27ae60;
+    --info: #3498db;
+    --gray-light: #f8f9fa;
+    --gray: #e9ecef;
+    --border-radius: 12px;
+    --shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+  }
+
+  body {
+    background-color: var(--background-light);
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-primary);
+    padding-top: 90px;
+    padding-bottom: 50px;
+  }
+
+  .orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .orders-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-teal);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .orders-filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .orders-filter-wrapper {
+      flex-direction: row;
+      width: auto;
+    }
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .custom-select {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: var(--transition);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+  }
+
+  .custom-select:hover, .custom-select:focus {
+    border-color: var(--primary-teal);
+  }
+
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .date-picker {
+    position: relative;
+  }
+
+  .date-picker i {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+  }
+
+  .date-input {
+    padding: 0.5rem 0.75rem 0.5rem 2rem;
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+  }
+
+  .date-input:hover, .date-input:focus {
+    border-color: var(--primary-teal);
+  }
+
+  .date-separator {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .reset-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .reset-btn:hover {
+    background-color: var(--gray);
+    color: var(--text-primary);
+  }
+
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .search-wrapper {
+      width: 300px;
+    }
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    color: var(--text-primary);
+    outline: none;
+    transition: var(--transition);
+  }
+
+  .search-input:hover, .search-input:focus {
+    border-color: var(--primary-teal);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+  }
+
+
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--white);
+  }
+
+  .stat-icon.completed {
+    background-color: var(--success);
+  }
+
+  .stat-icon.pending {
+    background-color: var(--warning);
+  }
+
+  .stat-icon.shipped {
+    background-color: var(--info);
+  }
+
+  .stat-icon.cancelled {
+    background-color: var(--danger);
+  }
+
+  .stat-icon.money {
+    background-color: var(--primary-teal);
+  }
+
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+
+  .empty-orders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 4rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .empty-illustration {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 2rem;
+  }
+
+  .empty-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .empty-orders h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .empty-orders p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .browse-btn {
+    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(32, 178, 170, 0.3);
+  }
+
+  .browse-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(32, 178, 170, 0.4);
+    color: var(--white);
+  }
+
+
+  .order-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .order-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+
+  .order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  .order-id h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .order-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .order-status {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .order-status.pending {
+    background-color: rgba(243, 156, 18, 0.1);
+    color: var(--warning);
+  }
+
+  .order-status.completed {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--success);
+  }
+
+  .order-status.shipped {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--info);
+  }
+
+  .order-status.cancelled {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger);
+  }
+
+  .order-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  @media (min-width: 768px) {
+    .order-content {
+      flex-direction: row;
+    }
+  }
+
+  .crop-image {
+    width: 100%;
+    height: 160px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .crop-image {
+      width: 160px;
+      min-width: 160px;
+    }
+  }
+
+  .crop-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+  }
+
+  .crop-image img:hover {
+    transform: scale(1.05);
+  }
+
+  .order-details {
+    flex: 1;
+  }
+
+  .crop-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .order-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .info-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .info-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .total-price {
+    color: var(--success);
+  }
+
+  .order-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    justify-content: flex-end;
+  }
+
+  .action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+  }
+
+  .action-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .cancel-btn {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger);
+  }
+
+  .cancel-btn:hover {
+    background-color: var(--danger);
+    color: var(--white);
+  }
+
+  .review-btn {
+    background-color: rgba(243, 156, 18, 0.1);
+    color: var(--warning);
+  }
+
+  .review-btn:hover {
+    background-color: var(--warning);
+    color: var(--white);
+  }
+
+  .contact-btn {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--info);
+  }
+
+  .contact-btn:hover {
+    background-color: var(--info);
+    color: var(--white);
+  }
+
+  .track-btn {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--success);
+  }
+
+  .track-btn:hover {
+    background-color: var(--success);
+    color: var(--white);
+  }
+
+ 
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+
+  .page-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--gray);
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+    color: var(--white);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.page-number {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--white);
+    border: 2px solid var(--gray);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.page-number.active {
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+    color: var(--white);
+}
+
+.page-number:hover:not(.active) {
+    background-color: var(--gray-light);
+    border-color: var(--primary-teal);
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    background-color: var(--light-teal);
+    border-bottom: 1px solid var(--gray);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.modal-title {
+    color: var(--dark-teal);
+    font-weight: 700;
+}
+
+.rating-container {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.rating-star {
+    color: var(--gray);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.rating-star.active {
+    color: #ffc107;
+}
+
+.rating-star:hover {
+    transform: scale(1.1);
+}
+
+/* Tracking Timeline */
+.tracking-timeline {
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+.tracking-timeline::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    background-color: var(--gray);
+    left: 24px;
+    top: 0;
+    border-radius: 4px;
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+    margin-right: 1.5rem;
+    transition: var(--transition);
+}
+
+.timeline-item.active .timeline-icon {
+    background-color: var(--success);
+    color: var(--white);
+    box-shadow: 0 0 0 5px rgba(39, 174, 96, 0.2);
+}
+
+.timeline-content {
+    flex: 1;
+    background-color: var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.timeline-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.timeline-content p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.estimated-delivery, .delivery-address {
+    background-color: var(--gray-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.estimated-delivery h5, .delivery-address h5 {
+    margin-top: 0;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.delivery-date {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success);
+}
+
+.address-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ 
+    const ordersPerPage = 5;
+    const orderList = document.getElementById('order-list');
+    const orderCards = orderList ? Array.from(orderList.getElementsByClassName('order-card')) : [];
+    const pageNumbers = document.getElementById('page-numbers');
+    const prevButton = document.getElementById('prev-page');
+    const nextButton = document.getElementById('next-page');
+    
+    let currentPage = 1;
+    let filteredOrders = [...orderCards];
+    
+
+    const statusFilter = document.getElementById('status-filter');
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
+    const resetButton = document.getElementById('reset-filters');
+    const searchInput = document.getElementById('order-search');
+    
+    function setupPagination() {
+        if (!orderList || orderCards.length === 0) return;
+        
+        const pageCount = Math.ceil(filteredOrders.length / ordersPerPage);
+        pageNumbers.innerHTML = '';
+        
+        for (let i = 1; i <= pageCount; i++) {
+            const pageNumber = document.createElement('div');
+            pageNumber.classList.add('page-number');
+            if (i === currentPage) pageNumber.classList.add('active');
+            pageNumber.textContent = i;
+            pageNumber.addEventListener('click', () => {
+                currentPage = i;
+                showPage(currentPage);
+                updatePaginationButtons();
+            });
+            pageNumbers.appendChild(pageNumber);
+        }
+        
+        showPage(currentPage);
+        updatePaginationButtons();
+    }
+    
+    function showPage(page) {
+        const startIndex = (page - 1) * ordersPerPage;
+        const endIndex = startIndex + ordersPerPage;
+        
+        orderCards.forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        filteredOrders.slice(startIndex, endIndex).forEach(card => {
+            card.style.display = 'block';
+        });
+        
+      
+        const pageNumberButtons = pageNumbers.getElementsByClassName('page-number');
+        Array.from(pageNumberButtons).forEach((btn, index) => {
+            btn.classList.toggle('active', index + 1 === page);
+        });
+    }
+    
+    function updatePaginationButtons() {
+        const pageCount = Math.ceil(filteredOrders.length / ordersPerPage);
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === pageCount || pageCount === 0;
+    }
+    
+    function applyFilters() {
+        const statusValue = statusFilter.value;
+        const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
+        const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        filteredOrders = orderCards.filter(card => {
+            const cardStatus = card.getAttribute('data-status');
+            const cardCrop = card.getAttribute('data-crop');
+            const cardDate = new Date(card.getAttribute('data-date'));
+            
+            
+            if (statusValue !== 'all' && cardStatus !== statusValue) return false;
+            
+            
+            if (startDate && cardDate < startDate) return false;
+            if (endDate && cardDate > endDate) return false;
+           
+            if (searchTerm && !cardCrop.includes(searchTerm)) return false;
+            
+            return true;
+        });
+        
+        
+        updateStats();
+        
+       
+        currentPage = 1;
+        setupPagination();
+    }
+    
+    function updateStats() {
+     
+        const completedCount = document.getElementById('completed-count');
+        const pendingCount = document.getElementById('pending-count');
+        const shippedCount = document.getElementById('shipped-count');
+        const cancelledCount = document.getElementById('cancelled-count');
+        const totalSpent = document.getElementById('total-spent');
+        
+        if (!completedCount || !orderCards.length) return;
+        
+     
+        const completed = filteredOrders.filter(order => order.getAttribute('data-status') === 'Completed').length;
+        const pending = filteredOrders.filter(order => order.getAttribute('data-status') === 'Pending').length;
+        const shipped = filteredOrders.filter(order => order.getAttribute('data-status') === 'Shipped').length;
+        const cancelled = filteredOrders.filter(order => order.getAttribute('data-status') === 'Cancelled').length;
+        
+     
+        completedCount.textContent = completed;
+        pendingCount.textContent = pending;
+        shippedCount.textContent = shipped;
+        cancelledCount.textContent = cancelled;
+        
+   
+    }
+    
+ 
+    if (statusFilter) {
+        statusFilter.addEventListener('change', applyFilters);
+    }
+    
+    if (startDateInput) {
+        startDateInput.addEventListener('change', applyFilters);
+    }
+    
+    if (endDateInput) {
+        endDateInput.addEventListener('change', applyFilters);
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+    }
+    
+    if (resetButton) {
+        resetButton.addEventListener('click', function() {
+            if (statusFilter) statusFilter.value = 'all';
+            if (startDateInput) startDateInput.value = '';
+            if (endDateInput) endDateInput.value = '';
+            if (searchInput) searchInput.value = '';
+            
+            filteredOrders = [...orderCards];
+            currentPage = 1;
+            applyFilters();
+        });
+    }
+    
+
+    if (prevButton) {
+        prevButton.addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+    }
+    
+    if (nextButton) {
+        nextButton.addEventListener('click', function() {
+            const pageCount = Math.ceil(filteredOrders.length / ordersPerPage);
+            if (currentPage < pageCount) {
+                currentPage++;
+                showPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+    }
+    
+   
+    const ratingStars = document.querySelectorAll('.rating-star');
+    const ratingValue = document.getElementById('rating-value');
+    
+    if (ratingStars.length > 0 && ratingValue) {
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                ratingValue.value = rating;
+                
+         
+                ratingStars.forEach(s => {
+                    const starRating = parseInt(s.getAttribute('data-rating'));
+                    if (starRating <= rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas', 'active');
+                    } else {
+                        s.classList.remove('fas', 'active');
+                        s.classList.add('far');
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                
+                ratingStars.forEach(s => {
+                    const starRating = parseInt(s.getAttribute('data-rating'));
+                    if (starRating <= rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const currentRating = parseInt(ratingValue.value) || 0;
+                
+                ratingStars.forEach(s => {
+                    const starRating = parseInt(s.getAttribute('data-rating'));
+                    if (starRating <= currentRating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas', 'active');
+                    } else {
+                        s.classList.remove('fas', 'active');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+    }
+    
+
+    const reviewModal = document.getElementById('reviewModal');
+    if (reviewModal) {
+        const reviewBtns = document.querySelectorAll('.review-btn');
+        const cropIdInput = document.getElementById('review-crop-id');
+        const submitReviewBtn = document.getElementById('submit-review');
+        const reviewText = document.getElementById('review-text');
+        
+        reviewBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const cropId = this.getAttribute('data-crop-id');
+                const cropName = this.getAttribute('data-crop-name');
+                
+               
+                document.getElementById('reviewModalLabel').textContent = `Write a Review for ${cropName}`;
+                cropIdInput.value = cropId;
+                
+               
+                reviewText.value = '';
+                ratingValue.value = '0';
+                ratingStars.forEach(s => {
+                    s.classList.remove('fas', 'active');
+                    s.classList.add('far');
+                });
+            });
+        });
+        
+        if (submitReviewBtn) {
+            submitReviewBtn.addEventListener('click', async function() {
+                const cropId = cropIdInput.value;
+                const rating = ratingValue.value;
+                const review = reviewText.value;
+                
+                if (!rating || parseInt(rating) === 0) {
+                    alert('Please select a rating');
+                    return;
+                }
+                
+                if (!review.trim()) {
+                    alert('Please write a review');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('/reviews/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cropId,
+                            rating,
+                            text: review
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        
+                        const modal = bootstrap.Modal.getInstance(reviewModal);
+                        modal.hide();
+                        alert('Review submitted successfully!');
+                    } else {
+                        const data = await response.json();
+                        alert(data.message || 'Failed to submit review');
+                    }
+                } catch (error) {
+                    console.error('Error submitting review:', error);
+                    alert('An error occurred while submitting your review');
+                }
+            });
+        }
+    }
+    
+   
+    const trackingModal = document.getElementById('trackingModal');
+    if (trackingModal) {
+        const trackBtns = document.querySelectorAll('.track-btn');
+        
+        trackBtns.forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const orderId = this.getAttribute('data-order-id');
+                
+                
+                
+               
+                const timelineItems = document.querySelectorAll('.timeline-item');
+                timelineItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+               
+                timelineItems[0].classList.add('active');
+                
+               
+                const orderCard = this.closest('.order-card');
+                const orderStatus = orderCard.getAttribute('data-status');
+                const orderDateElem = orderCard.querySelector('.order-date');
+                const orderDate = orderDateElem ? orderDateElem.textContent.trim().replace('📅', '').trim() : 'Unknown';
+                
+                
+                document.getElementById('order-placed-date').textContent = orderDate;
+                document.getElementById('payment-date').textContent = orderDate;
+                
+             
+                if (orderStatus === 'Pending') {
+                    timelineItems[0].classList.add('active');
+                    timelineItems[1].classList.add('active');
+                } else if (orderStatus === 'Shipped') {
+                    timelineItems[0].classList.add('active');
+                    timelineItems[1].classList.add('active');
+                    timelineItems[2].classList.add('active');
+                    timelineItems[3].classList.add('active');
+                    
+                    
+                    const processingDate = new Date(orderDate);
+                    processingDate.setDate(processingDate.getDate() + 3);
+                    document.getElementById('processing-date').textContent = processingDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', month: 'short', day: 'numeric' 
+                    });
+                    
+                    
+                    const shippedDate = new Date(orderDate);
+                    shippedDate.setDate(shippedDate.getDate() + 5);
+                    document.getElementById('shipped-date').textContent = shippedDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', month: 'short', day: 'numeric' 
+                    });
+                } else if (orderStatus === 'Completed') {
+                    timelineItems.forEach(item => item.classList.add('active'));
+                    
+                   
+                    const processingDate = new Date(orderDate);
+                    processingDate.setDate(processingDate.getDate() + 3);
+                    document.getElementById('processing-date').textContent = processingDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', month: 'short', day: 'numeric' 
+                    });
+                    
+                    const shippedDate = new Date(orderDate);
+                    shippedDate.setDate(shippedDate.getDate() + 5);
+                    document.getElementById('shipped-date').textContent = shippedDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', month: 'short', day: 'numeric' 
+                    });
+                    
+                    const deliveryDate = new Date(orderDate);
+                    deliveryDate.setDate(deliveryDate.getDate() + 8);
+                    document.getElementById('delivery-date').textContent = deliveryDate.toLocaleDateString('en-US', { 
+                        year: 'numeric', month: 'short', day: 'numeric' 
+                    });
+                }
+                
+                
+                const estimatedDate = new Date(orderDate);
+                estimatedDate.setDate(estimatedDate.getDate() + 8);
+                document.getElementById('estimated-date').textContent = estimatedDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', month: 'short', day: 'numeric' 
+                });
+                
+               
+                document.getElementById('delivery-address-display').innerHTML = `
+                    <p><strong>Name:</strong> ${orderCard.querySelector('.info-value').textContent}</p>
+                    <p><strong>Address:</strong> 123 Farming Street, Agriville</p>
+                    <p><strong>City:</strong> Croptown</p>
+                    <p><strong>State:</strong> Maharashtra</p>
+                    <p><strong>Pincode:</strong> 400001</p>
+                    <p><strong>Phone:</strong> +91 98765 43210</p>
+                `;
+            });
+        });
+    }
+    
+    
+    const cancelBtns = document.querySelectorAll('.cancel-btn');
+    cancelBtns.forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const orderId = this.getAttribute('data-order-id');
+            
+            if (confirm('Are you sure you want to cancel this order?')) {
+                try {
+                    const response = await fetch(`/orders/${orderId}/cancel`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        alert('Order cancelled successfully');
+                        location.reload();
+                    } else {
+                        const data = await response.json();
+                        alert(data.message || 'Failed to cancel order');
+                    }
+                } catch (error) {
+                    console.error('Error cancelling order:', error);
+                    alert('An error occurred while cancelling your order');
+                }
+            }
+        });
+    });
+    
+    
+    const contactBtns = document.querySelectorAll('.contact-btn');
+    contactBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const sellerId = this.getAttribute('data-seller-id');
+            
+            window.location.href = `/messages?seller=${sellerId}`;
+        });
+    });
+    
+    
+    if (orderCards.length > 0) {
+        setupPagination();
+    }
+});
+</script>

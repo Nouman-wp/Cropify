@@ -1,0 +1,570 @@
+<% layout("/layouts/boilerplate") %>
+
+<section class="kyc-container">
+  <div class="kyc-card">
+    <div class="kyc-header">
+      <div class="kyc-icon">🔒</div>
+      <h1 class="kyc-title">KYC Verification</h1>
+      <p class="kyc-subtitle">Complete your verification to unlock full platform features</p>
+    </div>
+    
+    <div class="kyc-steps">
+      <div class="step active">
+        <div class="step-number">1</div>
+        <div class="step-label">Upload ID</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-label">Review</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-label">Verification</div>
+      </div>
+    </div>
+
+    <div class="kyc-content">
+      <div class="kyc-info-card">
+        <div class="info-icon"><i class="fa fa-info-circle"></i></div>
+        <div class="info-text">
+          To ensure security and compliance, we require a valid government-issued ID. 
+          Your information is encrypted and securely stored.
+        </div>
+      </div>
+
+      <form action="/kyc" method="POST" enctype="multipart/form-data" class="kyc-form">
+        <div class="kyc-form-group">
+          <label for="idType">ID Type</label>
+          <select id="idType" name="idType" required>
+            <option value="" disabled selected>Select ID Type</option>
+            <option value="passport">Passport</option>
+            <option value="driverLicense">Driver's License</option>
+            <option value="nationalId">National ID Card</option>
+            <option value="other">Other Government ID</option>
+          </select>
+        </div>
+        
+        <div class="kyc-form-group">
+          <label for="idNumber">ID Number</label>
+          <input type="text" id="idNumber" name="idNumber" placeholder="Enter your ID number" required>
+        </div>
+        
+        <div class="kyc-upload-container">
+          <label for="idProof" class="upload-label">
+            <div class="upload-area" id="upload-area">
+              <i class="fa fa-cloud-upload-alt upload-icon"></i>
+              <div class="upload-text">
+                <span class="upload-title">Drag & Drop your ID or Click to Browse</span>
+                <span class="upload-subtitle">Supported formats: PDF, JPG, JPEG, PNG (Max: 5MB)</span>
+              </div>
+            </div>
+            <input type="file" id="idProof" name="idProof" accept=".pdf, .jpg, .jpeg, .png" required>
+          </label>
+          <div class="file-preview" id="file-preview"></div>
+        </div>
+        
+        <div class="kyc-form-group consent-group">
+          <label class="checkbox-container">
+            <input type="checkbox" required>
+            <span class="checkmark"></span>
+            I confirm that the information provided is accurate and the documents are authentic
+          </label>
+        </div>
+        
+        <div class="kyc-actions">
+          <button type="button" class="kyc-btn secondary">Save for Later</button>
+          <button type="submit" class="kyc-btn primary">Submit Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --primary-teal: #20b2aa;       
+    --secondary-teal: #008080;      
+    --dark-teal: #005f73;          
+    --accent-green: #2ecc71;        
+    --background-light: #f0f4f4;   
+    --text-primary: #2c3e50;        
+    --white: #ffffff;
+    --grey-light: #e9ecef;
+    --grey-medium: #adb5bd;
+    --transition-speed: 0.3s;
+  }
+
+  .kyc-container {
+    min-height: calc(100vh - 80px);
+    padding: 40px 20px 60px;
+    background-color: var(--background-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .kyc-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 128, 128, 0.1);
+    max-width: 800px;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .kyc-header {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+    color: var(--white);
+    padding: 30px;
+    text-align: center;
+    position: relative;
+  }
+
+  .kyc-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .kyc-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .kyc-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+
+  .kyc-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 20px;
+    background-color: rgba(240, 244, 244, 0.5);
+    border-bottom: 1px solid rgba(0, 128, 128, 0.1);
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--grey-light);
+    color: var(--grey-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .step.active .step-number {
+    background-color: var(--primary-teal);
+    color: var(--white);
+    box-shadow: 0 3px 10px rgba(32, 178, 170, 0.3);
+  }
+
+  .step-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all var(--transition-speed) ease;
+  }
+
+  .step.active .step-label {
+    color: var(--primary-teal);
+    font-weight: 600;
+  }
+
+  .step-connector {
+    height: 3px;
+    background-color: var(--grey-light);
+    flex-grow: 1;
+    margin: 0 10px;
+    max-width: 80px;
+    position: relative;
+    top: -12px;
+  }
+
+  .kyc-content {
+    padding: 30px;
+  }
+
+  .kyc-info-card {
+    display: flex;
+    align-items: center;
+    background-color: rgba(32, 178, 170, 0.1);
+    border-left: 4px solid var(--primary-teal);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+  }
+
+  .info-icon {
+    color: var(--primary-teal);
+    font-size: 1.5rem;
+    margin-right: 15px;
+  }
+
+  .info-text {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .kyc-form-group {
+    margin-bottom: 20px;
+  }
+
+  .kyc-form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  .kyc-form-group input[type="text"],
+  .kyc-form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .kyc-form-group input[type="text"]:focus,
+  .kyc-form-group select:focus {
+    border-color: var(--primary-teal);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.2);
+  }
+
+  .kyc-upload-container {
+    margin-bottom: 25px;
+  }
+
+  .upload-label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .upload-area {
+    border: 2px dashed var(--grey-medium);
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    background-color: var(--grey-light);
+    transition: all var(--transition-speed) ease;
+  }
+
+  .upload-area:hover, .upload-area.dragover {
+    border-color: var(--primary-teal);
+    background-color: rgba(32, 178, 170, 0.05);
+  }
+
+  .upload-icon {
+    font-size: 2.5rem;
+    color: var(--primary-teal);
+    margin-bottom: 15px;
+  }
+
+  .upload-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .upload-title {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .upload-subtitle {
+    font-size: 0.85rem;
+    color: var(--grey-medium);
+  }
+
+  #idProof {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .file-preview {
+    margin-top: 15px;
+    display: none;
+  }
+
+  .file-preview.active {
+    display: flex;
+    align-items: center;
+    background-color: rgba(32, 178, 170, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+  }
+
+  .file-preview .file-name {
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+
+  .file-preview .file-remove {
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .consent-group {
+    margin-top: 30px;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+    color: var(--text-primary);
+  }
+
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--grey-light);
+    border-radius: 4px;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-teal);
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .kyc-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+  }
+
+  .kyc-btn {
+    padding: 14px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .kyc-btn.primary {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+    color: var(--white);
+    flex-grow: 1;
+    box-shadow: 0 4px 15px rgba(0, 128, 128, 0.2);
+  }
+
+  .kyc-btn.primary:hover {
+    background: linear-gradient(135deg, var(--primary-teal), var(--accent-green));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 128, 128, 0.25);
+  }
+
+  .kyc-btn.secondary {
+    background-color: var(--white);
+    color: var(--text-primary);
+    border: 1px solid #ddd;
+  }
+
+  .kyc-btn.secondary:hover {
+    background-color: var(--grey-light);
+    border-color: var(--grey-medium);
+  }
+
+  @media (max-width: 768px) {
+    .kyc-header {
+      padding: 25px 20px;
+    }
+
+    .kyc-title {
+      font-size: 1.8rem;
+    }
+
+    .kyc-subtitle {
+      font-size: 0.9rem;
+      max-width: 100%;
+    }
+
+    .kyc-content {
+      padding: 25px 20px;
+    }
+
+    .kyc-actions {
+      flex-direction: column;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+    }
+
+    .step-number {
+      width: 35px;
+      height: 35px;
+    }
+
+    .step-connector {
+      max-width: 50px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('idProof');
+    const filePreview = document.getElementById('file-preview');
+    
+    // Handle drag and drop events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+      uploadArea.classList.add('dragover');
+    }
+    
+    function unhighlight() {
+      uploadArea.classList.remove('dragover');
+    }
+    
+    // Handle file drop
+    uploadArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      
+      if (files.length) {
+        fileInput.files = files;
+        updateFilePreview(files[0]);
+      }
+    }
+    
+    // Handle file selection via input
+    fileInput.addEventListener('change', function() {
+      if (this.files.length) {
+        updateFilePreview(this.files[0]);
+      }
+    });
+    
+    function updateFilePreview(file) {
+      filePreview.innerHTML = '';
+      filePreview.classList.add('active');
+      
+      // Create file icon based on file type
+      let fileIcon = 'fa-file';
+      
+      if (file.type.includes('pdf')) {
+        fileIcon = 'fa-file-pdf';
+      } else if (file.type.includes('image')) {
+        fileIcon = 'fa-file-image';
+      }
+      
+      const fileElement = document.createElement('div');
+      fileElement.innerHTML = `
+        <i class="fa ${fileIcon}"></i>
+        <span class="file-name">${file.name} (${formatFileSize(file.size)})</span>
+        <span class="file-remove"><i class="fa fa-times-circle"></i></span>
+      `;
+      
+      filePreview.appendChild(fileElement);
+      
+      // Add remove file functionality
+      const removeBtn = filePreview.querySelector('.file-remove');
+      removeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        fileInput.value = '';
+        filePreview.classList.remove('active');
+      });
+    }
+    
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' bytes';
+      else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      else return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+  });
+</script>

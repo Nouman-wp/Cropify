@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmer's Marketplace</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header Section -->
+<header>
+<div class="logo">
+<h1>Farmer's Marketplace</h1>
+</div>
+<nav>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#buy">Buy Crops</a></li>
+<li><a href="#sell">Sell Crops</a></li>
+<li><a href="#prices">Market Prices</a></li>
+<li><a href="#profile">Profile</a></li>
+</ul>
+</nav>
+</header>
+<!-- Main Section -->
+<section id="home">
+<div class="welcome">
+<h2>Welcome to Farmer's Marketplace!</h2>
+<p>Your one-stop platform for buying, selling crops, and checking market 
+prices.</p>
+</div>
+</section>
+<!-- Buy Crops Section -->
+<section id="buy">
+<h2>Buy Crops</h2>
+<div class="search-bar">
+<input type="text" placeholder="Search crops..." />
+<button>Search</button>
+</div>
+<div class="crop-listings">
+<div class="listing">
+<h3>Wheat</h3>
+<p>Price: 400 per ton</p>
+<p>Location: UTAAR PRADESH</p>
+<button>Contact Seller</button>
+</div>
+<div class="listing">
+<h3>Corn</h3>
+<p>Price: 500 per ton</p>
+<p>Location: BIHAR </p>
+<button>Contact Seller</button>
+</div>
+</div>
+</section>
+<!-- Sell Crops Section -->
+<section id="sell">
+<h2>Sell Your Crops</h2>
+<form class="sell-form">
+<label for="crop-name">Crop Name:</label>
+<input type="text" id="crop-name" placeholder="e.g., Wheat" />
+<label for="quantity">Quantity (in tons):</label>
+<input type="number" id="quantity" placeholder="e.g., 5" />
+<label for="price">Price per ton:</label>
+<input type="number" id="price" placeholder="e.g., 50" />
+<label for="location">Location:</label>
+<input type="text" id="location" placeholder="e.g., UTTAR PRADESH " />
+<button type="submit">Submit Listing</button>
+</form>
+</section>
+<!-- Market Prices Section -->
+<section id="prices">
+<h2>Market Prices</h2>
+<div class="price-table">
+<table>
+<thead>
+<tr>
+<th>Crop</th>
+<th>Price (per ton)</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wheat</td>
+<td>400</td>
+<td> UTTAR PRADESH </td>
+</tr>
+<tr>
+<td>Corn</td>
+<td>500</td>
+<td>BIHAR</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Profile Section -->
+<section id="profile">
+<h2>Your Profile</h2>
+<p>Manage your listings and transactions here.</p>
+</section>
+<!-- Footer Section -->
+<footer>
+<p>&copy; 2025 Farmer's Marketplace. All rights reserved.</p>
+</footer>
+</body>
+</html>

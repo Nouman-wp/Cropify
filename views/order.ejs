@@ -1,0 +1,2372 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5 pt-4">
+  <div class="order-process-container">
+    <!-- Animated Order Progress Bar -->
+    <div class="order-progress-wrapper mb-5">
+      <div class="progress-steps">
+        <div class="progress-step completed">
+          <div class="step-circle">
+            <div class="step-icon">
+              <i class="bi bi-basket-fill"></i>
+            </div>
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+              <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+          </div>
+          <span class="step-name">Select</span>
+        </div>
+        <div class="progress-connector"></div>
+        <div class="progress-step active">
+          <div class="step-circle">
+            <div class="step-icon">
+              <i class="bi bi-bag-check"></i>
+            </div>
+          </div>
+          <span class="step-name">Review</span>
+        </div>
+        <div class="progress-connector"></div>
+        <div class="progress-step">
+          <div class="step-circle">
+            <div class="step-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+          </div>
+          <span class="step-name">Payment</span>
+        </div>
+        <div class="progress-connector"></div>
+        <div class="progress-step">
+          <div class="step-circle">
+            <div class="step-icon">
+              <i class="bi bi-truck"></i>
+            </div>
+          </div>
+          <span class="step-name">Delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row gx-4 gy-4">
+      <!-- Left Column: Product Info -->
+      <div class="col-lg-7">
+        <!-- Product Card with Animated Badge -->
+        <div class="product-card">
+          <div class="badge-ribbon">
+            <% if (crop.originalPrice && crop.originalPrice > crop.price) { %>
+              <span class="ribbon-text"><%= Math.round((1 - crop.price/crop.originalPrice) * 100) %>% OFF</span>
+            <% } else { %>
+              <span class="ribbon-text">Fresh Pick</span>
+            <% } %>
+          </div>
+          <div class="row g-0">
+            <div class="col-md-5">
+              <div class="product-gallery">
+                <div class="product-image-main">
+                  <img src="<%= crop.image || '/images/placeholder.png' %>" alt="<%= crop.title %>" class="img-fluid">
+                  <div class="organic-badge" title="Organic Certified">
+                    <i class="bi bi-flower1"></i>
+                  </div>
+                </div>
+                <div class="product-thumbnails">
+                  <div class="thumbnail active" data-image="<%= crop.image || '/images/placeholder.png' %>">
+                    <img src="<%= crop.image || '/images/placeholder.png' %>" alt="Main Image">
+                  </div>
+                  <div class="thumbnail" data-image="/images/crop-detail-1.jpg">
+                    <img src="/images/crop-detail-1.jpg" alt="Detail 1">
+                  </div>
+                  <div class="thumbnail" data-image="/images/crop-detail-2.jpg">
+                    <img src="/images/crop-detail-2.jpg" alt="Detail 2">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="product-info">
+                <h2 class="product-title"><%= crop.title %></h2>
+                <div class="product-meta">
+                  <div class="meta-row">
+                    <div class="meta-item">
+                      <i class="bi bi-geo-alt-fill"></i>
+                      <span><%= crop.location || 'Local Farm, Maharashtra' %></span>
+                    </div>
+                    <div class="meta-divider"></div>
+                    <div class="meta-item">
+                      <i class="bi bi-calendar-event"></i>
+                      <span>Harvested <%= crop.harvestDate ? new Date(crop.harvestDate).toLocaleDateString() : 'Fresh Harvest' %></span>
+                    </div>
+                  </div>
+                  <div class="meta-row">
+                    <div class="meta-item">
+                      <i class="bi bi-truck"></i>
+                      <span>Delivery in 24-48 hours</span>
+                    </div>
+                    <div class="meta-divider"></div>
+                    <div class="meta-item">
+                      <i class="bi bi-box-seam"></i>
+                      <span><%= crop.stock || '50+' %> kg available</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="product-rating">
+                  <div class="rating-stars">
+                    <% for(let i = 0; i < 5; i++) { %>
+                      <i class="bi <%= i < 4 ? 'bi-star-fill' : 'bi-star-half' %>"></i>
+                    <% } %>
+                    <span class="rating-value">4.8</span>
+                  </div>
+                  <span class="rating-count">(152 reviews)</span>
+                </div>
+                
+                <div class="product-highlights">
+                  <p class="highlight-text"><%= crop.description || 'Premium quality produce straight from the farm to your kitchen. Harvested at peak freshness to ensure maximum flavor and nutrition.' %></p>
+                </div>
+                
+                <div class="product-badges">
+                  <span class="product-badge seasonal">
+                    <i class="bi bi-calendar-check"></i> In Season
+                  </span>
+                  <span class="product-badge pesticide-free">
+                    <i class="bi bi-shield-check"></i> Pesticide Free
+                  </span>
+                  <% if (crop.stock <= 20) { %>
+                    <span class="product-badge limited-stock">
+                      <i class="bi bi-exclamation-triangle"></i> Limited Stock
+                    </span>
+                  <% } %>
+                </div>
+                
+                <div class="seller-card">
+                  <div class="seller-header">
+                    <div class="seller-avatar">
+                      <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="seller-info">
+                      <h5 class="seller-name"><%= crop.seller ? crop.seller.username : 'Ramesh Kumar' %></h5>
+                      <span class="seller-location">Verified Farmer, <%= crop.location ? crop.location.split(',')[0] : 'Nashik' %></span>
+                    </div>
+                  </div>
+                  <div class="seller-badges">
+                    <span class="badge verified-badge">
+                      <i class="bi bi-patch-check-fill"></i> Verified
+                    </span>
+                    <span class="badge years-badge">
+                      <i class="bi bi-calendar3"></i> 8+ Years
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Farm Story Section with Animations -->
+        <div class="farm-story mt-4">
+          <div class="card-header">
+            <h5><i class="bi bi-journal-richtext me-2"></i>The Story Behind Your Food</h5>
+          </div>
+          <div class="card-body">
+            <div class="farm-story-content">
+              <div class="farm-image-container">
+                <img src="/images/farm-story.jpg" alt="Farm Story" class="farm-image">
+                <div class="farmer-quote">
+                  <i class="bi bi-quote"></i>
+                  <p>Every crop tells a story of hard work, patience, and love for the land.</p>
+                </div>
+              </div>
+              <div class="farm-details">
+                <h4>Meet <%= crop.seller ? crop.seller.username : 'Ramesh Kumar' %></h4>
+                <p class="farm-description">"I've been farming for over 8 years using sustainable practices handed down through generations. Every crop is grown with care, without harmful pesticides, ensuring you get the freshest and healthiest produce possible. My farm is located in the fertile soils of <%= crop.location ? crop.location.split(',')[0] : 'Nashik' %>, where the climate is perfect for growing <%= crop.title %>."</p>
+                
+                <div class="sustainability-practices">
+                  <h6>Our Sustainable Practices:</h6>
+                  <div class="practice-items">
+                    <div class="practice-item">
+                      <div class="practice-icon">
+                        <i class="bi bi-droplet"></i>
+                      </div>
+                      <div class="practice-details">
+                        <h6>Water Conservation</h6>
+                        <p>Drip irrigation to minimize water usage</p>
+                      </div>
+                    </div>
+                    <div class="practice-item">
+                      <div class="practice-icon">
+                        <i class="bi bi-bug"></i>
+                      </div>
+                      <div class="practice-details">
+                        <h6>Natural Pest Control</h6>
+                        <p>Using beneficial insects instead of chemicals</p>
+                      </div>
+                    </div>
+                    <div class="practice-item">
+                      <div class="practice-icon">
+                        <i class="bi bi-recycle"></i>
+                      </div>
+                      <div class="practice-details">
+                        <h6>Composting</h6>
+                        <p>Recycling farm waste into natural fertilizer</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product Benefits Section -->
+        <div class="product-benefits mt-4">
+          <div class="card-header">
+            <h5><i class="bi bi-heart-fill me-2"></i>Health Benefits</h5>
+          </div>
+          <div class="card-body">
+            <div class="benefits-grid">
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="bi bi-heart-pulse"></i>
+                </div>
+                <div class="benefit-info">
+                  <h6>Heart Health</h6>
+                  <p>Rich in antioxidants that support cardiovascular function</p>
+                </div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="bi bi-shield-plus"></i>
+                </div>
+                <div class="benefit-info">
+                  <h6>Immunity Boost</h6>
+                  <p>High in vitamins that strengthen immune response</p>
+                </div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="bi bi-lightbulb"></i>
+                </div>
+                <div class="benefit-info">
+                  <h6>Cognitive Function</h6>
+                  <p>Contains nutrients that support brain health</p>
+                </div>
+              </div>
+              <div class="benefit-item">
+                <div class="benefit-icon">
+                  <i class="bi bi-battery-charging"></i>
+                </div>
+                <div class="benefit-info">
+                  <h6>Energy Boost</h6>
+                  <p>Natural source of sustainable energy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Form -->
+      <div class="col-lg-5">
+        <div class="order-form-card sticky-lg-top" style="top: 100px; z-index: 100;">
+          <div class="card-header">
+            <h5><i class="bi bi-cart-check-fill me-2"></i>Complete Your Order</h5>
+          </div>
+          <div class="card-body">
+            <form id="orderForm" action="/order/<%= crop._id %>" method="POST">
+              <div class="price-container">
+                <div class="price-display">
+                  <div class="current-price">₹<%= crop.price %></div>
+                  <div class="price-unit">per kg</div>
+                  <% if (crop.originalPrice && crop.originalPrice > crop.price) { %>
+                    <div class="original-price">₹<%= crop.originalPrice %></div>
+                  <% } %>
+                </div>
+                <div class="price-badges">
+                  <span class="price-badge best-price">
+                    <i class="bi bi-award"></i> Best Price
+                  </span>
+                </div>
+              </div>
+              
+              <div class="quantity-container mb-4">
+                <label for="quantity" class="form-label">Quantity (kg)</label>
+                <div class="quantity-control">
+                  <button type="button" class="quantity-btn minus" aria-label="Decrease quantity">
+                    <i class="bi bi-dash"></i>
+                  </button>
+                  <input type="number" name="quantity" id="quantity" class="form-control quantity-input" 
+                        min="1" max="<%= crop.stock || 100 %>" value="1" required>
+                  <button type="button" class="quantity-btn plus" aria-label="Increase quantity">
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+                <div class="stock-info">
+                  <div class="stock-indicator <%= crop.stock <= 20 ? 'low-stock' : 'in-stock' %>"></div>
+                  <span><%= crop.stock || '50+' %> kg available</span>
+                </div>
+              </div>
+
+              <div class="delivery-options mb-4">
+                <label class="form-label">Choose Delivery Option</label>
+                <div class="delivery-options-container">
+                  <div class="delivery-option">
+                    <input type="radio" name="deliveryOption" id="standard" value="standard" checked>
+                    <label for="standard">
+                      <div class="option-content">
+                        <div class="option-icon">
+                          <i class="bi bi-truck"></i>
+                        </div>
+                        <div class="option-details">
+                          <div class="option-title">Standard Delivery</div>
+                          <div class="option-info">2-3 days</div>
+                        </div>
+                        <div class="option-price">Free</div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="delivery-option">
+                    <input type="radio" name="deliveryOption" id="express" value="express">
+                    <label for="express">
+                      <div class="option-content">
+                        <div class="option-icon express-icon">
+                          <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <div class="option-details">
+                          <div class="option-title">Express Delivery</div>
+                          <div class="option-info">24 hours</div>
+                        </div>
+                        <div class="option-price">₹50</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="delivery-date mb-4">
+                <div class="date-display">
+                  <i class="bi bi-calendar-event"></i>
+                  <div class="date-info">
+                    <span class="date-label">Estimated Delivery:</span>
+                    <span class="date-value" id="deliveryDate">Thursday, Apr 3</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="coupon-section mb-4">
+                <div class="coupon-header" id="couponHeader">
+                  <i class="bi bi-ticket-perforated"></i>
+                  <span>Apply Coupon</span>
+                  <i class="bi bi-chevron-down coupon-toggle"></i>
+                </div>
+                <div class="coupon-body" id="couponBody">
+                  <div class="available-coupons mb-3">
+                    <div class="coupon-option" data-code="FRESH10">
+                      <div class="coupon-details">
+                        <div class="coupon-name">FRESH10</div>
+                        <div class="coupon-description">10% off fresh produce</div>
+                      </div>
+                      <div class="coupon-action">
+                        <button type="button" class="btn btn-sm btn-outline-success apply-coupon-btn">Apply</button>
+                      </div>
+                    </div>
+                    <div class="coupon-option" data-code="FARM15">
+                      <div class="coupon-details">
+                        <div class="coupon-name">FARM15</div>
+                        <div class="coupon-description">15% off for orders above ₹500</div>
+                      </div>
+                      <div class="coupon-action">
+                        <button type="button" class="btn btn-sm btn-outline-success apply-coupon-btn">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="promo-input-group">
+                    <input type="text" id="promoCode" class="form-control" placeholder="Enter promo code">
+                    <button type="button" id="applyPromo" class="btn btn-outline-success">Apply</button>
+                  </div>
+                  <div class="coupon-message mt-2" id="couponMessage"></div>
+                </div>
+              </div>
+
+              <div class="order-summary mb-4">
+                <h6 class="summary-header">Price Details</h6>
+                <div class="summary-content">
+                  <div class="summary-row">
+                    <div class="summary-label">Price (<span id="quantityValue">1</span> kg):</div>
+                    <div class="summary-value">₹<span id="subtotal"><%= crop.price %></span></div>
+                  </div>
+                  <div class="summary-row">
+                    <div class="summary-label">Delivery Fee:</div>
+                    <div class="summary-value">₹<span id="deliveryFee">0</span></div>
+                  </div>
+                  <div class="summary-row discount" id="discountRow">
+                    <div class="summary-label">Discount:</div>
+                    <div class="summary-value">-₹<span id="discount">0</span></div>
+                  </div>
+                  <div class="summary-divider"></div>
+                  <div class="summary-row total">
+                    <div class="summary-label">Total Amount:</div>
+                    <div class="summary-value">₹<span id="totalPrice"><%= crop.price %></span></div>
+                  </div>
+                </div>
+                <div class="savings-alert" id="savingsAlert">
+                  <i class="bi bi-piggy-bank"></i>
+                  <span>You're saving ₹<span id="savingsAmount">0</span> on this order!</span>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success order-btn">
+                <i class="bi bi-bag-check-fill me-2"></i> Place Order
+              </button>
+            </form>
+
+            <div class="order-features">
+              <div class="feature-item">
+                <i class="bi bi-shield-lock"></i>
+                <span>Secure Payment</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-arrow-return-left"></i>
+                <span>Easy Returns</span>
+              </div>
+              <div class="feature-item">
+                <i class="bi bi-check-circle"></i>
+                <span>Quality Assured</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- You Might Also Like Section -->
+    <div class="similar-products mt-5">
+      <div class="section-header">
+        <h4><i class="bi bi-grid me-2"></i>You Might Also Like</h4>
+        <div class="carousel-controls">
+          <button class="carousel-control prev" id="prevSlide" aria-label="Previous product">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="carousel-control next" id="nextSlide" aria-label="Next product">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="products-carousel">
+        <div class="products-slider">
+          <div class="product-slide">
+            <div class="product-card-small">
+              <div class="product-image">
+                <img src="/images/product1.jpg" alt="Organic Tomatoes" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-action" aria-label="Add to cart">
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="quick-action" aria-label="View details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div class="product-tag">Fresh</div>
+              </div>
+              <div class="product-details">
+                <h6 class="product-name">Organic Tomatoes</h6>
+                <div class="product-price-container">
+                  <span class="product-price">₹40</span>
+                  <span class="product-unit">/kg</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-success view-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="product-card-small">
+              <div class="product-image">
+                <img src="/images/product2.jpg" alt="Fresh Spinach" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-action" aria-label="Add to cart">
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="quick-action" aria-label="View details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div class="product-tag">Organic</div>
+              </div>
+              <div class="product-details">
+                <h6 class="product-name">Fresh Spinach</h6>
+                <div class="product-price-container">
+                  <span class="product-price">₹30</span>
+                  <span class="product-unit">/kg</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-success view-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="product-card-small">
+              <div class="product-image">
+                <img src="/images/product3.jpg" alt="Organic Potatoes" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-action" aria-label="Add to cart">
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="quick-action" aria-label="View details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div class="product-tag">Local</div>
+              </div>
+              <div class="product-details">
+                <h6 class="product-name">Organic Potatoes</h6>
+                <div class="product-price-container">
+                  <span class="product-price">₹25</span>
+                  <span class="product-unit">/kg</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-success view-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="product-slide">
+            <div class="product-card-small">
+              <div class="product-image">
+                <img src="/images/product4.jpg" alt="Fresh Carrots" loading="lazy">
+                <div class="product-quick-actions">
+                  <button class="quick-action" aria-label="Add to cart">
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="quick-action" aria-label="View details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div class="product-tag">Seasonal</div>
+              </div>
+              <div class="product-details">
+                <h6 class="product-name">Fresh Carrots</h6>
+                <div class="product-price-container">
+                  <span class="product-price">₹35</span>
+                  <span class="product-unit">/kg</span>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-success view-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Badges Section -->
+    <div class="trust-badges mt-5 mb-4">
+      <div class="badge-item">
+        <div class="badge-icon">
+          <i class="bi bi-truck"></i>
+        </div>
+        <div class="badge-details">
+          <h6>Fast Delivery</h6>
+          <p>Farm-fresh in 24-48 hours</p>
+        </div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">
+          <i class="bi bi-award"></i>
+        </div>
+        <div class="badge-details">
+          <h6>Quality Guarantee</h6>
+          <p>100% satisfaction or refund</p>
+        </div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">
+          <i class="bi bi-droplet"></i>
+        </div>
+        <div class="badge-details">
+          <h6>Farm Fresh</h6>
+          <p>Harvested at peak freshness</p>
+        </div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">
+          <i class="bi bi-patch-check"></i>
+        </div>
+        <div class="badge-details">
+          <h6>Verified Farms</h6>
+          <p>Direct from trusted farmers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --primary-teal: #20b2aa;        /* Light Sea Green */
+    --primary-teal-hover: #1ca098;
+    --primary-teal-light: #dff5f4;
+    --secondary-teal: #008080;      /* Teal */
+    --dark-teal: #005f73;           /* Deep Teal */
+    --accent-green: #2ecc71;        /* Emerald Green */
+    --background-light: #f0f4f4;    /* Soft Teal Background */
+    --background-white: #ffffff;
+    --text-primary: #2c3e50;        /* Dark Blue-Gray */
+    --text-secondary: #5f7384;
+    --text-light: #94a3b8;
+    --border-color: #e4eaec;
+    --border-focus: #b3e6e3;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    --animation-timing: 0.3s ease;
+  }
+
+  /* Global styles */
+  .container {
+    max-width: 1320px;
+  }
+
+  .card-header {
+    background: linear-gradient(45deg, var(--primary-teal), var(--secondary-teal));
+    color: white;
+    padding: 15px 20px;
+    font-weight: 600;
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-body {
+    padding: 20px;
+    background-color: var(--background-white);
+    border-radius: 0 0 10px 10px;
+  }
+
+  .product-card, .order-form-card, .farm-story, .product-benefits, .similar-products {
+    background-color: var(--background-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: all var(--animation-timing);
+    border: none;
+  }
+
+  /* ===== Progress Steps ===== */
+  .order-progress-wrapper {
+    padding: 20px 0;
+  }
+
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    transition: all var(--animation-timing);
+  }
+
+  .step-circle {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--background-white);
+    border: 2px solid var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    transition: all var(--animation-timing);
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .checkmark {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+  }
+
+  .checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--primary-teal);
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  }
+
+  .checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-width: 3;
+    stroke: var(--primary-teal);
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .progress-step.completed .step-icon {
+    border-color: var(--primary-teal);
+    background-color: var(--primary-teal-light);
+    color: var(--primary-teal);
+  }
+
+  .progress-step.completed .checkmark {
+    display: block;
+  }
+
+  .progress-step.active .step-icon {
+    border-color: var(--primary-teal);
+    background-color: var(--primary-teal);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(32, 178, 170, 0.4);
+  }
+
+  .step-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    transition: all var(--animation-timing);
+  }
+
+  .progress-step.active .step-name {
+    color: var(--primary-teal);
+    font-weight: 600;
+  }
+
+  .progress-connector {
+    height: 3px;
+    background-color: var(--text-light);
+    flex-grow: 1;
+    margin: 0 10px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .progress-step.completed + .progress-connector {
+    background-color: var(--primary-teal);
+  }
+
+  /* ===== Product Card ===== */
+  .product-card {
+    position: relative;
+    margin-bottom: 30px;
+  }
+
+  .badge-ribbon {
+    position: absolute;
+    top: 15px;
+    right: -5px;
+    z-index: 10;
+  }
+
+  .ribbon-text {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--danger-color);
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ribbon-text::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid var(--danger-color);
+    border-right: 10px solid transparent;
+  }
+
+  .ribbon-text::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-bottom: 15px solid var(--danger-color);
+    border-right: 10px solid transparent;
+  }
+
+  .product-gallery {
+    padding: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-image-main {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+
+  .product-image-main img {
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .product-image-main:hover img {
+    transform: scale(1.05);
+  }
+
+  .organic-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: var(--primary-teal);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .product-thumbnails {
+    display: flex;
+    gap: 10px;
+  }
+
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all var(--animation-timing);
+  }
+
+  .thumbnail.active {
+    border-color: var(--primary-teal);
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .product-meta {
+    margin-bottom: 15px;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .meta-item i {
+    margin-right: 6px;
+    color: var(--primary-teal);
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 15px;
+    background-color: var(--border-color);
+    margin: 0 15px;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .rating-stars {
+    display: flex;
+    align-items: center;
+  }
+
+  .rating-stars i {
+    color: var(--warning-color);
+    margin-right: 3px;
+  }
+
+  .rating-value {
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  .rating-count {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-left: 10px;
+  }
+
+  .product-highlights {
+    margin-bottom: 15px;
+  }
+
+  .highlight-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .product-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .product-badge i {
+    margin-right: 5px;
+  }
+
+  .seasonal {
+    background-color: #e6f7ff;
+    color: #0070f3;
+  }
+
+  .pesticide-free {
+    background-color: var(--primary-teal-light);
+    color: var(--primary-teal);
+  }
+
+  .limited-stock {
+    background-color: #fff3e6;
+    color: #fa8c16;
+  }
+
+  .seller-card {
+    background-color: var(--background-light);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: auto;
+  }
+
+  .seller-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .seller-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .seller-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .seller-location {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .seller-badges {
+    display: flex;
+    gap: 10px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .verified-badge {
+    background-color: var(--primary-teal-light);
+    color: var(--primary-teal);
+  }
+
+  .years-badge {
+    background-color: #e7f5ff;
+    color: #228be6;
+  }
+
+  /* ===== Farm Story Section ===== */
+  .farm-story-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .farm-story-content {
+      flex-direction: row;
+    }
+  }
+
+  .farm-image-container {
+    flex: 0 0 40%;
+    position: relative;
+  }
+
+  .farm-image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .farmer-quote {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .farmer-quote i {
+    color: var(--primary-teal);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  .farmer-quote p {
+    margin: 0;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .farm-details {
+    flex: 1;
+  }
+
+  .farm-details h4 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+  }
+
+  .farm-description {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .sustainability-practices {
+    margin-top: 20px;
+  }
+
+  .sustainability-practices h6 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+  }
+
+  .practice-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .practice-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    padding: 12px;
+    transition: all var(--animation-timing);
+  }
+
+  .practice-item:hover {
+    background-color: var(--primary-teal-light);
+    transform: translateY(-2px);
+  }
+
+  .practice-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    color: var(--primary-teal);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .practice-details h6 {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+  }
+
+  .practice-details p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  /* ===== Product Benefits Section ===== */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--background-light);
+    transition: all var(--animation-timing);
+  }
+
+  .benefit-item:hover {
+    background-color: var(--primary-teal-light);
+    transform: translateY(-2px);
+  }
+
+  .benefit-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    color: var(--primary-teal);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .benefit-info h6 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+  }
+
+  .benefit-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  /* ===== Order Form ===== */
+  .order-form-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+  }
+
+  .price-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .current-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-teal);
+  }
+
+  .price-unit {
+    margin-left: 5px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .original-price {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+  }
+
+  .price-badges {
+    display: flex;
+    gap: 10px;
+  }
+
+  .price-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .best-price {
+    background-color: #fff3e0;
+    color: #ed6c02;
+  }
+
+  .quantity-container {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .quantity-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--animation-timing);
+  }
+
+  .quantity-btn:hover {
+    background-color: var(--primary-teal-light);
+    color: var(--primary-teal);
+  }
+
+  .quantity-input {
+    width: 70px;
+    height: 36px;
+    text-align: center;
+    font-weight: 600;
+    margin: 0 10px;
+  }
+
+  .stock-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .stock-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .in-stock {
+    background-color: var(--primary-teal);
+  }
+
+  .low-stock {
+    background-color: var(--warning-color);
+  }
+
+  .delivery-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .delivery-option {
+    position: relative;
+  }
+
+  .delivery-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .delivery-option label {
+    display: block;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all var(--animation-timing);
+  }
+
+  .delivery-option input:checked + label {
+    border-color: var(--primary-teal);
+    background-color: var(--primary-teal-light);
+  }
+
+  .option-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .option-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    color: var(--text-secondary);
+  }
+
+  .express-icon {
+    background-color: #fff3e0;
+    color: #ed6c02;
+  }
+
+  .delivery-option input:checked + label .option-icon {
+    background-color: var(--primary-teal);
+    color: white;
+  }
+
+  .option-details {
+    flex: 1;
+  }
+
+  .option-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .option-info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .option-price {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .delivery-date {
+    background-color: var(--background-light);
+    border-radius: 8px;
+    padding: 12px 15px;
+  }
+
+  .date-display {
+    display: flex;
+    align-items: center;
+  }
+
+  .date-display i {
+    font-size: 1.2rem;
+    color: var(--primary-teal);
+    margin-right: 12px;
+  }
+
+  .date-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-right: 5px;
+  }
+
+  .date-value {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .coupon-section {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .coupon-header {
+    padding: 12px 15px;
+    background-color: var(--background-light);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .coupon-header i:first-child {
+    color: var(--primary-teal);
+    margin-right: 10px;
+  }
+
+  .coupon-toggle {
+    margin-left: auto;
+    transition: transform var(--animation-timing);
+  }
+
+  .coupon-header.active .coupon-toggle {
+    transform: rotate(180deg);
+  }
+
+  .coupon-body {
+    padding: 15px;
+    display: none;
+  }
+
+  .coupon-body.active {
+    display: block;
+  }
+
+  .available-coupons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .coupon-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px dashed var(--primary-teal);
+    border-radius: 6px;
+    background-color: var(--background-light);
+  }
+
+  .coupon-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--primary-teal);
+  }
+
+  .coupon-description {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .promo-input-group {
+    display: flex;
+    margin-top: 15px;
+  }
+
+  .promo-input-group input {
+    flex: 1;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .promo-input-group button {
+    border-radius: 0 4px 4px 0;
+  }
+
+  .coupon-message {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .order-summary {
+    background-color: var(--background-light);
+    border-radius: 8px;
+    padding: 15px;
+  }
+
+  .summary-header {
+    margin: 0 0 15px 0;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .summary-row.discount {
+    color: var(--primary-teal);
+  }
+
+  .summary-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 10px 0;
+  }
+
+  .summary-row.total {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1rem;
+  }
+
+  .savings-alert {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--primary-teal);
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--primary-teal-light);
+    border-radius: 4px;
+  }
+
+  .savings-alert i {
+    margin-right: 8px;
+  }
+
+  .order-btn {
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+    transition: all var(--animation-timing);
+  }
+
+  .order-btn:hover {
+    background-color: var(--secondary-teal);
+    transform: translateY(-2px);
+  }
+
+  .order-features {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .feature-item i {
+    font-size: 1.2rem;
+    color: var(--primary-teal);
+    margin-bottom: 5px;
+  }
+
+  /* ===== Similar Products ===== */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .section-header h4 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .carousel-controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  .carousel-control {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all var(--animation-timing);
+  }
+
+  .carousel-control:hover {
+    background-color: var(--primary-teal);
+    color: white;
+    border-color: var(--primary-teal);
+  }
+
+  .products-carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .products-slider {
+    display: flex;
+    gap: 20px;
+    transition: transform var(--animation-timing);
+  }
+
+  .product-slide {
+    flex: 0 0 calc(25% - 15px);
+    transition: transform var(--animation-timing);
+  }
+
+  @media (max-width: 991.98px) {
+    .product-slide {
+      flex: 0 0 calc(33.333% - 15px);
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .product-slide {
+      flex: 0 0 calc(50% - 10px);
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .product-slide {
+      flex: 0 0 calc(100% - 10px);
+    }
+  }
+
+  .product-card-small {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: all var(--animation-timing);
+  }
+
+  .product-card-small:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card-small:hover .product-image img {
+    transform: scale(1.1);
+}
+
+.product-details {
+    padding: 15px;
+}
+
+.product-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-farm {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.product-price-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-price {
+    font-weight: 600;
+    color: var(--primary-teal);
+}
+
+.add-to-cart {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--primary-teal-light);
+    color: var(--primary-teal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all var(--animation-timing);
+}
+
+.add-to-cart:hover {
+    background-color: var(--primary-teal);
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1199.98px) {
+    .progress-steps {
+        max-width: 500px;
+    }
+    
+    .step-circle {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .step-icon, .checkmark {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .progress-steps {
+        max-width: 450px;
+    }
+    
+    .step-circle {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .step-icon, .checkmark {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .step-name {
+        font-size: 0.8rem;
+    }
+    
+    .product-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .progress-steps {
+        max-width: 100%;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .step-icon, .checkmark {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .step-name {
+        font-size: 0.7rem;
+    }
+    
+    .product-gallery, .product-info {
+        padding: 15px;
+    }
+    
+    .product-title {
+        font-size: 1.4rem;
+    }
+    
+    .order-features {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .feature-item {
+        width: 45%;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .progress-steps {
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+    
+    .progress-step {
+        flex: 0 0 auto;
+        min-width: 100px;
+    }
+    
+    .progress-connector {
+        min-width: 30px;
+    }
+    
+    .product-title {
+        font-size: 1.3rem;
+    }
+    
+    .meta-row {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .meta-divider {
+        display: none;
+    }
+    
+    .order-features {
+        justify-content: center;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 180px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -90px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Custom form controls */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--background-white);
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    color: var(--text-primary);
+    background-color: var(--background-white);
+    border-color: var(--primary-teal);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--background-white);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    appearance: none;
+}
+
+.form-select:focus {
+    border-color: var(--primary-teal);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: var(--danger-color);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-teal);
+    border-color: var(--secondary-teal);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-outline:hover {
+    background-color: var(--background-light);
+}
+
+.btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+}
+  
+    </style>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Quantity control
+    const quantityInput = document.getElementById('quantity');
+    const minusBtn = document.querySelector('.quantity-btn.minus');
+    const plusBtn = document.querySelector('.quantity-btn.plus');
+    const quantityValueEl = document.getElementById('quantityValue');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const deliveryFeeEl = document.getElementById('deliveryFee');
+    const discountEl = document.getElementById('discount');
+    const discountRow = document.getElementById('discountRow');
+    const savingsAlert = document.getElementById('savingsAlert');
+    const savingsAmountEl = document.getElementById('savingsAmount');
+    
+    const itemPrice = <%= crop.price %>;
+    let deliveryFee = 0;
+    let discount = 0;
+    
+    function updatePrice() {
+      const quantity = parseInt(quantityInput.value);
+      quantityValueEl.textContent = quantity;
+      
+      const subtotal = itemPrice * quantity;
+      subtotalEl.textContent = subtotal;
+      
+      const totalPrice = subtotal + deliveryFee - discount;
+      totalPriceEl.textContent = totalPrice;
+      
+      // Show/hide discount row
+      if (discount > 0) {
+        discountRow.style.display = 'flex';
+        savingsAlert.style.display = 'flex';
+        savingsAmountEl.textContent = discount;
+      } else {
+        discountRow.style.display = 'none';
+        savingsAlert.style.display = 'none';
+      }
+    }
+    
+    minusBtn.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value);
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+        updatePrice();
+      }
+    });
+    
+    plusBtn.addEventListener('click', function() {
+      const currentValue = parseInt(quantityInput.value);
+      const maxValue = parseInt(quantityInput.getAttribute('max'));
+      if (currentValue < maxValue) {
+        quantityInput.value = currentValue + 1;
+        updatePrice();
+      }
+    });
+    
+    quantityInput.addEventListener('change', function() {
+      const currentValue = parseInt(quantityInput.value);
+      const maxValue = parseInt(quantityInput.getAttribute('max'));
+      if (currentValue < 1) {
+        quantityInput.value = 1;
+      } else if (currentValue > maxValue) {
+        quantityInput.value = maxValue;
+      }
+      updatePrice();
+    });
+    
+    // Delivery option control
+    const standardDelivery = document.getElementById('standard');
+    const expressDelivery = document.getElementById('express');
+    const deliveryDateEl = document.getElementById('deliveryDate');
+    
+    standardDelivery.addEventListener('change', function() {
+      if (this.checked) {
+        deliveryFee = 0;
+        deliveryFeeEl.textContent = deliveryFee;
+        deliveryDateEl.textContent = 'Thursday, Apr 3';
+        updatePrice();
+      }
+    });
+    
+    expressDelivery.addEventListener('change', function() {
+      if (this.checked) {
+        deliveryFee = 50;
+        deliveryFeeEl.textContent = deliveryFee;
+        deliveryDateEl.textContent = 'Wednesday, Apr 2';
+        updatePrice();
+      }
+    });
+    
+    // Coupon toggle
+    const couponHeader = document.getElementById('couponHeader');
+    const couponBody = document.getElementById('couponBody');
+    
+    couponHeader.addEventListener('click', function() {
+      this.classList.toggle('active');
+      if (couponBody.style.display === 'block') {
+        couponBody.style.display = 'none';
+      } else {
+        couponBody.style.display = 'block';
+      }
+    });
+    
+    // Apply coupon buttons
+    const applyCouponButtons = document.querySelectorAll('.apply-coupon-btn');
+    const couponMessageEl = document.getElementById('couponMessage');
+    
+    applyCouponButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const couponCode = this.closest('.coupon-option').dataset.code;
+        const subtotal = parseInt(subtotalEl.textContent);
+        
+        if (couponCode === 'FRESH10') {
+          discount = Math.round(subtotal * 0.1);
+          couponMessageEl.textContent = 'FRESH10 applied successfully!';
+          couponMessageEl.style.color = 'var(--primary-green)';
+        } else if (couponCode === 'FARM15' && subtotal >= 500) {
+          discount = Math.round(subtotal * 0.15);
+          couponMessageEl.textContent = 'FARM15 applied successfully!';
+          couponMessageEl.style.color = 'var(--primary-green)';
+        } else if (couponCode === 'FARM15') {
+          couponMessageEl.textContent = 'FARM15 requires minimum order of ₹500';
+          couponMessageEl.style.color = 'var(--danger-color)';
+          return;
+        }
+        
+        discountEl.textContent = discount;
+        updatePrice();
+      });
+    });
+    
+    // Manual promo code
+    const promoCodeInput = document.getElementById('promoCode');
+    const applyPromoBtn = document.getElementById('applyPromo');
+    
+    applyPromoBtn.addEventListener('click', function() {
+      const promoCode = promoCodeInput.value.trim().toUpperCase();
+      const subtotal = parseInt(subtotalEl.textContent);
+      
+      if (promoCode === 'FRESH10') {
+        discount = Math.round(subtotal * 0.1);
+        couponMessageEl.textContent = 'FRESH10 applied successfully!';
+        couponMessageEl.style.color = 'var(--primary-green)';
+      } else if (promoCode === 'FARM15' && subtotal >= 500) {
+        discount = Math.round(subtotal * 0.15);
+        couponMessageEl.textContent = 'FARM15 applied successfully!';
+        couponMessageEl.style.color = 'var(--primary-green)';
+      } else if (promoCode === 'FARM15') {
+        couponMessageEl.textContent = 'FARM15 requires minimum order of ₹500';
+        couponMessageEl.style.color = 'var(--danger-color)';
+        return;
+      } else if (promoCode === 'WELCOME20') {
+        discount = Math.round(subtotal * 0.2);
+        couponMessageEl.textContent = 'WELCOME20 applied successfully!';
+        couponMessageEl.style.color = 'var(--primary-green)';
+      } else {
+        couponMessageEl.textContent = 'Invalid or expired promo code';
+        couponMessageEl.style.color = 'var(--danger-color)';
+        return;
+      }
+      
+      discountEl.textContent = discount;
+      updatePrice();
+    });
+    
+    // Product gallery
+    const mainImage = document.querySelector('.product-image-main img');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const imageUrl = this.dataset.image;
+        mainImage.src = imageUrl;
+        
+        // Update active thumbnail
+        thumbnails.forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    // Products carousel
+    const slider = document.querySelector('.products-slider');
+    const nextBtn = document.getElementById('nextSlide');
+    const prevBtn = document.getElementById('prevSlide');
+    const slides = document.querySelectorAll('.product-slide');
+    
+    let currentPosition = 0;
+    const slidesToShow = window.innerWidth < 576 ? 1 : 
+                         window.innerWidth < 768 ? 2 : 
+                         window.innerWidth < 992 ? 3 : 4;
+    
+    function updateSlider() {
+      if (slides.length <= slidesToShow) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      
+      const slideWidth = slides[0].offsetWidth + 20; // width + gap
+      slider.style.transform = `translateX(-${currentPosition * slideWidth}px)`;
+      
+      prevBtn.disabled = currentPosition === 0;
+      nextBtn.disabled = currentPosition >= slides.length - slidesToShow;
+    }
+    
+    nextBtn.addEventListener('click', function() {
+      if (currentPosition < slides.length - slidesToShow) {
+        currentPosition++;
+        updateSlider();
+      }
+    });
+    
+    prevBtn.addEventListener('click', function() {
+      if (currentPosition > 0) {
+        currentPosition--;
+        updateSlider();
+      }
+    });
+    
+    // Initialize
+    updateSlider();
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      // Recalculate slidesToShow
+      const newSlidesToShow = window.innerWidth < 576 ? 1 : 
+                             window.innerWidth < 768 ? 2 : 
+                             window.innerWidth < 992 ? 3 : 4;
+      
+      if (newSlidesToShow !== slidesToShow) {
+        currentPosition = 0;
+      }
+      
+      updateSlider();
+    });
+  });
+</script>

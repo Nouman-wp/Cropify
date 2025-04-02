@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<header>
+    <div class="logo">🌾 Farmer's Marketplace</div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/buy">Buy Crops</a></li>
+            <li><a href="/sell">Sell Crops</a></li>
+            <li><a href="/prices">Market Prices</a></li>
+            <% if (currentUser && currentUser.username) { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <% if (currentUser.profileImage) { %>
+                            <img src="<%= currentUser.profileImage %>" alt="Profile" class="profile-img">
+                        <% } else { %>
+                            <i class="fa fa-user-circle profile-placeholder"></i>
+                        <% } %>
+                        <%= currentUser.username %> <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/dashboard"><i class="fa fa-chart-line"></i> My Dashboard</a></li>
+                        <li><a href="/profile"><i class="fa fa-user-edit"></i> Profile</a></li>
+                        <li><a href="/orders"><i class="fa fa-shopping-basket"></i> My Orders</a></li>
+                        <li class="logout"><a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            <% } else { %>
+                <li class="account-dropdown">
+                    <span class="account-toggle">
+                        <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
+                    </span>
+                    <ul class="dropdown-content">
+                        <li><a href="/signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+                        <li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
+                    </ul>
+                </li>
+            <% } %>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <style>
+        :root {
+            --primary-teal: #20b2aa;       
+            --secondary-teal: #008080;      
+            --dark-teal: #005f73;          
+            --accent-green: #2ecc71;        
+            --background-light: #f0f4f4;   
+            --text-primary: #2c3e50;        
+            --white: #ffffff;
+            --transition-speed: 0.3s;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+            color: var(--white);
+            padding: 15px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 128, 128, 0.2);
+            transition: all var(--transition-speed) ease;
+        }
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-links li {
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            padding-bottom: 8px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover {
+            color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-green);
+            transition: width var(--transition-speed) ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background: var(--white);
+            margin: 4px 0;
+            transition: 0.4s;
+            border-radius: 2px;
+        }
+
+        .account-dropdown {
+            position: relative;
+        }
+        .account-toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: color var(--transition-speed) ease;
+            font-weight: 600;
+            gap: 8px;
+        }
+        .account-toggle:hover {
+            color: var(--accent-green);
+        }
+        .profile-img, .profile-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(32, 178, 170, 0.6);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform var(--transition-speed) ease;
+        }
+        .profile-placeholder {
+            background-color: var(--white);
+            color: var(--dark-teal);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        .account-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: var(--white);
+            min-width: 250px;
+            box-shadow: 0 10px 25px rgba(0, 128, 128, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index: 1000;
+            margin-top: 15px;
+            border: 1px solid rgba(0, 128, 128, 0.1);
+        }
+        .account-dropdown.active .dropdown-content {
+            display: block;
+            animation: dropdownSlideIn var(--transition-speed) ease;
+        }
+        .dropdown-content li a {
+            color: var(--dark-teal);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            transition: all var(--transition-speed) ease;
+            gap: 10px;
+        }
+        .dropdown-content li a:hover {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--primary-teal);
+        }
+        .dropdown-content .logout a {
+            color: #e74c3c;
+        }
+        .dropdown-content .logout a:hover {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        @keyframes dropdownSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: linear-gradient(135deg, var(--dark-teal), var(--secondary-teal));
+                text-align: center;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                margin: 15px 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hamburger = document.querySelector(".hamburger");
+            const navLinks = document.querySelector(".nav-links");
+            const accountDropdown = document.querySelector(".account-dropdown");
+            hamburger.addEventListener("click", () => {
+                navLinks.classList.toggle("active");
+                hamburger.classList.toggle("active");
+            });
+            navLinks.addEventListener("click", (e) => {
+                if (e.target.tagName === 'A') {
+                    navLinks.classList.remove("active");
+                    hamburger.classList.remove("active");
+                }
+            });
+            if (accountDropdown) {
+                const accountToggle = accountDropdown.querySelector(".account-toggle");
+                accountToggle.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    accountDropdown.classList.toggle("active");
+                });
+                document.addEventListener("click", (e) => {
+                    if (!accountDropdown.contains(e.target)) {
+                        accountDropdown.classList.remove("active");
+                    }
+                });
+            }
+        });
+    </script>
+</header>

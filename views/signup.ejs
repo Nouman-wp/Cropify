@@ -1,0 +1,667 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="signup-header">
+            <div class="logo-container">
+                
+                
+            </div>
+            <h1>Create Your Account</h1>
+            <h4>Join our growing community</h4>
+            <p class="subtitle">Connect with local farmers and get access to the freshest produce</p>
+        </div>
+
+        <form action="/signup" method="POST" class="signup-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Username <span class="required">*</span>
+                    </label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a unique username">
+                    <small>This will be displayed on your profile</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email <span class="required">*</span>
+                    </label>
+                    <input type="email" id="email" name="email" required placeholder="Your email address">
+                    <small>We'll never share your email with anyone else</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password <span class="required">*</span>
+                    </label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" name="password" required placeholder="Create a strong password">
+                        <button type="button" id="togglePassword" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small id="passwordStrength">Password must be at least 8 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">
+                        <i class="fas fa-user-tag"></i> I am a <span class="required">*</span>
+                    </label>
+                    <div class="role-selector">
+                        <div class="role-option">
+                            <input type="radio" id="roleFarmer" name="role" value="farmer">
+                            <label for="roleFarmer" class="role-label">
+                                <i class="fas fa-tractor"></i>
+                                <span>Farmer</span>
+                                <small>I want to sell my crops</small>
+                            </label>
+                        </div>
+                        <div class="role-option">
+                            <input type="radio" id="roleBuyer" name="role" value="buyer" checked>
+                            <label for="roleBuyer" class="role-label">
+                                <i class="fas fa-shopping-basket"></i>
+                                <span>Buyer</span>
+                                <small>I want to buy fresh produce</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <i class="fas fa-user-circle"></i> Profile Details
+                    <span class="section-subtitle">Customize your profile</span>
+                </h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileImage">Profile Image URL</label>
+                        <div class="profile-input-container">
+                            <div id="profilePreview" class="profile-preview">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <input type="url" id="profileImage" name="profileImage" placeholder="https://example.com/your-image.jpg">
+                        </div>
+                        <small>Leave empty to use default avatar</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i> Phone Number
+                        </label>
+                        <input type="tel" id="phone" name="phone" placeholder="Your contact number">
+                        <small>For order confirmations and updates</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <i class="fas fa-map-marker-alt"></i> Address Details
+                    <span class="section-subtitle">Where are you located?</span>
+                </h3>
+                <div class="address-container">
+                    <div class="form-group">
+                        <label for="street">Street Address</label>
+                        <input type="text" id="street" name="address[street]" placeholder="123 Farm Lane">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="address[city]" placeholder="Ruralville">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State/Province</label>
+                            <input type="text" id="state" name="address[state]" placeholder="State">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" name="address[country]" placeholder="Country">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode">Postal/ZIP Code</label>
+                            <input type="text" id="pincode" name="address[pincode]" placeholder="000000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section social-section">
+                <h3>
+                    <i class="fas fa-share-alt"></i> Social Links
+                    <span class="section-subtitle">Connect your social profiles (Optional)</span>
+                </h3>
+                <div class="social-links-container">
+                    <div class="form-group">
+                        <label for="facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </label>
+                        <input type="url" id="facebook" name="socialLinks[facebook]" placeholder="https://facebook.com/your-profile">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </label>
+                        <input type="url" id="twitter" name="socialLinks[twitter]" placeholder="https://twitter.com/your-handle">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instagram">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </label>
+                        <input type="url" id="instagram" name="socialLinks[instagram]" placeholder="https://instagram.com/your-handle">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-agreement">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsAgreement" required>
+                    <label for="termsAgreement">I agree to the <a href="/terms" target="_blank">Terms and Conditions</a> and <a href="/privacy" target="_blank">Privacy Policy</a></label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletterSubscription" name="subscribeNewsletter">
+                    <label for="newsletterSubscription">Subscribe to our newsletter for market updates and special offers</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                <p class="login-link">Already have an account? <a href="/login">Sign In</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    :root {
+        /* Sophisticated Teal Color Palette - Matching your header/footer */
+        --primary-teal: #20b2aa;        /* Light Sea Green */
+        --secondary-teal: #008080;      /* Teal */
+        --dark-teal: #005f73;           /* Deep Teal */
+        --accent-green: #2ecc71;        /* Emerald Green */
+        --background-light: #f0f4f4;    /* Soft Teal Background */
+        --text-primary: #2c3e50;        /* Dark Blue-Gray */
+        --text-secondary: #5d7b8a;      /* Slate Gray */
+        --white: #ffffff;
+        --error: #e74c3c;
+        --success: #2ecc71;
+        --warning: #f39c12;
+        
+        /* Form Elements */
+        --input-bg: #f9fbfb;
+        --input-border: #dbe5e5;
+        --input-focus: #20b2aa;
+        
+        /* Shadows and Effects */
+        --card-shadow: 0 10px 25px rgba(0, 128, 128, 0.1);
+        --hover-shadow: 0 15px 35px rgba(0, 128, 128, 0.15);
+        --btn-shadow: 0 4px 6px rgba(32, 178, 170, 0.2);
+        
+        /* Transition and Animation */
+        --transition-speed: 0.3s;
+    }
+
+    body {
+        background-color: var(--background-light);
+        color: var(--text-primary);
+        line-height: 1.6;
+        font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .signup-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 40px auto 80px;
+        padding: 0 20px;
+    }
+
+    .signup-card {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        transition: all var(--transition-speed) ease;
+    }
+
+    .signup-card:hover {
+        box-shadow: var(--hover-shadow);
+    }
+
+    .signup-header {
+        background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+        color: var(--white);
+        padding: 40px;
+        text-align: center;
+        position: relative;
+    }
+
+    .logo-container {
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        display: inline-block;
+        color: var(--white);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .signup-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .signup-header h4 {
+        margin: 10px 0 0;
+        font-weight: 400;
+        opacity: 0.9;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-top: 10px;
+    }
+
+    .signup-form {
+        padding: 40px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+    }
+
+    .form-group {
+        flex: 1;
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    label i {
+        margin-right: 8px;
+        color: var(--primary-teal);
+    }
+
+    input, select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--input-border);
+        border-radius: 10px;
+        background-color: var(--input-bg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: all var(--transition-speed) ease;
+    }
+
+    input:focus, select:focus {
+        border-color: var(--input-focus);
+        box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.2);
+        outline: none;
+    }
+
+    .required {
+        color: var(--error);
+    }
+
+    small {
+        display: block;
+        margin-top: 6px;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+    }
+
+    .form-section {
+        margin: 30px 0;
+        padding-top: 20px;
+        border-top: 1px solid var(--input-border);
+    }
+
+    .form-section h3 {
+        display: flex;
+        align-items: center;
+        color: var(--dark-teal);
+        margin-bottom: 20px;
+    }
+
+    .form-section h3 i {
+        margin-right: 10px;
+        color: var(--primary-teal);
+    }
+
+    .section-subtitle {
+        font-size: 0.9rem;
+        font-weight: normal;
+        color: var(--text-secondary);
+        margin-left: 10px;
+    }
+
+    /* Role Selector */
+    .role-selector {
+        display: flex;
+        gap: 20px;
+    }
+
+    .role-option {
+        flex: 1;
+    }
+
+    .role-option input[type="radio"] {
+        display: none;
+    }
+
+    .role-label {
+        display: block;
+        padding: 20px;
+        background-color: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+        transition: all var(--transition-speed) ease;
+    }
+
+    .role-label:hover {
+        background-color: rgba(32, 178, 170, 0.05);
+        border-color: var(--primary-teal);
+    }
+
+    .role-label i {
+        display: block;
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--primary-teal);
+    }
+
+    .role-label span {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .role-option input[type="radio"]:checked + .role-label {
+        background-color: rgba(32, 178, 170, 0.1);
+        border-color: var(--primary-teal);
+        box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.2);
+    }
+
+    /* Password Field */
+    .password-input-container {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    .toggle-password:hover {
+        color: var(--dark-teal);
+    }
+
+    /* Profile Image */
+    .profile-input-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .profile-preview {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--input-bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: var(--text-secondary);
+        border: 1px solid var(--input-border);
+        overflow: hidden;
+    }
+
+    .profile-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Social Links */
+    .social-links-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Checkboxes */
+    .form-agreement {
+        margin-top: 25px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        margin-top: 3px;
+    }
+
+    .checkbox-group label {
+        margin-bottom: 0;
+        font-weight: normal;
+    }
+
+    .checkbox-group a {
+        color: var(--primary-teal);
+        text-decoration: none;
+        border-bottom: 1px dotted;
+    }
+
+    .checkbox-group a:hover {
+        color: var(--dark-teal);
+    }
+
+    /* Form Actions */
+    .form-actions {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .btn-submit {
+        background: linear-gradient(to right, var(--secondary-teal), var(--primary-teal));
+        color: var(--white);
+        border: none;
+        padding: 16px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all var(--transition-speed) ease;
+        box-shadow: var(--btn-shadow);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 250px;
+    }
+
+    .btn-submit i {
+        margin-right: 10px;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(to right, var(--dark-teal), var(--secondary-teal));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(32, 178, 170, 0.3);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    .login-link {
+        margin-top: 20px;
+        color: var(--text-secondary);
+    }
+
+    .login-link a {
+        color: var(--primary-teal);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-link a:hover {
+        color: var(--dark-teal);
+        text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 900px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .social-links-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .signup-header, .signup-form {
+            padding: 20px;
+        }
+
+        .signup-card {
+            margin-top: 0;
+            border-radius: 0;
+        }
+
+        .signup-container {
+            padding: 0;
+        }
+
+        .signup-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .role-selector {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Profile Image Preview
+        const profileImageInput = document.getElementById('profileImage');
+        const profilePreview = document.getElementById('profilePreview');
+        
+        profileImageInput.addEventListener('input', function() {
+            const imageUrl = this.value.trim();
+            if (imageUrl) {
+                profilePreview.innerHTML = `<img src="${imageUrl}" alt="Profile Preview">`;
+            } else {
+                profilePreview.innerHTML = `<i class="fas fa-user-circle"></i>`;
+            }
+        });
+
+        // Password Toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Password Strength Indicator
+        const passwordStrength = document.getElementById('passwordStrength');
+        
+        passwordInput.addEventListener('input', function() {
+            const value = this.value;
+            
+            if (value.length === 0) {
+                passwordStrength.textContent = 'Password must be at least 8 characters';
+                passwordStrength.style.color = '';
+                return;
+            }
+            
+            if (value.length < 6) {
+                passwordStrength.textContent = 'Weak password';
+                passwordStrength.style.color = '#e74c3c';
+            } else if (value.length < 10) {
+                passwordStrength.textContent = 'Medium strength password';
+                passwordStrength.style.color = '#f39c12';
+            } else {
+                passwordStrength.textContent = 'Strong password';
+                passwordStrength.style.color = '#2ecc71';
+            }
+        });
+
+        // Form Validation
+        const form = document.querySelector('.signup-form');
+        
+        form.addEventListener('submit', function(event) {
+            const password = passwordInput.value;
+            
+            if (password.length < 6) {
+                event.preventDefault();
+                passwordStrength.textContent = 'Password must be at least 6 characters!';
+                passwordStrength.style.color = '#e74c3c';
+                passwordInput.focus();
+            }
+        });
+
+        // Input Animation
+        const inputs = document.querySelectorAll('input, select');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+    });
+</script>

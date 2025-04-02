@@ -1,0 +1,13 @@
+<% if (success && success.length > 0) { %>
+  <div class="flash-message success">
+    <%= success %>
+    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+  </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="flash-message error">
+    <%= error %>
+    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+  </div>
+<% } %>

@@ -1,0 +1,1177 @@
+<% layout("/layouts/boilerplate") %>
+
+<section class="sell-container">
+  <div class="sell-header">
+    <h1>Sell Your Crops</h1>
+    <p>Connect directly with buyers and get the best prices for your harvest</p>
+  </div>
+
+  <div class="sell-card">
+    <div class="sell-card-inner">
+      <div class="form-progress">
+        <div class="progress-step active" data-step="1">
+          <div class="step-icon"><i class="fa fa-seedling"></i></div>
+          <span>Crop Details</span>
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="step-icon"><i class="fa fa-tag"></i></div>
+          <span>Pricing</span>
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="step-icon"><i class="fa fa-image"></i></div>
+          <span>Image</span>
+        </div>
+        <div class="progress-step" data-step="4">
+          <div class="step-icon"><i class="fa fa-check-circle"></i></div>
+          <span>Review</span>
+        </div>
+      </div>
+
+      <form action="/sell" method="POST" class="sell-form" id="sellForm">
+        <!-- Step 1: Crop Details -->
+        <div class="form-step active" data-step="1">
+          <div class="form-group">
+            <label for="title">Crop Name</label>
+            <div class="input-wrapper">
+              <i class="fa fa-wheat-awn input-icon"></i>
+              <input type="text" id="title" name="title" placeholder="What crop are you selling?" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+            <div class="input-wrapper">
+              <i class="fa fa-leaf input-icon"></i>
+              <select id="category" name="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Grains">Grains</option>
+                <option value="Pulses">Pulses</option>
+                <option value="Herbs">Herbs & Spices</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Describe your crop quality, quantity available, harvest date, etc." required></textarea>
+            <div class="character-count">
+              <span id="charCount">0</span>/500
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="quantity">Quantity Available (kg)</label>
+              <div class="input-wrapper">
+                <i class="fa fa-scale-balanced input-icon"></i>
+                <input type="number" id="quantity" name="quantity" min="1" placeholder="Available quantity" required>
+              </div>
+            </div>
+            <div class="form-group half">
+              <label for="harvestDate">Harvest Date</label>
+              <div class="input-wrapper">
+                <i class="fa fa-calendar input-icon"></i>
+                <input type="date" id="harvestDate" name="harvestDate" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn-next">Continue to Pricing <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 2: Pricing -->
+        <div class="form-step" data-step="2">
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="price">Price per Kg (₹)</label>
+              <div class="input-wrapper">
+                <i class="fa fa-rupee-sign input-icon"></i>
+                <input type="number" id="price" name="price" min="1" step="0.01" placeholder="Enter price" required>
+              </div>
+            </div>
+            <div class="form-group half">
+              <label for="minimumOrder">Minimum Order (kg)</label>
+              <div class="input-wrapper">
+                <i class="fa fa-weight-scale input-icon"></i>
+                <input type="number" id="minimumOrder" name="minimumOrder" min="1" placeholder="Minimum order" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-comparison">
+            <h4>Current Market Rates <i class="fa fa-info-circle" title="Based on market data from the last 7 days"></i></h4>
+            <div class="price-info">
+              <div class="price-stat">
+                <span class="stat-label">Market Average</span>
+                <span class="stat-value" id="marketAvg">Loading...</span>
+              </div>
+              <div class="price-stat">
+                <span class="stat-label">Your Price</span>
+                <span class="stat-value" id="yourPrice">₹0.00</span>
+              </div>
+              <div class="price-stat comparison">
+                <span class="stat-label">Difference</span>
+                <span class="stat-value" id="priceDiff">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="negotiable">Price Negotiability</label>
+            <div class="toggle-container">
+              <label class="toggle">
+                <input type="checkbox" id="negotiable" name="negotiable" value="true">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label">Price is negotiable</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Pickup Location</label>
+            <div class="input-wrapper">
+              <i class="fa fa-location-dot input-icon"></i>
+              <input type="text" id="location" name="location" placeholder="Where can buyers collect from?" required>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn-prev"><i class="fa fa-arrow-left"></i> Back</button>
+            <button type="button" class="btn-next">Continue to Image <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 3: Image -->
+        <div class="form-step" data-step="3">
+          <div class="image-upload-container">
+            <div class="form-group">
+              <label for="image">Crop Image URL</label>
+              <div class="input-wrapper">
+                <i class="fa fa-link input-icon"></i>
+                <input type="url" id="cropImage" name="image" placeholder="https://example.com/your-image.jpg" required>
+              </div>
+            </div>
+            
+            <div class="image-preview-container">
+              <h4>Image Preview</h4>
+              <div class="image-preview-wrapper">
+                <div id="imagePreviewPlaceholder" class="image-preview-placeholder">
+                  <i class="fa fa-image"></i>
+                  <p>Enter a valid image URL to see preview</p>
+                </div>
+                <img id="imagePreview" class="image-preview hidden" src="" alt="Crop Image Preview">
+              </div>
+            </div>
+
+            <div class="image-tips">
+              <h4>Tips for Great Crop Photos</h4>
+              <ul>
+                <li><i class="fa fa-sun"></i> Use natural lighting for accurate colors</li>
+                <li><i class="fa fa-object-group"></i> Show the entire harvest for quantity perspective</li>
+                <li><i class="fa fa-magnifying-glass"></i> Include quality details showing freshness</li>
+                <li><i class="fa fa-circle-check"></i> Clean background to keep focus on your crops</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn-prev"><i class="fa fa-arrow-left"></i> Back</button>
+            <button type="button" class="btn-next">Review Listing <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 4: Review -->
+        <div class="form-step" data-step="4">
+          <div class="review-container">
+            <h3>Review Your Listing</h3>
+            <div class="review-header">
+              <div class="review-image">
+                <img id="reviewImage" src="" alt="Crop Image">
+                <div id="noImagePlaceholder" class="no-image-placeholder">
+                  <i class="fa fa-image"></i>
+                  <span>No Image</span>
+                </div>
+              </div>
+              <div class="review-title-section">
+                <h2 id="reviewTitle">-</h2>
+                <div class="review-badge" id="reviewCategory">-</div>
+                <div class="review-price">
+                  <span id="reviewPrice">-</span>
+                  <span id="reviewNegotiableTag" class="negotiable-tag hidden">Negotiable</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="review-details">
+              <div class="review-detail-item">
+                <i class="fa fa-scale-balanced"></i>
+                <span class="review-label">Quantity Available:</span>
+                <span class="review-value" id="reviewQuantity">-</span>
+              </div>
+              <div class="review-detail-item">
+                <i class="fa fa-weight-scale"></i>
+                <span class="review-label">Minimum Order:</span>
+                <span class="review-value" id="reviewMinOrder">-</span>
+              </div>
+              <div class="review-detail-item">
+                <i class="fa fa-location-dot"></i>
+                <span class="review-label">Pickup Location:</span>
+                <span class="review-value" id="reviewLocation">-</span>
+              </div>
+              <div class="review-detail-item">
+                <i class="fa fa-calendar"></i>
+                <span class="review-label">Harvest Date:</span>
+                <span class="review-value" id="reviewHarvestDate">-</span>
+              </div>
+            </div>
+
+            <div class="review-description-section">
+              <h4><i class="fa fa-file-text"></i> Description</h4>
+              <p class="review-description" id="reviewDescription">-</p>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn-prev"><i class="fa fa-arrow-left"></i> Back</button>
+            <button type="submit" class="btn-submit">List Crop <i class="fa fa-check"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --primary-teal: #20b2aa;
+    --secondary-teal: #008080;
+    --dark-teal: #005f73;
+    --accent-green: #2ecc71;
+    --background-light: #f0f4f4;
+    --text-primary: #2c3e50;
+    --text-secondary: #627282;
+    --border-color: #e1e8ed;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --error-color: #e74c3c;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --transition-speed: 0.3s;
+    --white: #ffffff;
+  }
+
+  .sell-container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .sell-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .sell-header h1 {
+    font-size: 2.5rem;
+    color: var(--dark-teal);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .sell-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .sell-card {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .sell-card-inner {
+    padding: 30px;
+  }
+
+  /* Form Progress */
+  .form-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .form-progress::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+  }
+
+  .progress-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    z-index: 2;
+  }
+
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    transition: all var(--transition-speed) ease;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+  }
+
+  .progress-step span {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all var(--transition-speed) ease;
+  }
+
+  .progress-step.active .step-icon {
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+    color: var(--white);
+    box-shadow: 0 0 15px rgba(32, 178, 170, 0.4);
+  }
+
+  .progress-step.active span {
+    color: var(--dark-teal);
+    font-weight: 600;
+  }
+
+  .progress-step.completed .step-icon {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    color: var(--white);
+  }
+
+  /* Form Styles */
+  .form-step {
+    display: none;
+  }
+
+  .form-step.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+
+  .form-group.half {
+    flex: 1;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+  }
+
+  .input-wrapper {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="url"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+    color: var(--text-primary);
+    background-color: var(--white);
+  }
+
+  textarea {
+    padding: 15px;
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--primary-teal);
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.15);
+    outline: none;
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23627282' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+  }
+
+  .character-count {
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+  }
+
+  /* Toggle Switch */
+  .toggle-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    margin-right: 10px;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: .4s;
+    border-radius: 34px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .toggle-slider {
+    background-color: var(--primary-teal);
+  }
+
+  input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+  }
+
+  .toggle-label {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Price Comparison */
+  .price-comparison {
+    background-color: rgba(32, 178, 170, 0.05);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+
+  .price-comparison h4 {
+    color: var(--dark-teal);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .price-info {
+    display: flex;
+    gap: 15px;
+  }
+
+  .price-stat {
+    flex: 1;
+    background-color: var(--white);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .price-stat.comparison {
+    border-left: 4px solid var(--primary-teal);
+  }
+
+  /* Image Section */
+  .image-upload-container {
+    margin-bottom: 25px;
+  }
+
+  .image-preview-container {
+    margin: 25px 0;
+  }
+
+  .image-preview-container h4 {
+    margin-bottom: 15px;
+    color: var(--dark-teal);
+  }
+
+  .image-preview-wrapper {
+    background-color: var(--background-light);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .image-preview-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  .image-preview-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+  }
+
+  .image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: var(--radius-sm);
+    object-fit: contain;
+  }
+
+  .image-tips {
+    background-color: rgba(46, 204, 113, 0.1);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-top: 25px;
+  }
+
+  .image-tips h4 {
+    color: var(--accent-green);
+    margin-bottom: 15px;
+  }
+
+  .image-tips ul {
+    padding-left: 15px;
+  }
+
+  .image-tips li {
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    list-style-type: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .image-tips li i {
+    color: var(--accent-green);
+    margin-top: 3px;
+  }
+
+  /* Review Section */
+  .review-container {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: 0;
+    margin-bottom: 25px;
+  }
+
+  .review-container h3 {
+    color: var(--dark-teal);
+    margin-bottom: 25px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .review-header {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+  }
+
+  .review-image {
+    width: 200px;
+    height: 200px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--background-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .review-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .no-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    width: 100%;
+    height: 100%;
+  }
+
+  .no-image-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+  }
+
+  .review-title-section {
+    flex-grow: 1;
+  }
+
+  .review-title-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-size: 1.75rem;
+  }
+
+  .review-badge {
+    display: inline-block;
+    background-color: var(--primary-teal);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .review-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-teal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .negotiable-tag {
+    display: inline-block;
+    background-color: var(--accent-green);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .review-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .review-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .review-detail-item i {
+    color: var(--primary-teal);
+    font-size: 1.1rem;
+    margin-top: 2px;
+  }
+
+  .review-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-right: 5px;
+  }
+
+  .review-value {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .review-description-section {
+    background-color: var(--background-light);
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .review-description-section h4 {
+    color: var(--dark-teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .review-description {
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-line;
+  }
+
+  /* Form Navigation */
+  .form-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+
+  .btn-prev,
+  .btn-next,
+  .btn-submit {
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .btn-prev {
+    background-color: var(--white);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-prev:hover {
+    background-color: var(--background-light);
+  }
+
+  .btn-next {
+    background-color: var(--primary-teal);
+    color: var(--white);
+  }
+
+  .btn-next:hover {
+    background-color: var(--secondary-teal);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-submit {
+    background-color: var(--accent-green);
+    color: var(--white);
+  }
+
+  .btn-submit:hover {
+    background-color: var(--success-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Utility Classes */
+  .hidden {
+    display: none !important;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .sell-card-inner {
+      padding: 20px;
+    }
+
+    .form-progress {
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .form-progress::before {
+      display: none;
+    }
+
+    .progress-step {
+      flex-basis: 50%;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .price-info {
+      flex-direction: column;
+    }
+
+    .review-header {
+      flex-direction: column;
+    }
+
+    .review-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .review-details {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Form navigation
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const formSteps = document.querySelectorAll('.form-step');
+    const btnNext = document.querySelectorAll('.btn-next');
+    const btnPrev = document.querySelectorAll('.btn-prev');
+    const sellForm = document.getElementById('sellForm');
+
+    // Character counter for description
+    const descriptionField = document.getElementById('description');
+    const charCount = document.getElementById('charCount');
+
+    // Price validation and calculation
+    const priceField = document.getElementById('price');
+    const yourPriceDisplay = document.getElementById('yourPrice');
+    const marketAvgDisplay = document.getElementById('marketAvg');
+    const priceDiffDisplay = document.getElementById('priceDiff');
+
+    // Image preview
+    const cropImageUrl = document.getElementById('cropImage');
+    const imagePreview = document.getElementById('imagePreview');
+    const imagePreviewPlaceholder = document.getElementById('imagePreviewPlaceholder');
+
+    // Review page elements
+    const reviewElements = {
+      title: document.getElementById('reviewTitle'),
+      category: document.getElementById('reviewCategory'),
+      price: document.getElementById('reviewPrice'),
+      quantity: document.getElementById('reviewQuantity'),
+      minOrder: document.getElementById('reviewMinOrder'),
+      location: document.getElementById('reviewLocation'),
+      harvestDate: document.getElementById('reviewHarvestDate'),
+      negotiable: document.getElementById('reviewNegotiableTag'),
+      description: document.getElementById('reviewDescription'),
+      image: document.getElementById('reviewImage'),
+      noImagePlaceholder: document.getElementById('noImagePlaceholder')
+    };
+    // Form step navigation
+    btnNext.forEach(button => {
+      button.addEventListener('click', () => {
+        const currentStep = parseInt(button.closest('.form-step').dataset.step);
+        if (validateStep(currentStep)) {
+          goToStep(currentStep + 1);
+          updateReviewPage();
+        }
+      });
+    });
+
+    btnPrev.forEach(button => {
+      button.addEventListener('click', () => {
+        const currentStep = parseInt(button.closest('.form-step').dataset.step);
+        goToStep(currentStep - 1);
+      });
+    });
+
+    function goToStep(stepNumber) {
+      formSteps.forEach(step => {
+        step.classList.remove('active');
+      });
+      progressSteps.forEach(step => {
+        step.classList.remove('active');
+        if (parseInt(step.dataset.step) < stepNumber) {
+          step.classList.add('completed');
+        } else {
+          step.classList.remove('completed');
+        }
+      });
+
+      document.querySelector(`.form-step[data-step="${stepNumber}"]`).classList.add('active');
+      document.querySelector(`.progress-step[data-step="${stepNumber}"]`).classList.add('active');
+    }
+
+    // Validate each step before proceeding
+    function validateStep(stepNumber) {
+      switch(stepNumber) {
+        case 1:
+          return validateCropDetails();
+        case 2:
+          return validatePricing();
+        case 3:
+          return validateImage();
+        default:
+          return true;
+      }
+    }
+
+    function validateCropDetails() {
+      const title = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
+      const description = document.getElementById('description').value;
+      const quantity = document.getElementById('quantity').value;
+      const harvestDate = document.getElementById('harvestDate').value;
+      
+      if (!title || !category || !description || !quantity || !harvestDate) {
+        alert('Please fill in all required fields in Crop Details');
+        return false;
+      }
+      return true;
+    }
+
+    function validatePricing() {
+      const price = document.getElementById('price').value;
+      const minimumOrder = document.getElementById('minimumOrder').value;
+      const location = document.getElementById('location').value;
+      
+      if (!price || !minimumOrder || !location) {
+        alert('Please fill in all required fields in Pricing');
+        return false;
+      }
+      return true;
+    }
+
+    function validateImage() {
+      const imageUrl = document.getElementById('cropImage').value;
+      
+      if (!imageUrl) {
+        alert('Please provide an image URL');
+        return false;
+      }
+      return true;
+    }
+
+    // Character counter for description
+    descriptionField.addEventListener('input', () => {
+      const count = descriptionField.value.length;
+      charCount.textContent = count;
+      
+      if (count > 500) {
+        charCount.style.color = 'var(--error-color)';
+        descriptionField.value = descriptionField.value.substring(0, 500);
+        charCount.textContent = 500;
+      } else {
+        charCount.style.color = '';
+      }
+    });
+
+    // Price comparison
+    // Simulate market data fetch
+    setTimeout(() => {
+      marketAvgDisplay.textContent = '₹35.75';
+      updatePriceComparison();
+    }, 1500);
+
+    priceField.addEventListener('input', updatePriceComparison);
+
+    function updatePriceComparison() {
+      const price = parseFloat(priceField.value) || 0;
+      const marketAvg = parseFloat(marketAvgDisplay.textContent.replace('₹', '')) || 0;
+      
+      yourPriceDisplay.textContent = `₹${price.toFixed(2)}`;
+      
+      const difference = price - marketAvg;
+      const percentDiff = marketAvg ? (difference / marketAvg) * 100 : 0;
+      
+      if (difference === 0 || !price) {
+        priceDiffDisplay.textContent = '-';
+        priceDiffDisplay.style.color = '';
+      } else {
+        priceDiffDisplay.textContent = `${difference > 0 ? '+' : ''}₹${Math.abs(difference).toFixed(2)} (${percentDiff.toFixed(1)}%)`;
+        priceDiffDisplay.style.color = difference > 0 ? 'var(--error-color)' : 'var(--success-color)';
+      }
+    }
+
+    // Image preview
+    cropImageUrl.addEventListener('input', () => {
+      const url = cropImageUrl.value;
+      if (url) {
+        imagePreview.src = url;
+        imagePreview.onload = function() {
+          imagePreview.classList.remove('hidden');
+          imagePreviewPlaceholder.classList.add('hidden');
+        };
+        imagePreview.onerror = function() {
+          imagePreview.classList.add('hidden');
+          imagePreviewPlaceholder.classList.remove('hidden');
+        };
+      } else {
+        imagePreview.classList.add('hidden');
+        imagePreviewPlaceholder.classList.remove('hidden');
+      }
+    });
+
+    // Update review page
+    function updateReviewPage() {
+      const title = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
+      const description = document.getElementById('description').value;
+      const quantity = document.getElementById('quantity').value;
+      const harvestDate = document.getElementById('harvestDate').value;
+      const price = document.getElementById('price').value;
+      const minimumOrder = document.getElementById('minimumOrder').value;
+      const location = document.getElementById('location').value;
+      const negotiable = document.getElementById('negotiable').checked;
+      const imageUrl = document.getElementById('cropImage').value;
+      
+      reviewElements.title.textContent = title || '-';
+      reviewElements.category.textContent = category || '-';
+      reviewElements.description.textContent = description || '-';
+      reviewElements.quantity.textContent = quantity ? `${quantity} kg` : '-';
+      
+      // Format date for better readability
+      if (harvestDate) {
+        const date = new Date(harvestDate);
+        reviewElements.harvestDate.textContent = date.toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+      } else {
+        reviewElements.harvestDate.textContent = '-';
+      }
+      
+      reviewElements.price.textContent = price ? `₹${parseFloat(price).toFixed(2)}/kg` : '-';
+      reviewElements.minOrder.textContent = minimumOrder ? `${minimumOrder} kg` : '-';
+      reviewElements.location.textContent = location || '-';
+      
+      if (negotiable) {
+        reviewElements.negotiable.classList.remove('hidden');
+      } else {
+        reviewElements.negotiable.classList.add('hidden');
+      }
+      
+      if (imageUrl) {
+        reviewElements.image.src = imageUrl;
+        reviewElements.image.classList.remove('hidden');
+        reviewElements.noImagePlaceholder.classList.add('hidden');
+      } else {
+        reviewElements.image.classList.add('hidden');
+        reviewElements.noImagePlaceholder.classList.remove('hidden');
+      }
+    }
+
+    // Form submission
+    // Form submission
+document.addEventListener('DOMContentLoaded', function() {
+  const sellForm = document.getElementById('sellForm');
+  
+  // Set default harvest date to today
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0];
+  document.getElementById('harvestDate').value = formattedDate;
+  
+  // Form validation and submission
+  sellForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (validateStep(1) && validateStep(2) && validateStep(3)) {
+      const submitBtn = document.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing...';
+      
+      // Actually submit the form to the server
+      fetch('/sell', {
+        method: 'POST',
+        body: new FormData(sellForm)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Success - redirect to dashboard
+          window.location.href = '/dashboard';
+        } else {
+          // Handle server errors
+          return response.json().then(data => {
+            throw new Error(data.message || 'Error submitting form');
+          });
+        }
+      })
+      .catch(error => {
+        // Re-enable the submit button and show error
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'List Crop <i class="fa fa-check"></i>';
+        alert('Error: ' + error.message);
+      });
+    }
+  });
+});
+  });
+</script>

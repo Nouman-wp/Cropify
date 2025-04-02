@@ -1,0 +1,126 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2c3e50;
+    color: white;
+    padding: 15px 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #f39c12;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    width: 30px;
+    background: white;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #2c3e50;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+.flash-message {
+    position: fixed;
+    top: 80px; /* Adjust based on navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2001; /* Higher than navbar */
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    font-size: 1rem;
+    max-width: 80%;
+    text-align: center;
+}
+
+.flash-message.error {
+    background-color: #e74c3c;
+}
+
+.flash-message .close-btn {
+    margin-left: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+

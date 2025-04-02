@@ -1,0 +1,258 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="error-container">
+    <div class="error-card">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        
+        <div class="error-content">
+            <h1>Oops! Something went wrong</h1>
+            <div class="error-message">
+                <p><%= message %></p>
+            </div>
+            
+            <div class="error-actions">
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </a>
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Return to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="error-help">
+        <h3>Need assistance?</h3>
+        <p>Our support team is here to help. Contact us at <a href="mailto:support@farmersmarketplace.com">support@farmersmarketplace.com</a></p>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-teal: #20b2aa;
+        --secondary-teal: #008080;
+        --dark-teal: #005f73;
+        --accent-green: #2ecc71;
+        --background-light: #f0f4f4;
+        --error-light: #ffe8e6;
+        --error-primary: #e74c3c;
+        --error-dark: #c0392b;
+        --text-primary: #2c3e50;
+        --white: #ffffff;
+        --gray-light: #f7f9f9;
+        --gray: #e0e0e0;
+        --transition-speed: 0.3s;
+    }
+
+    .error-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 0 20px;
+        min-height: 60vh;
+    }
+
+    .error-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 95, 115, 0.1);
+        overflow: hidden;
+        position: relative;
+        border: 1px solid rgba(0, 128, 128, 0.1);
+    }
+
+    .error-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 40px 0;
+        background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+        color: var(--white);
+    }
+
+    .error-icon i {
+        font-size: 5rem;
+        animation: pulse 2s infinite;
+    }
+
+    .error-content {
+        width: 100%;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .error-content h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .error-message {
+        background-color: var(--error-light);
+        border-left: 4px solid var(--error-primary);
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 4px;
+        color: var(--error-dark);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-align: left;
+    }
+
+    .error-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all var(--transition-speed) ease;
+        box-shadow: 0 4px 6px rgba(0, 95, 115, 0.1);
+    }
+
+    .btn-primary {
+        background-color: var(--primary-teal);
+        color: var(--white);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-teal);
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(0, 95, 115, 0.15);
+    }
+
+    .btn-secondary {
+        background-color: var(--gray-light);
+        color: var(--text-primary);
+        border: 1px solid var(--gray);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--white);
+        color: var(--primary-teal);
+        transform: translateY(-3px);
+        box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-help {
+        margin-top: 40px;
+        text-align: center;
+        background-color: var(--background-light);
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 90%;
+    }
+
+    .error-help h3 {
+        color: var(--secondary-teal);
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .error-help a {
+        color: var(--primary-teal);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color var(--transition-speed) ease;
+    }
+
+    .error-help a:hover {
+        color: var(--dark-teal);
+        text-decoration: underline;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .error-card {
+            flex-direction: row;
+            align-items: stretch;
+        }
+        
+        .error-icon {
+            width: 35%;
+            padding: 0;
+        }
+        
+        .error-content {
+            width: 65%;
+            text-align: left;
+            padding: 40px;
+        }
+        
+        .error-actions {
+            justify-content: flex-start;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .error-container {
+            margin: 40px auto;
+        }
+        
+        .error-icon {
+            padding: 30px 0;
+        }
+        
+        .error-icon i {
+            font-size: 4rem;
+        }
+        
+        .error-content h1 {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        const errorCard = document.querySelector('.error-card');
+        errorCard.style.opacity = '0';
+        errorCard.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            errorCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            errorCard.style.opacity = '1';
+            errorCard.style.transform = 'translateY(0)';
+        }, 100);
+        
+       
+        console.log('Error page viewed: ' + document.querySelector('.error-message p').textContent);
+    });
+</script>

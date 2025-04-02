@@ -1,0 +1,942 @@
+<% layout("/layouts/boilerplate") %>
+<section class="hero">
+  <div class="hero-video-container">
+    <video class="hero-background-video" autoplay loop muted playsinline>
+      <source src="/videos/bg_vid_home.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="hero-content">
+    <h1>Farm Fresh <span class="highlight">Direct to You</span></h1>
+    <p>Connecting local farmers with consumers for fresher produce, fairer prices, and a more sustainable food system.</p>
+    <div class="hero-buttons">
+      <a href="/buy" class="btn primary">Browse Fresh Produce</a>
+      <a href="/sell" class="btn secondary">List Your Harvest</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">200+</span>
+        <span class="stat-label">Local Farmers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">5,000+</span>
+        <span class="stat-label">Happy Customers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">30+</span>
+        <span class="stat-label">Crop Varieties</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="featured-crops">
+  <div class="container">
+    <div class="section-header">
+      <h2>In Season Now</h2>
+      <p>Discover what local farmers are harvesting this month</p>
+    </div>
+    
+    <div class="crops-grid">
+      <% const seasonalCrops = [
+          { name: "Organic Tomatoes", price: "$3.99/lb", image: "https://bittmanproject.com/wp-content/uploads/engin-akyurt-HrCatSbULFY-unsplash-1600x1200.jpg", farmer: "Green Valley Farm", distance: "5 miles" },
+          { name: "Fresh Corn", price: "$0.75/ear", image: "https://chefsmandala.com/wp-content/uploads/2018/03/corn.jpg", farmer: "Sunshine Acres", distance: "8 miles" },
+          { name: "Heirloom Lettuce", price: "$2.50/head", image: "https://heirloomseedkits.com/wp-content/uploads/2023/10/lettuce.jpg", farmer: "River Creek Gardens", distance: "3 miles" },
+          { name: "Sweet Berries", price: "$4.99/pint", image: "https://ohmyfacts.com/wp-content/uploads/2024/07/30-facts-about-raspberry-1720541629.jpg", farmer: "Berry Patch", distance: "12 miles" }
+      ]; %>
+      <% seasonalCrops.forEach(crop => { %>
+        <div class="crop-card">
+          <div class="crop-image">
+            <img src="<%= crop.image %>" alt="<%= crop.name %>">
+            <div class="distance-badge"><i class="fas fa-map-marker-alt"></i> <%= crop.distance %></div>
+          </div>
+          <div class="crop-info">
+            <h3><%= crop.name %></h3>
+            <div class="price"><%= crop.price %></div>
+            <div class="farmer">by <%= crop.farmer %></div>
+            <a href="/product" class="btn-outline">View Details</a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <div class="view-all">
+      <a href="/buy" class="btn-text">View All Available Crops <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+<section class="benefits">
+  <div class="container">
+    <div class="benefits-content">
+      <div class="benefits-text">
+        <div class="section-header">
+          <h2>Why Choose Farmer's Marketplace?</h2>
+          <p>Supporting local agriculture has never been easier</p>
+        </div>
+        <div class="benefits-list">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div class="benefit-details">
+              <h3>Farm Fresh Quality</h3>
+              <p>Produce harvested at peak ripeness and delivered directly to you, often within 24 hours of harvest.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="benefit-details">
+              <h3>Fair Pricing Model</h3>
+              <p>Farmers earn up to 80% more than traditional distribution, while consumers pay market or better rates.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="benefit-details">
+              <h3>Community Connection</h3>
+              <p>Know exactly who grows your food and build relationships with local producers in your area.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-globe-americas"></i>
+            </div>
+            <div class="benefit-details">
+              <h3>Environmental Impact</h3>
+              <p>Reduced food miles and packaging waste compared to traditional grocery supply chains.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="benefits-image">
+        <img src="https://cdn.prod.website-files.com/62571614c21145ddc6d61d5a/671afcf367362735ffbca715_resource-img-1.jpg" alt="Farmer harvesting crops">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Three simple steps to get started</p>
+    </div>
+    
+    <div class="steps-container">
+      <div class="step-line"></div>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Create Your Account</h3>
+            <p>Sign up as a buyer looking for fresh local produce or as a farmer selling your harvest.</p>
+            <a href="/signup" class="step-link">Create Account <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Browse or List</h3>
+            <p>Search for available produce in your area or list your harvest with details and pricing.</p>
+            <a href="/browse" class="step-link">Start Browsing <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Connect & Exchange</h3>
+            <p>Arrange pickup or delivery directly with farmers through our secure messaging system.</p>
+            <a href="/how-it-works" class="step-link">Learn More <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <h2>What Our Community Says</h2>
+      <p>Stories from farmers and consumers</p>
+    </div>
+    
+    <div class="testimonial-slider">
+      <div class="testimonial-card">
+        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+        <p class="testimonial-text">"Farmer's Marketplace has transformed how I sell my organic vegetables. I'm earning 40% more and connecting directly with people who appreciate my growing practices."</p>
+        <div class="testimonial-author">
+          <img src="https://st5.depositphotos.com/73757358/66057/i/450/depositphotos_660575800-stock-photo-beautiful-blonde-cowgirl-straw-hat.jpg" alt="Sarah Johnson" class="author-image">
+          <div class="author-info">
+            <h4>Sarah Johnson</h4>
+            <p>Green Acres Farm, Farmer for 15 years</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-nav">
+        <button class="nav-dot active"></button>
+        <button class="nav-dot"></button>
+        <button class="nav-dot"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Experience the Difference?</h2>
+      <p>Join thousands of farmers and consumers already benefiting from our marketplace.</p>
+      <div class="cta-buttons">
+        <a href="/signup" class="btn primary">Create Your Free Account</a>
+        <a href="/learn-more" class="btn secondary">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --primary-teal: #20b2aa;
+    --secondary-teal: #008080;
+    --dark-teal: #005f73;
+    --accent-green: #2ecc71;
+    --background-light: #f0f4f4;
+    --text-primary: #2c3e50;
+    --white: #ffffff;
+    --transition-speed: 0.3s;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-primary);
+    background-color: var(--background-light);
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2.5rem;
+    color: var(--dark-teal);
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .section-header h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-green);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .section-header p {
+    font-size: 1.1rem;
+    color: #5a6c7d;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero {
+    position: relative;
+    height: 85vh;
+    min-height: 600px;
+    /* background: linear-gradient(rgba(0, 95, 115, 0.7), rgba(0, 128, 128, 0.7)), url('/api/placeholder/1920/1080') center/cover no-repeat; */
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    overflow: hidden;
+  }
+  .hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .hero-background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+    opacity: 0.7; 
+  }
+  
+
+  .hero-video-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 95, 115, 0.6), rgba(0, 128, 128, 0.6));
+    z-index: 2;
+  }
+
+  
+  .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+  
+  .hero h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  .highlight {
+    color: var(--accent-green);
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+  
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .btn.primary {
+    background-color: var(--accent-green);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+  }
+  
+  .btn.primary:hover {
+    background-color: #27ae60;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+  }
+  
+  .btn.secondary {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+  }
+  
+  .btn.secondary:hover {
+    background-color: var(--white);
+    color: var(--secondary-teal);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+  }
+  
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+  }
+  
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-green);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* Featured Crops Section */
+  .featured-crops {
+    padding: 5rem 0;
+    background-color: var(--white);
+  }
+  
+  .crops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .crop-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 128, 128, 0.08);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  }
+  
+  .crop-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 128, 128, 0.12);
+  }
+  
+  .crop-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .crop-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .crop-card:hover .crop-image img {
+    transform: scale(1.05);
+  }
+  
+  .distance-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .crop-info {
+    padding: 1.5rem;
+  }
+  
+  .crop-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-teal);
+  }
+  
+  .price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--secondary-teal);
+    margin-bottom: 0.5rem;
+  }
+  
+  .farmer {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+  }
+  
+  .btn-outline {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--primary-teal);
+    border-radius: 50px;
+    color: var(--primary-teal);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-speed) ease;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  .btn-outline:hover {
+    background-color: var(--primary-teal);
+    color: var(--white);
+  }
+  
+  .view-all {
+    text-align: center;
+  }
+  
+  .btn-text {
+    display: inline-flex;
+    align-items: center;
+    color: var(--secondary-teal);
+    font-weight: 600;
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: color var(--transition-speed) ease;
+    font-size: 1.1rem;
+  }
+  
+  .btn-text i {
+    transition: transform var(--transition-speed) ease;
+  }
+  
+  .btn-text:hover {
+    color: var(--accent-green);
+  }
+  
+  .btn-text:hover i {
+    transform: translateX(5px);
+  }
+
+  /* Benefits Section */
+  .benefits {
+    padding: 5rem 0;
+    background-color: var(--background-light);
+  }
+  
+  .benefits-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .benefits-text .section-header {
+    text-align: left;
+  }
+  
+  .benefits-text .section-header h2::after {
+    left: 30px;
+    transform: none;
+  }
+  
+  .benefits-list {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .benefit-item {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .benefit-icon {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(0, 128, 128, 0.2);
+  }
+  
+  .benefit-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-teal);
+  }
+  
+  .benefit-details p {
+    color: #5a6c7d;
+    font-size: 0.95rem;
+  }
+  
+  .benefits-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .benefits-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* How It Works Section */
+  .how-it-works {
+    padding: 5rem 0;
+    background-color: var(--white);
+  }
+  
+  .steps-container {
+    position: relative;
+    padding: 2rem 0;
+  }
+  
+  .step-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background-color: #e2e8f0;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  
+  .steps {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  
+  .step-number {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    box-shadow: 0 8px 20px rgba(0, 128, 128, 0.2);
+  }
+  
+  .step-content {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    flex-grow: 1;
+  }
+  
+  .step-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-teal);
+  }
+  
+  .step-content p {
+    margin-bottom: 1.5rem;
+    color: #5a6c7d;
+  }
+  
+  .step-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--secondary-teal);
+    font-weight: 600;
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .step-link:hover {
+    color: var(--accent-green);
+  }
+  
+  .step-link:hover i {
+    transform: translateX(5px);
+  }
+  
+  .step-link i {
+    transition: transform var(--transition-speed) ease;
+  }
+
+  /* Testimonials Section */
+  .testimonials {
+    padding: 5rem 0;
+    background-color: var(--background-light);
+  }
+  
+  .testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .testimonial-card {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .quote-icon {
+    position: absolute;
+    top: -15px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-teal), var(--secondary-teal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 5px 15px rgba(0, 128, 128, 0.2);
+  }
+  
+  .testimonial-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .author-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .author-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: var(--dark-teal);
+  }
+  
+  .author-info p {
+    font-size: 0.9rem;
+    color: #5a6c7d;
+  }
+  
+  .testimonial-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #cbd5e0;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .nav-dot.active {
+    background-color: var(--secondary-teal);
+    transform: scale(1.2);
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
+    color: var(--white);
+    text-align: center;
+  }
+  
+  .cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .hero h1 {
+      font-size: 3.5rem;
+    }
+    
+    .benefits-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .benefits-image {
+      order: -1;
+    }
+    
+    .benefits-text .section-header {
+      text-align: center;
+    }
+    
+    .benefits-text .section-header h2::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      height: auto;
+      padding: 6rem 20px;
+    }
+    
+    .hero h1 {
+      font-size: 2.8rem;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+    }
+    
+    .hero-buttons {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .hero-stats {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2rem;
+    }
+    
+    .step {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .step-line {
+      display: none;
+    }
+    
+    .benefit-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .testimonial-card {
+      padding: 2rem 1.5rem;
+    }
+    
+    .quote-icon {
+      position: static;
+      margin: 0 auto 1.5rem;
+    }
+    
+    .testimonial-author {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .cta-buttons {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .section-header h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  
+    const dots = document.querySelectorAll('.nav-dot');
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+
+        dots.forEach(d => d.classList.remove('active'));
+
+        dot.classList.add('active');
+
+        console.log(`Testimonial ${index + 1} selected`);
+      });
+    });
+  });
+</script>
