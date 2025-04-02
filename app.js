@@ -79,6 +79,10 @@ app.get("/sell", isLoggedIn, (req, res) => {
   res.render("sell.ejs");
 });
 
+const listingsRoutes = require("./routes/listing");
+app.use("/listings", listingsRoutes);
+
+
 app.get("/buy", async (req, res) => {
   const listings = await Listing.find({});
   res.render("buy.ejs", { listings });
