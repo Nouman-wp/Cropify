@@ -19,7 +19,6 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const Order = require("./models/order");
 
-// Database connection
 async function main() {
   try {
     await mongoose.connect(MONGO_URL);
@@ -30,7 +29,6 @@ async function main() {
 }
 main();
 
-// Middleware setup
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
@@ -39,7 +37,6 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
-// Session configuration
 const sessionOptions = {
   secret: "myrandomsecret",
   resave: false,
@@ -53,22 +50,18 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-// Passport.js setup (order is important)
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// Store current user and flash messages in all templates
 app.use((req, res, next) => {
   res.locals.currentUser = req.user || null;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
-
-// Routes
 app.use(dashboardRoutes);
 
 app.get("/", (req, res) => {
