@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Listing = require('../models/listing');
-const { isLoggedIn } = require('../middleware'); // Protect route
+const { isLoggedIn } = require('../middleware'); 
 
 
 router.get('/dashboard', isLoggedIn, async (req, res) => {
