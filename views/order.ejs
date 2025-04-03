@@ -2,7 +2,7 @@
 
 <div class="container my-5 pt-4">
   <div class="order-process-container">
-    <!-- Animated Order Progress Bar -->
+
     <div class="order-progress-wrapper mb-5">
       <div class="progress-steps">
         <div class="progress-step completed">
@@ -48,9 +48,9 @@
     </div>
 
     <div class="row gx-4 gy-4">
-      <!-- Left Column: Product Info -->
+
       <div class="col-lg-7">
-        <!-- Product Card with Animated Badge -->
+ 
         <div class="product-card">
           <div class="badge-ribbon">
             <% if (crop.originalPrice && crop.originalPrice > crop.price) { %>
@@ -161,7 +161,6 @@
           </div>
         </div>
         
-        <!-- Farm Story Section with Animations -->
         <div class="farm-story mt-4">
           <div class="card-header">
             <h5><i class="bi bi-journal-richtext me-2"></i>The Story Behind Your Food</h5>
@@ -216,7 +215,7 @@
           </div>
         </div>
         
-        <!-- Product Benefits Section -->
+
         <div class="product-benefits mt-4">
           <div class="card-header">
             <h5><i class="bi bi-heart-fill me-2"></i>Health Benefits</h5>
@@ -264,7 +263,7 @@
         </div>
       </div>
 
-      <!-- Right Column: Order Form -->
+
       <div class="col-lg-5">
         <div class="order-form-card sticky-lg-top" style="top: 100px; z-index: 100;">
           <div class="card-header">
@@ -437,7 +436,7 @@
       </div>
     </div>
 
-    <!-- You Might Also Like Section -->
+
     <div class="similar-products mt-5">
       <div class="section-header">
         <h4><i class="bi bi-grid me-2"></i>You Might Also Like</h4>
@@ -552,7 +551,7 @@
       </div>
     </div>
 
-    <!-- Trust Badges Section -->
+
     <div class="trust-badges mt-5 mb-4">
       <div class="badge-item">
         <div class="badge-icon">
@@ -596,15 +595,15 @@
 
 <style>
   :root {
-    --primary-teal: #20b2aa;        /* Light Sea Green */
+    --primary-teal: #20b2aa;        
     --primary-teal-hover: #1ca098;
     --primary-teal-light: #dff5f4;
-    --secondary-teal: #008080;      /* Teal */
-    --dark-teal: #005f73;           /* Deep Teal */
-    --accent-green: #2ecc71;        /* Emerald Green */
-    --background-light: #f0f4f4;    /* Soft Teal Background */
+    --secondary-teal: #008080;      
+    --dark-teal: #005f73;           
+    --accent-green: #2ecc71;       
+    --background-light: #f0f4f4;    
     --background-white: #ffffff;
-    --text-primary: #2c3e50;        /* Dark Blue-Gray */
+    --text-primary: #2c3e50;        
     --text-secondary: #5f7384;
     --text-light: #94a3b8;
     --border-color: #e4eaec;
@@ -615,7 +614,7 @@
     --animation-timing: 0.3s ease;
   }
 
-  /* Global styles */
+
   .container {
     max-width: 1320px;
   }
@@ -653,7 +652,7 @@
     border: none;
   }
 
-  /* ===== Progress Steps ===== */
+
   .order-progress-wrapper {
     padding: 20px 0;
   }
@@ -779,7 +778,7 @@
     background-color: var(--primary-teal);
   }
 
-  /* ===== Product Card ===== */
+
   .product-card {
     position: relative;
     margin-bottom: 30px;
@@ -1067,7 +1066,7 @@
     color: #228be6;
   }
 
-  /* ===== Farm Story Section ===== */
+
   .farm-story-content {
     display: flex;
     flex-direction: column;
@@ -1184,8 +1183,6 @@
     font-size: 0.8rem;
     color: var(--text-secondary);
   }
-
-  /* ===== Product Benefits Section ===== */
   .benefits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1231,7 +1228,7 @@
     color: var(--text-secondary);
   }
 
-  /* ===== Order Form ===== */
+
   .order-form-card {
     background-color: white;
     border-radius: 12px;
@@ -1630,8 +1627,6 @@
     color: var(--primary-teal);
     margin-bottom: 5px;
   }
-
-  /* ===== Similar Products ===== */
   .section-header {
     display: flex;
     justify-content: space-between;
@@ -1782,8 +1777,6 @@
     background-color: var(--primary-teal);
     color: white;
 }
-
-/* Responsive adjustments */
 @media (max-width: 1199.98px) {
     .progress-steps {
         max-width: 500px;
@@ -1895,8 +1888,6 @@
         justify-content: center;
     }
 }
-
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -1911,8 +1902,6 @@
 .fade-in {
     animation: fadeIn 0.5s ease forwards;
 }
-
-/* Tooltips */
 .tooltip {
     position: relative;
     display: inline-block;
@@ -1953,8 +1942,6 @@
     visibility: visible;
     opacity: 1;
 }
-
-/* Custom form controls */
 .form-control {
     display: block;
     width: 100%;
@@ -2001,8 +1988,6 @@
     outline: 0;
     box-shadow: 0 0 0 3px var(--border-focus);
 }
-
-/* Modal styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -2077,8 +2062,6 @@
     justify-content: flex-end;
     gap: 10px;
 }
-
-/* Buttons */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -2134,7 +2117,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Quantity control
     const quantityInput = document.getElementById('quantity');
     const minusBtn = document.querySelector('.quantity-btn.minus');
     const plusBtn = document.querySelector('.quantity-btn.plus');
@@ -2160,8 +2142,6 @@
       
       const totalPrice = subtotal + deliveryFee - discount;
       totalPriceEl.textContent = totalPrice;
-      
-      // Show/hide discount row
       if (discount > 0) {
         discountRow.style.display = 'flex';
         savingsAlert.style.display = 'flex';
@@ -2199,8 +2179,6 @@
       }
       updatePrice();
     });
-    
-    // Delivery option control
     const standardDelivery = document.getElementById('standard');
     const expressDelivery = document.getElementById('express');
     const deliveryDateEl = document.getElementById('deliveryDate');
@@ -2222,8 +2200,7 @@
         updatePrice();
       }
     });
-    
-    // Coupon toggle
+
     const couponHeader = document.getElementById('couponHeader');
     const couponBody = document.getElementById('couponBody');
     
@@ -2235,8 +2212,7 @@
         couponBody.style.display = 'block';
       }
     });
-    
-    // Apply coupon buttons
+
     const applyCouponButtons = document.querySelectorAll('.apply-coupon-btn');
     const couponMessageEl = document.getElementById('couponMessage');
     
@@ -2263,8 +2239,7 @@
         updatePrice();
       });
     });
-    
-    // Manual promo code
+
     const promoCodeInput = document.getElementById('promoCode');
     const applyPromoBtn = document.getElementById('applyPromo');
     
@@ -2297,8 +2272,7 @@
       discountEl.textContent = discount;
       updatePrice();
     });
-    
-    // Product gallery
+
     const mainImage = document.querySelector('.product-image-main img');
     const thumbnails = document.querySelectorAll('.thumbnail');
     
@@ -2306,14 +2280,12 @@
       thumbnail.addEventListener('click', function() {
         const imageUrl = this.dataset.image;
         mainImage.src = imageUrl;
-        
-        // Update active thumbnail
+
         thumbnails.forEach(item => item.classList.remove('active'));
         this.classList.add('active');
       });
     });
-    
-    // Products carousel
+
     const slider = document.querySelector('.products-slider');
     const nextBtn = document.getElementById('nextSlide');
     const prevBtn = document.getElementById('prevSlide');
@@ -2351,13 +2323,10 @@
         updateSlider();
       }
     });
-    
-    // Initialize
+
     updateSlider();
-    
-    // Handle window resize
+
     window.addEventListener('resize', function() {
-      // Recalculate slidesToShow
       const newSlidesToShow = window.innerWidth < 576 ? 1 : 
                              window.innerWidth < 768 ? 2 : 
                              window.innerWidth < 992 ? 3 : 4;
