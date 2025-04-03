@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 
 <section class="profile-container">
-  <!-- Profile Sidebar -->
+
   <div class="profile-sidebar">
     <div class="user-details">
       <div class="avatar-container">
@@ -54,14 +54,12 @@
     </div>
   </div>
 
-  <!-- Profile Content -->
   <div class="profile-content">
     <div class="content-header">
       <h1>Your Profile</h1>
       <p>Manage your account information and settings</p>
     </div>
 
-    <!-- Alert Messages -->
     <% if (locals.successMessage) { %>
       <div class="alert alert-success">
         <i class="fa fa-check-circle"></i> <%= successMessage %>
@@ -76,7 +74,6 @@
       </div>
     <% } %>
 
-    <!-- Personal Info Tab -->
     <div class="tab-content active" id="personal-tab">
       <div class="content-card">
         <div class="card-header">
@@ -130,7 +127,6 @@
       </div>
     </div>
 
-    <!-- Address Tab -->
     <div class="tab-content" id="address-tab">
       <div class="content-card">
         <div class="card-header">
@@ -194,7 +190,6 @@
       </div>
     </div>
 
-    <!-- KYC Tab -->
     <div class="tab-content" id="kyc-tab">
       <div class="content-card">
         <div class="card-header">
@@ -257,7 +252,6 @@
       </div>
     </div>
 
-    <!-- Social Tab -->
     <div class="tab-content" id="social-tab">
       <div class="content-card">
         <div class="card-header">
@@ -307,8 +301,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Settings Tab -->
     <div class="tab-content" id="settings-tab">
       <div class="content-card">
         <div class="card-header">
@@ -404,26 +396,23 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Tab Navigation
+
     const tabLinks = document.querySelectorAll('.profile-nav .nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
     
     tabLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        // Remove active class from all tabs
+
         tabLinks.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-        
-        // Add active class to current tab
+
         this.classList.add('active');
         const tabId = this.getAttribute('data-tab') + '-tab';
         document.getElementById(tabId).classList.add('active');
       });
     });
-    
-    // File Upload Preview
+
     const fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach(input => {
       input.addEventListener('change', function() {
@@ -440,7 +429,7 @@
       });
     });
     
-    // Close Alert Messages
+
     const closeButtons = document.querySelectorAll('.close-alert');
     closeButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -477,7 +466,6 @@
   --transition: all 0.3s ease;
 }
 
-/* Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -491,7 +479,6 @@ body {
   line-height: 1.6;
 }
 
-/* Layout */
 .profile-container {
   display: flex;
   gap: 30px;
@@ -500,7 +487,6 @@ body {
   margin: 0 auto;
 }
 
-/* Sidebar Styles */
 .profile-sidebar {
   width: 320px;
   background-color: var(--color-bg-card);
@@ -510,7 +496,7 @@ body {
   position: sticky;
   top: 100px;
   height: fit-content;
-  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  flex-shrink: 0; 
 }
 
 .user-details {
@@ -525,8 +511,8 @@ body {
 .avatar-container {
   position: relative;
   margin-bottom: 15px;
-  width: 120px; /* Fixed width to prevent layout shifts */
-  height: 120px; /* Fixed height to match avatar size */
+  width: 120px; 
+  height: 120px; 
 }
 
 .avatar-image {
@@ -551,7 +537,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: var(--shadow-sm);
-  z-index: 1; /* Ensure badge is above other elements */
+  z-index: 1; 
 }
 
 .farmer-badge {
@@ -577,7 +563,7 @@ body {
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
-  z-index: 1; /* Ensure icon is above other elements */
+  z-index: 1; 
 }
 
 .edit-avatar:hover {
@@ -590,8 +576,8 @@ body {
   font-weight: 700;
   margin: 10px 0 5px;
   color: var(--color-text);
-  text-align: center; /* Center username text */
-  word-break: break-word; /* Prevent text overflow */
+  text-align: center; 
+  word-break: break-word; 
 }
 
 .user-status {
@@ -599,7 +585,7 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
-  justify-content: center; /* Center status text */
+  justify-content: center; 
 }
 
 .verified {
@@ -610,7 +596,6 @@ body {
   color: var(--color-warning);
 }
 
-/* Profile Navigation */
 .profile-nav {
   margin-bottom: 30px;
 }
@@ -626,14 +611,14 @@ body {
   transition: var(--transition);
   border-radius: var(--border-radius-md);
   margin-bottom: 8px;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 .profile-nav .nav-item i {
-  flex-shrink: 0; /* Prevent icon from shrinking */
-  width: 20px; /* Fixed width for icons */
+  flex-shrink: 0; 
+  width: 20px; 
   display: inline-flex;
   justify-content: center;
 }
@@ -653,7 +638,7 @@ body {
   color: white;
 }
 
-/* Profile Stats */
+
 .profile-stats {
   display: flex;
   justify-content: space-between;
@@ -665,7 +650,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 5px; /* Add padding to prevent overlap */
+  padding: 0 5px; 
 }
 
 .stat-value {
@@ -679,14 +664,14 @@ body {
   color: var(--color-text-light);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  text-align: center; /* Center label text */
+  text-align: center; 
 }
 
-/* Content Styles */
+
 .profile-content {
   flex: 1;
   max-width: 800px;
-  min-width: 0; /* Allow content to shrink below min-content width */
+  min-width: 0; 
 }
 
 .content-header {
@@ -698,16 +683,15 @@ body {
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: 5px;
-  word-break: break-word; /* Prevent text overflow */
+  word-break: break-word; 
 }
 
 .content-header p {
   color: var(--color-text-light);
 }
 
-/* Alert Messages */
 .alert {
-  padding: 15px 35px 15px 15px; /* Add right padding for close button */
+  padding: 15px 35px 15px 15px; 
   border-radius: var(--border-radius-md);
   margin-bottom: 20px;
   display: flex;
@@ -739,8 +723,8 @@ body {
   cursor: pointer;
   opacity: 0.7;
   transition: var(--transition);
-  width: 24px; /* Fixed width for button */
-  height: 24px; /* Fixed height for button */
+  width: 24px; 
+  height: 24px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -750,7 +734,6 @@ body {
   opacity: 1;
 }
 
-/* Tab Content */
 .tab-content {
   display: none;
 }
@@ -759,7 +742,7 @@ body {
   display: block;
 }
 
-/* Content Cards */
+
 .content-card {
   background-color: var(--color-bg-card);
   border-radius: var(--border-radius-lg);
@@ -784,7 +767,7 @@ body {
 }
 
 .card-header h2 i {
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0; 
 }
 
 .card-header p {
@@ -792,7 +775,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Forms */
+
 .profile-form {
   padding: 25px;
 }
@@ -805,7 +788,7 @@ body {
 
 .form-group {
   flex: 1;
-  min-width: 0; /* Allow form groups to shrink below min-content width */
+  min-width: 0; 
 }
 
 .form-group label {
@@ -826,8 +809,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-light);
-  width: 16px; /* Fixed width for icons */
-  text-align: center; /* Center icon in its space */
+  width: 16px; 
+  text-align: center; 
 }
 
 .input-icon input {
@@ -837,7 +820,7 @@ body {
   border-radius: var(--border-radius-md);
   transition: var(--transition);
   font-size: 1rem;
-  background-color: var(--color-bg-card); /* Ensure input has background */
+  background-color: var(--color-bg-card); 
 }
 
 .input-icon input:focus {
@@ -866,7 +849,7 @@ body {
   transition: var(--transition);
   text-decoration: none;
   border: none;
-  white-space: nowrap; /* Prevent text from wrapping */
+  white-space: nowrap; 
 }
 
 .primary-btn {
@@ -908,7 +891,7 @@ body {
 }
 
 .status-indicator i {
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0; 
 }
 
 .verified {
@@ -941,13 +924,13 @@ body {
 
 .upload-item {
   flex: 1;
-  min-width: 220px; /* Reduced min-width for better mobile layout */
+  min-width: 220px; 
 }
 
 .upload-area {
   border: 2px dashed var(--color-border);
   border-radius: var(--border-radius-md);
-  padding: 25px 15px; /* Reduced padding for better space usage */
+  padding: 25px 15px; 
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
@@ -967,23 +950,22 @@ body {
   font-size: 2.5rem;
   color: var(--color-primary);
   margin-bottom: 10px;
-  display: block; /* Ensure icon takes full width */
+  display: block; 
 }
 
 .upload-area span {
   display: block;
   font-weight: 600;
   margin-bottom: 5px;
-  word-break: break-word; /* Prevent text overflow */
+  word-break: break-word; 
 }
 
 .upload-area p {
   font-size: 0.85rem;
   color: var(--color-text-light);
-  word-break: break-word; /* Prevent text overflow */
+  word-break: break-word; 
 }
 
-/* Social Media Connections */
 .social-connections {
   padding: 15px 25px 25px;
 }
@@ -1015,7 +997,7 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0; 
 }
 
 .social-icon.facebook {
@@ -1033,24 +1015,24 @@ body {
 .social-info {
   flex: 1;
   margin-left: 15px;
-  min-width: 0; /* Allow info to shrink below min-content width */
-  overflow: hidden; /* Hide overflow text */
+  min-width: 0; 
+  overflow: hidden; 
 }
 
 .social-info h3 {
   font-size: 1.1rem;
   margin-bottom: 3px;
-  white-space: nowrap; /* Keep title on one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .social-info p {
   font-size: 0.85rem;
   color: var(--color-text-light);
-  white-space: nowrap; /* Keep status on one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 .social-btn {
@@ -1058,7 +1040,7 @@ body {
   border-radius: var(--border-radius-md);
   font-size: 0.85rem;
   margin-left: 10px;
-  flex-shrink: 0; /* Prevent button from shrinking */
+  flex-shrink: 0; 
 }
 
 .connect-btn {
@@ -1081,7 +1063,6 @@ body {
   color: white;
 }
 
-/* Settings Section */
 .settings-section {
   padding: 20px 25px;
   border-bottom: 1px solid var(--color-border);
@@ -1115,7 +1096,7 @@ body {
   opacity: 0;
   width: 0;
   height: 0;
-  position: absolute; /* Ensure hidden input doesn't affect layout */
+  position: absolute; 
 }
 
 .toggle-slider {
@@ -1127,7 +1108,7 @@ body {
   border-radius: 34px;
   transition: var(--transition);
   margin-right: 10px;
-  flex-shrink: 0; /* Prevent slider from shrinking */
+  flex-shrink: 0; 
 }
 
 .toggle-slider:before {
@@ -1152,12 +1133,12 @@ input:checked + .toggle-slider:before {
 
 .toggle-label {
   font-weight: 500;
-  white-space: nowrap; /* Keep label on one line */
-  overflow: hidden; /* Hide overflow */
-  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
-/* Danger Zone */
+
 .danger-zone {
   background-color: rgba(231, 76, 60, 0.05); /* Subtle background to highlight danger zone */
 }
@@ -1167,7 +1148,7 @@ input:checked + .toggle-slider:before {
   margin-bottom: 20px;
 }
 
-/* Improved Responsive Design */
+
 @media (max-width: 1200px) {
   .profile-container {
     padding: 25px 3%;
@@ -1176,7 +1157,7 @@ input:checked + .toggle-slider:before {
   .profile-sidebar {
   width: 320px;
   flex-shrink: 0;
-  overflow: hidden; /* Prevent content from flowing outside sidebar */
+  overflow: hidden; 
 }
 }
 
@@ -1188,7 +1169,7 @@ input:checked + .toggle-slider:before {
   .profile-sidebar {
     width: 100%;
     position: static;
-    max-width: 100%; /* Full width on smaller screens */
+    max-width: 100%; 
   }
   
   .profile-stats {
@@ -1196,7 +1177,7 @@ input:checked + .toggle-slider:before {
   }
   
   .profile-content {
-    max-width: 100%; /* Full width on smaller screens */
+    max-width: 100%;
   }
 }
 
@@ -1211,17 +1192,17 @@ input:checked + .toggle-slider:before {
   }
   
   .social-item {
-    flex-wrap: wrap; /* Allow social items to wrap on mobile */
+    flex-wrap: wrap; 
   }
   
   .social-btn {
     margin-left: 0;
     margin-top: 10px;
-    width: 100%; /* Full width buttons on mobile */
+    width: 100%;
   }
   
   .social-info {
-    width: calc(100% - 60px); /* Adjust width to account for icon */
+    width: calc(100% - 60px); 
     margin-right: 0;
   }
 }
@@ -1275,14 +1256,14 @@ input:checked + .toggle-slider:before {
   }
 }
 
-/* Handle form layout on very small screens */
+
 @media (max-width: 360px) {
   .form-actions {
-    justify-content: center; /* Center buttons on very small screens */
+    justify-content: center; 
   }
   
   .btn {
-    width: 100%; /* Full width buttons on very small screens */
+    width: 100%; 
   }
   
   .profile-nav .nav-item {
@@ -1291,7 +1272,7 @@ input:checked + .toggle-slider:before {
   }
 }
 
-/* Fix for potential Firefox flexbox issues */
+
 @supports (-moz-appearance:none) {
   .profile-sidebar, 
   .profile-content {
@@ -1304,7 +1285,6 @@ input:checked + .toggle-slider:before {
   }
 }
 
-/* Ensure proper spacing for all form elements */
 input, 
 button, 
 select, 
@@ -1315,7 +1295,7 @@ textarea {
   line-height: inherit;
 }
 
-/* Fix potential accessibility issues with focus states */
+
 :focus {
   outline: 0;
 }
@@ -1328,19 +1308,16 @@ textarea:focus {
   outline-offset: 2px;
 }
 
-/* Fix for table layouts in mobile views */
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
-/* Prevent overflows in tables */
 td, th {
   word-break: break-word;
   hyphens: auto;
 }
 
-/* Fix for long words breaking layout */
 p, h1, h2, h3, h4, h5, h6, span, a {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1349,7 +1326,7 @@ p, h1, h2, h3, h4, h5, h6, span, a {
   hyphens: auto;
 }
 
-/* Ensure proper spacing for FontAwesome icons */
+
 .fa, .fab, .fal, .far, .fas {
   line-height: 1;
   vertical-align: middle;
@@ -1357,26 +1334,23 @@ p, h1, h2, h3, h4, h5, h6, span, a {
 </style>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Tab Navigation
+
     const tabLinks = document.querySelectorAll('.profile-nav .nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
     
     tabLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        // Remove active class from all tabs
+
         tabLinks.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-        
-        // Add active class to current tab
+
         this.classList.add('active');
         const tabId = this.getAttribute('data-tab') + '-tab';
         document.getElementById(tabId).classList.add('active');
       });
     });
-    
-    // File Upload Preview
+
     const fileInputs = document.querySelectorAll('input[type="file"]');
     fileInputs.forEach(input => {
       input.addEventListener('change', function() {
@@ -1392,16 +1366,14 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         }
       });
     });
-    
-    // Close Alert Messages
+
     const closeButtons = document.querySelectorAll('.close-alert');
     closeButtons.forEach(button => {
       button.addEventListener('click', function() {
         this.parentElement.style.display = 'none';
       });
     });
-    
-    // Password validation
+
     const passwordForm = document.querySelector('form[action="/profile/password"]');
     if (passwordForm) {
       passwordForm.addEventListener('submit', function(e) {
@@ -1414,32 +1386,28 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         }
       });
     }
-    
-    // Profile picture upload preview
+
     const editAvatar = document.querySelector('.edit-avatar');
     const avatarImage = document.querySelector('.avatar-image');
     
     if (editAvatar) {
       editAvatar.addEventListener('click', function() {
-        // Create a file input element
+
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.accept = 'image/*';
-        
-        // Trigger click on file input
+
         fileInput.click();
-        
-        // Handle file selection
+
         fileInput.addEventListener('change', function() {
           if (this.files && this.files[0]) {
             const file = this.files[0];
             const reader = new FileReader();
             
             reader.onload = function(e) {
-              // Update avatar image preview
+
               avatarImage.src = e.target.result;
-              
-              // Create a form and submit it to update profile image
+
               const formData = new FormData();
               formData.append('profileImage', file);
               
@@ -1450,19 +1418,16 @@ p, h1, h2, h3, h4, h5, h6, span, a {
               .then(response => response.json())
               .then(data => {
                 if (data.success) {
-                  // Show success message
+
                   const successAlert = document.createElement('div');
                   successAlert.className = 'alert alert-success';
                   successAlert.innerHTML = `
                     <i class="fa fa-check-circle"></i> Profile picture updated successfully.
                     <button class="close-alert"><i class="fa fa-times"></i></button>
                   `;
-                  
-                  // Add alert to page
+
                   const contentHeader = document.querySelector('.content-header');
                   contentHeader.parentNode.insertBefore(successAlert, contentHeader.nextSibling);
-                  
-                  // Add close functionality to alert
                   successAlert.querySelector('.close-alert').addEventListener('click', function() {
                     successAlert.style.display = 'none';
                   });
@@ -1481,8 +1446,7 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         });
       });
     }
-    
-    // Form validation
+
     const allForms = document.querySelectorAll('form');
     allForms.forEach(form => {
       form.addEventListener('submit', function(e) {
@@ -1493,8 +1457,7 @@ p, h1, h2, h3, h4, h5, h6, span, a {
           if (!input.value.trim()) {
             isValid = false;
             input.classList.add('input-error');
-            
-            // Add shake animation to highlight the error
+
             input.parentElement.classList.add('shake-animation');
             setTimeout(() => {
               input.parentElement.classList.remove('shake-animation');
@@ -1510,16 +1473,14 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         }
       });
     });
-    
-    // Remove error styling when user types in a field
+
     const allInputs = document.querySelectorAll('input');
     allInputs.forEach(input => {
       input.addEventListener('input', function() {
         this.classList.remove('input-error');
       });
     });
-    
-    // Add smooth scrolling to tab navigation
+
     tabLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -1532,12 +1493,11 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         });
       });
     });
-    
-    // Handle form submissions with AJAX to prevent page reload
+
     const ajaxForms = document.querySelectorAll('form:not(.kyc-form)');
     ajaxForms.forEach(form => {
       form.addEventListener('submit', function(e) {
-        // Skip AJAX for password form and delete account form
+
         if (this.getAttribute('action') === '/profile/password' || 
             this.getAttribute('action') === '/profile/delete') {
           return;
@@ -1555,41 +1515,36 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            // Show success message
+
             const successAlert = document.createElement('div');
             successAlert.className = 'alert alert-success';
             successAlert.innerHTML = `
               <i class="fa fa-check-circle"></i> ${data.message || 'Changes saved successfully.'}
               <button class="close-alert"><i class="fa fa-times"></i></button>
             `;
-            
-            // Add alert to page
+
             const contentHeader = document.querySelector('.content-header');
             contentHeader.parentNode.insertBefore(successAlert, contentHeader.nextSibling);
-            
-            // Add close functionality to alert
+
             successAlert.querySelector('.close-alert').addEventListener('click', function() {
               successAlert.style.display = 'none';
             });
-            
-            // Update UI if necessary
+
             if (data.userData) {
               updateUIWithUserData(data.userData);
             }
           } else {
-            // Show error message
+
             const errorAlert = document.createElement('div');
             errorAlert.className = 'alert alert-error';
             errorAlert.innerHTML = `
               <i class="fa fa-exclamation-circle"></i> ${data.message || 'An error occurred. Please try again.'}
               <button class="close-alert"><i class="fa fa-times"></i></button>
             `;
-            
-            // Add alert to page
+
             const contentHeader = document.querySelector('.content-header');
             contentHeader.parentNode.insertBefore(errorAlert, contentHeader.nextSibling);
-            
-            // Add close functionality to alert
+
             errorAlert.querySelector('.close-alert').addEventListener('click', function() {
               errorAlert.style.display = 'none';
             });
@@ -1601,15 +1556,13 @@ p, h1, h2, h3, h4, h5, h6, span, a {
         });
       });
     });
-    
-    // Function to update UI elements with new user data
+
     function updateUIWithUserData(userData) {
-      // Update username if changed
+
       if (userData.username) {
         document.querySelector('.username').textContent = userData.username;
       }
-      
-      // Update verification status if changed
+
       if (userData.isVerified !== undefined) {
         const statusElement = document.querySelector('.user-status');
         if (userData.isVerified) {
