@@ -483,8 +483,6 @@
     const uploadArea = document.getElementById('upload-area');
     const fileInput = document.getElementById('idProof');
     const filePreview = document.getElementById('file-preview');
-    
-    // Handle drag and drop events
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       uploadArea.addEventListener(eventName, preventDefaults, false);
     });
@@ -509,8 +507,6 @@
     function unhighlight() {
       uploadArea.classList.remove('dragover');
     }
-    
-    // Handle file drop
     uploadArea.addEventListener('drop', handleDrop, false);
     
     function handleDrop(e) {
@@ -522,8 +518,7 @@
         updateFilePreview(files[0]);
       }
     }
-    
-    // Handle file selection via input
+
     fileInput.addEventListener('change', function() {
       if (this.files.length) {
         updateFilePreview(this.files[0]);
@@ -534,7 +529,6 @@
       filePreview.innerHTML = '';
       filePreview.classList.add('active');
       
-      // Create file icon based on file type
       let fileIcon = 'fa-file';
       
       if (file.type.includes('pdf')) {
@@ -551,8 +545,6 @@
       `;
       
       filePreview.appendChild(fileElement);
-      
-      // Add remove file functionality
       const removeBtn = filePreview.querySelector('.file-remove');
       removeBtn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -560,7 +552,6 @@
         filePreview.classList.remove('active');
       });
     }
-    
     function formatFileSize(bytes) {
       if (bytes < 1024) return bytes + ' bytes';
       else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';

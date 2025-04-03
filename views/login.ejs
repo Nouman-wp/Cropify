@@ -123,30 +123,24 @@
 
 <style>
     :root {
-        /* Sophisticated Teal Color Palette - Matching your header/footer */
-        --primary-teal: #20b2aa;        /* Light Sea Green */
-        --secondary-teal: #008080;      /* Teal */
-        --dark-teal: #005f73;           /* Deep Teal */
-        --accent-green: #2ecc71;        /* Emerald Green */
-        --background-light: #f0f4f4;    /* Soft Teal Background */
-        --text-primary: #2c3e50;        /* Dark Blue-Gray */
-        --text-secondary: #5d7b8a;      /* Slate Gray */
+
+        --primary-teal: #20b2aa;        
+        --secondary-teal: #008080;      
+        --dark-teal: #005f73;           
+        --accent-green: #2ecc71;        
+        --background-light: #f0f4f4;    
+        --text-primary: #2c3e50;        
+        --text-secondary: #5d7b8a;      
         --white: #ffffff;
         --error: #e74c3c;
         --success: #2ecc71;
         --warning: #f39c12;
-        
-        /* Form Elements */
         --input-bg: #f9fbfb;
         --input-border: #dbe5e5;
         --input-focus: #20b2aa;
-        
-        /* Shadows and Effects */
         --card-shadow: 0 10px 25px rgba(0, 128, 128, 0.1);
         --hover-shadow: 0 15px 35px rgba(0, 128, 128, 0.15);
         --btn-shadow: 0 4px 6px rgba(32, 178, 170, 0.2);
-        
-        /* Transition and Animation */
         --transition-speed: 0.3s;
     }
 
@@ -159,7 +153,7 @@
 
     .login-container {
         width: 100%;
-        max-width: 700px; /* Increased from 500px to 700px */
+        max-width: 700px; 
         margin: 40px auto 80px;
         padding: 0 20px;
     }
@@ -181,13 +175,13 @@
     .login-header {
         background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
         color: var(--white);
-        padding: 30px 40px; /* Reduced padding from 40px to 30px vertically */
+        padding: 30px 40px; 
         text-align: center;
         position: relative;
     }
 
     .logo-container {
-        margin-bottom: 15px; /* Reduced from 20px */
+        margin-bottom: 15px; 
     }
 
     .logo {
@@ -200,13 +194,13 @@
     }
 
     .login-header h1 {
-        font-size: 2.25rem; /* Reduced from 2.5rem */
+        font-size: 2.25rem;
         margin: 0;
         font-weight: 700;
     }
 
     .login-header h4 {
-        margin: 8px 0 0; /* Reduced top margin from 10px to 8px */
+        margin: 8px 0 0; 
         font-weight: 400;
         opacity: 0.9;
     }
@@ -214,11 +208,11 @@
     .subtitle {
         font-size: 1.1rem;
         opacity: 0.9;
-        margin-top: 8px; /* Reduced from 10px */
+        margin-top: 8px; 
     }
 
     .login-form {
-        padding: 30px 40px; /* Reduced vertical padding */
+        padding: 30px 40px; 
     }
 
     .form-row {
@@ -229,12 +223,12 @@
 
     .form-group {
         flex: 1;
-        margin-bottom: 20px; /* Reduced from 25px */
+        margin-bottom: 20px;
     }
 
     label {
         display: block;
-        margin-bottom: 6px; /* Reduced from 8px */
+        margin-bottom: 6px; 
         font-weight: 600;
         color: var(--text-primary);
     }
@@ -246,7 +240,7 @@
 
     input, select {
         width: 100%;
-        padding: 12px 16px; /* Reduced from 14px to 12px */
+        padding: 12px 16px;
         border: 1px solid var(--input-border);
         border-radius: 10px;
         background-color: var(--input-bg);
@@ -275,8 +269,6 @@
     .error-message {
         color: var(--error);
     }
-
-    /* Password Field */
     .password-input-container {
         position: relative;
     }
@@ -297,12 +289,11 @@
         color: var(--dark-teal);
     }
 
-    /* Form Agreement */
     .form-agreement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px; /* Reduced from 25px */
+        margin-bottom: 20px; 
     }
 
     .checkbox-group {
@@ -327,9 +318,9 @@
         color: var(--dark-teal);
     }
 
-    /* Form Actions */
+  
     .form-actions {
-        margin-top: 15px; /* Reduced from 20px */
+        margin-top: 15px; 
         text-align: center;
     }
 
@@ -337,7 +328,7 @@
         background: linear-gradient(to right, var(--secondary-teal), var(--primary-teal));
         color: var(--white);
         border: none;
-        padding: 14px 30px; /* Reduced from 16px to 14px */
+        padding: 14px 30px;
         font-size: 1.1rem;
         font-weight: 600;
         border-radius: 10px;
@@ -364,10 +355,10 @@
         transform: translateY(0);
     }
 
-    /* Social Login */
+ 
     .divider {
         text-align: center;
-        margin: 25px 0; /* Reduced from 30px */
+        margin: 25px 0; 
         position: relative;
     }
 
@@ -400,7 +391,7 @@
     .social-login {
         display: flex;
         gap: 20px;
-        margin-bottom: 25px; /* Reduced from 30px */
+        margin-bottom: 25px; 
     }
 
     .social-btn {
@@ -433,7 +424,7 @@
 
     .login-link {
         text-align: center;
-        margin-top: 15px; /* Reduced from 20px */
+        margin-top: 15px; 
         color: var(--text-secondary);
     }
 
@@ -448,11 +439,10 @@
         text-decoration: underline;
     }
 
-    /* Features Highlight */
     .features-highlight {
         display: flex;
         justify-content: space-around;
-        margin-top: 25px; /* Reduced from 30px */
+        margin-top: 25px;
     }
 
     .feature {
@@ -460,7 +450,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 8px; /* Reduced from 10px */
+        gap: 8px; 
     }
 
     .feature i {
@@ -473,9 +463,8 @@
         color: var(--text-secondary);
     }
 
-    /* Alerts */
     .alert {
-        padding: 12px 15px; /* Reduced from 15px to 12px 15px */
+        padding: 12px 15px; 
         border-radius: 10px;
         margin-bottom: 20px;
         font-weight: 500;
@@ -487,7 +476,6 @@
         border-left: 4px solid var(--error);
     }
 
-    /* Responsive */
     @media screen and (max-width: 768px) {
         .login-container {
             max-width: 95%;
@@ -527,7 +515,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Password Toggle
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
         
@@ -536,15 +523,11 @@
             passwordInput.setAttribute('type', type);
             this.querySelector('i').classList.toggle('fa-eye');
             this.querySelector('i').classList.toggle('fa-eye-slash');
-            
-            // Change aria-label for accessibility
             this.setAttribute(
                 'aria-label', 
                 type === 'password' ? 'Show password' : 'Hide password'
             );
         });
-
-        // Form Validation
         const loginForm = document.getElementById('loginForm');
         const usernameInput = document.getElementById('username');
         const usernameError = document.getElementById('username-error');
@@ -552,12 +535,8 @@
         
         const validateForm = () => {
             let isValid = true;
-            
-            // Reset error messages
             usernameError.textContent = '';
             passwordError.textContent = '';
-            
-            // Validate username
             if (!usernameInput.value.trim()) {
                 usernameError.textContent = 'Username is required';
                 isValid = false;
@@ -566,7 +545,6 @@
                 isValid = false;
             }
             
-            // Validate password
             if (!passwordInput.value) {
                 passwordError.textContent = 'Password is required';
                 isValid = false;
@@ -577,15 +555,13 @@
             
             return isValid;
         };
-        
-        // Handle form submission
+
         loginForm.addEventListener('submit', (e) => {
             if (!validateForm()) {
                 e.preventDefault();
             }
         });
-        
-        // Real-time validation feedback
+
         usernameInput.addEventListener('input', () => {
             if (usernameInput.value.trim().length >= 3) {
                 usernameError.textContent = '';

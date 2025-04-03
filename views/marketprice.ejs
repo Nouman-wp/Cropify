@@ -1,7 +1,6 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="market-dashboard">
-  <!-- Hero Section -->
   <section class="hero-section">
     <div class="container">
       <h1 class="display-4 fw-bold">Global Crop Market Intelligence</h1>
@@ -19,7 +18,6 @@
     </div>
   </section>
 
-  <!-- Market Overview Section -->
   <section class="market-overview">
     <div class="container">
       <div class="section-header">
@@ -58,7 +56,6 @@
     </div>
   </section>
 
-  <!-- Main Content -->
   <div class="container">
     <div class="dashboard-controls">
       <div class="view-controls">
@@ -78,8 +75,6 @@
         </select>
       </div>
     </div>
-
-    <!-- Market Categories -->
     <div class="market-categories">
       <button class="category-btn active" data-category="all">All Crops</button>
       <button class="category-btn" data-category="grains">Grains</button>
@@ -89,7 +84,6 @@
       <button class="category-btn" data-category="nuts">Nuts & Seeds</button>
     </div>
 
-    <!-- Crops Grid View (Default) -->
     <div class="view-container" id="gridView">
       <div class="row" id="crop-list">
         <% crops.forEach(crop => { %>
@@ -122,8 +116,6 @@
         <% }) %>
       </div>
     </div>
-
-    <!-- Crops List View (Hidden by default) -->
     <div class="view-container d-none" id="listView">
       <table class="table table-hover">
         <thead>
@@ -167,7 +159,6 @@
       </table>
     </div>
 
-    <!-- Comparison View (Hidden by default) -->
     <div class="view-container d-none" id="comparisonView">
       <div class="comparison-container">
         <div class="comparison-controls">
@@ -198,7 +189,6 @@
   </div>
 </div>
 
-<!-- Market Alerts Sidebar -->
 <div class="market-alerts">
   <div class="alerts-header">
     <h3><i class="fas fa-bell me-2"></i>Market Alerts</h3>
@@ -236,7 +226,7 @@
   <span class="alert-badge">4</span>
 </button>
 
-<!-- Advanced Filters Modal -->
+
 <div class="modal fade" id="filtersModal" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -329,7 +319,6 @@
   </div>
 </div>
 
-<!-- Crop Details Modal -->
 <div class="modal fade" id="cropDetailsModal" tabindex="-1">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -493,7 +482,7 @@
   </div>
 </div>
 
-<!-- Set Price Alert Modal -->
+
 <div class="modal fade" id="priceAlertModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -584,7 +573,6 @@
   --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* General Styles */
 body {
   background-color: var(--background-light);
   color: var(--text-primary);
@@ -646,7 +634,6 @@ body {
   margin-bottom: 2rem;
 }
 
-/* Hero Section */
 .hero-section {
   background: linear-gradient(135deg, var(--secondary-teal), var(--primary-teal));
   color: white;
@@ -688,7 +675,6 @@ body {
   padding-right: 1.5rem;
 }
 
-/* Market Overview */
 .market-overview {
   margin-bottom: 2rem;
 }
@@ -738,7 +724,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Dashboard Controls */
+
 .dashboard-controls {
   display: flex;
   justify-content: space-between;
@@ -765,7 +751,6 @@ body {
   padding: 0.5rem;
 }
 
-/* Market Categories */
 .market-categories {
   display: flex;
   flex-wrap: wrap;
@@ -793,7 +778,7 @@ body {
   border-color: #dee2e6;
 }
 
-/* Crop Cards */
+
 .crop-card {
   background-color: var(--card-bg);
   border-radius: var(--border-radius);
@@ -901,7 +886,7 @@ body {
   color: var(--primary-teal);
 }
 
-/* List View */
+
 .table {
   background-color: white;
   border-radius: var(--border-radius);
@@ -958,7 +943,6 @@ body {
   color: var(--neutral-color);
 }
 
-/* Comparison View */
 .comparison-container {
   background-color: white;
   border-radius: var(--border-radius);
@@ -990,7 +974,7 @@ body {
   height: 400px;
 }
 
-/* Market Alerts */
+
 .market-alerts {
   position: fixed;
   top: 0;
@@ -1103,7 +1087,6 @@ body {
   font-weight: bold;
 }
 
-/* Modal Styling */
 .modal-content {
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -1134,7 +1117,6 @@ body {
   padding: 1.25rem 1.5rem;
 }
 
-/* Chart Controls */
 .chart-controls {
   display: flex;
   justify-content: space-between;
@@ -1171,7 +1153,7 @@ body {
   font-weight: 600;
 }
 
-/* Crop Details */
+
 .crop-details-card {
   background-color: #f8f9fa;
   border-radius: var(--border-radius);
@@ -1235,7 +1217,7 @@ body {
   gap: 0.5rem;
 }
 
-/* Price Range Slider */
+
 .price-slider-container {
   padding: 0 10px;
   margin-top: 1rem;
@@ -1247,7 +1229,7 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 992px) {
   .crop-summary {
     grid-template-columns: 1fr;
@@ -1307,7 +1289,7 @@ body {
   }
 }
 
-/* Animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1323,7 +1305,7 @@ body {
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Staggered animation for cards */
+
 .col-xl-3:nth-child(1) .crop-card { animation-delay: 0.05s; }
 .col-xl-3:nth-child(2) .crop-card { animation-delay: 0.1s; }
 .col-xl-3:nth-child(3) .crop-card { animation-delay: 0.15s; }
@@ -1334,7 +1316,7 @@ body {
 .col-xl-3:nth-child(8) .crop-card { animation-delay: 0.4s; }
 </style>
 
-<!-- JavaScript for the dashboard functionality -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/nouislider@15.6.1/dist/nouislider.min.js"></script>
@@ -1342,18 +1324,14 @@ body {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize Bootstrap components
+
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.forEach(function(tooltipTriggerEl) {
     new bootstrap.Tooltip(tooltipTriggerEl);
   });
-
-  // Initialize modals
   const filtersModal = new bootstrap.Modal(document.getElementById('filtersModal'));
   const cropDetailsModal = new bootstrap.Modal(document.getElementById('cropDetailsModal'));
   const priceAlertModal = new bootstrap.Modal(document.getElementById('priceAlertModal'));
-
-  // Market Alerts Toggle
   const alertsToggleBtn = document.querySelector('.alerts-toggle-btn');
   const closeAlertsBtn = document.querySelector('.btn-close-alerts');
   const marketAlerts = document.querySelector('.market-alerts');
@@ -1366,56 +1344,47 @@ document.addEventListener('DOMContentLoaded', function() {
     marketAlerts.classList.remove('active');
   });
 
-  // Advanced Filters Button
   document.getElementById('advancedFilterBtn').addEventListener('click', () => {
     filtersModal.show();
   });
 
-  // View switching (Grid, List, Comparison)
   const viewBtns = document.querySelectorAll('.btn-view');
   const viewContainers = document.querySelectorAll('.view-container');
 
   viewBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       const view = this.getAttribute('data-view');
-      
-      // Deactivate all buttons
+
       viewBtns.forEach(b => b.classList.remove('active'));
-      
-      // Activate clicked button
+
       this.classList.add('active');
-      
-      // Hide all views
+
       viewContainers.forEach(container => {
         container.classList.add('d-none');
       });
-      
-      // Show selected view
+
       document.getElementById(view + 'View').classList.remove('d-none');
     });
   });
 
-  // Category filtering
+
   const categoryBtns = document.querySelectorAll('.category-btn');
   const cropItems = document.querySelectorAll('[data-category]');
 
   categoryBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       const category = this.getAttribute('data-category');
-      
-      // Deactivate all buttons
+
       categoryBtns.forEach(b => b.classList.remove('active'));
-      
-      // Activate clicked button
+
       this.classList.add('active');
-      
-      // Show all items if "all" is selected
+
       if (category === 'all') {
         cropItems.forEach(item => {
           item.style.display = '';
         });
       } else {
-        // Filter items
+
         cropItems.forEach(item => {
           if (item.getAttribute('data-category') === category) {
             item.style.display = '';
@@ -1427,15 +1396,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Crop details modal
+
   const detailBtns = document.querySelectorAll('.btn-details');
   
   detailBtns.forEach(btn => {
     btn.addEventListener('click', function() {
       const cropCard = this.closest('[data-crop]');
       const cropData = JSON.parse(cropCard.getAttribute('data-crop'));
-      
-      // Populate modal with crop data
+
       document.getElementById('cropDetailTitle').textContent = cropData.name;
       document.getElementById('cropCategoryBadge').textContent = cropData.category || 'All Crops';
       
@@ -1458,19 +1426,15 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('cropSeason').textContent = cropData.season || 'Year-round';
       document.getElementById('topProducingRegion').textContent = cropData.topRegion || 'Multiple Regions';
 
-      // Show the modal
       cropDetailsModal.show();
-      
-      // Initialize chart
+
       initPriceChart(cropData);
     });
   });
 
-  // Sample function to initialize price chart
   function initPriceChart(cropData) {
     const ctx = document.getElementById('cropPriceChart').getContext('2d');
-    
-    // Sample data - in a real app, this would come from an API
+
     const dates = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const prices = generateRandomPrices(cropData.currentPrice, 12);
     
@@ -1538,7 +1502,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // Update price indicators
+
     document.getElementById('indicatorCurrent').textContent = '₹' + cropData.currentPrice;
     const highPrice = Math.max(...prices);
     document.getElementById('indicatorHigh').textContent = '₹' + highPrice.toFixed(2);
@@ -1546,8 +1510,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('indicatorLow').textContent = '₹' + lowPrice.toFixed(2);
     const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
     document.getElementById('indicatorAvg').textContent = '₹' + avgPrice.toFixed(2);
-    
-    // Populate regional price table with sample data
+
     const regions = ['North India', 'South India', 'East India', 'West India', 'Central India'];
     const tableBody = document.getElementById('regionalPriceTable').querySelector('tbody');
     tableBody.innerHTML = '';
@@ -1569,7 +1532,7 @@ document.addEventListener('DOMContentLoaded', function() {
       tableBody.appendChild(row);
     });
     
-    // Sample market insights
+
     document.getElementById('marketInsights').innerHTML = `
       <p>The ${cropData.name} market has shown ${cropData.trend > 0 ? 'a positive' : cropData.trend < 0 ? 'a negative' : 'a stable'} trend in recent weeks.</p>
       <p>Current supply is considered ${cropData.supply || 'Medium'} with main production coming from ${cropData.topRegion || 'multiple regions'}.</p>
@@ -1583,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
   
-  // Set price alert button
+
   document.getElementById('setAlertBtn').addEventListener('click', function() {
     const cropTitle = document.getElementById('cropDetailTitle').textContent;
     const currentPrice = document.getElementById('currentDetailPrice').textContent.replace('₹', '').replace('/kg', '');
@@ -1594,8 +1557,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     priceAlertModal.show();
   });
-  
-  // Generate random price data for demo
+
   function generateRandomPrices(basePrice, count) {
     const prices = [];
     let currentPrice = basePrice;
@@ -1609,7 +1571,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return prices;
   }
 
-  // Initialize price range slider
   if (document.getElementById('priceRangeSlider')) {
     const priceSlider = document.getElementById('priceRangeSlider');
     
