@@ -763,7 +763,6 @@
         color: #ffc107;
     }
 
-    /* Skeleton loading animation */
     @keyframes skeleton-loading {
         0% {
             background-position: -200px 0;
@@ -782,7 +781,6 @@
         margin-bottom: 8px;
     }
 
-    /* Responsive Adjustments */
     @media (max-width: 1200px) {
         .grid-item-4, .grid-item-8 {
             grid-column: span 6;
@@ -928,7 +926,6 @@
             </div>
         </div>
 
-        <!-- Profile Card -->
         <div class="grid-item-4">
             <div class="card profile-section">
                 <div class="profile-header">
@@ -1029,7 +1026,6 @@
             </div>
         </div>
 
-        <!-- Activity Chart -->
         <div class="grid-item-8">
             <div class="card">
                 <div class="card-title">
@@ -1046,7 +1042,6 @@
             </div>
         </div>
 
-        <!-- Recent Transactions -->
         <div class="grid-item-6">
             <div class="card">
                 <div class="card-title">
@@ -1087,7 +1082,6 @@
                             <div class="transaction-amount purchase">-₹800</div>
                         </div>
                     <% } else { %>
-                        <!-- Buyer transactions -->
                         <div class="transaction-item">
                             <div class="transaction-icon purchase">
                                 <i class="fas fa-shopping-basket"></i>
@@ -1123,7 +1117,6 @@
             </div>
         </div>
 
-        <!-- Market Trends -->
         <div class="grid-item-6">
             <div class="card">
                 <div class="card-title">
@@ -1167,7 +1160,6 @@
             </div>
         </div>
 
-        <!-- Upcoming Tasks -->
         <div class="grid-item-6">
             <div class="card">
                 <div class="card-title">
@@ -1201,7 +1193,6 @@
                             </div>
                         </div>
                     <% } else { %>
-                        <!-- Buyer tasks -->
                         <div class="task-item">
                             <div class="task-checkbox completed">
                                 <i class="fas fa-check"></i>
@@ -1229,8 +1220,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Weather and Recommendations -->
         <div class="grid-item-6">
             <div class="card">
                 <div class="card-title">
@@ -1258,8 +1247,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Notifications -->
         <div class="grid-item-6">
             <div class="card">
                 <div class="card-title">
@@ -1301,7 +1288,7 @@
 </div>
 
 <script>
-    // Animate welcome section elements
+
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             document.querySelector('.welcome-header').style.opacity = '1';
@@ -1318,7 +1305,7 @@
             }, 100);
         }, 300);
         
-        // Handle task checkboxes
+
         const taskCheckboxes = document.querySelectorAll('.task-checkbox:not(.completed)');
         taskCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('click', function() {
@@ -1333,7 +1320,7 @@
             });
         });
         
-        // Initialize charts
+
         const ctx = document.getElementById('activityChart').getContext('2d');
         const activityChart = new Chart(ctx, {
             type: 'line',

@@ -106,26 +106,22 @@
 
 <style>
 :root {
-    /* Sophisticated Teal Color Palette */
-    --primary-teal: #20b2aa;        /* Light Sea Green */
-    --secondary-teal: #008080;      /* Teal */
-    --dark-teal: #005f73;           /* Deep Teal */
-    --accent-green: #2ecc71;        /* Emerald Green */
-    --background-light: #f0f4f4;    /* Soft Teal Background */
-    --text-primary: #2c3e50;        /* Dark Blue-Gray */
+    --primary-teal: #20b2aa;        
+    --secondary-teal: #008080;      
+    --dark-teal: #005f73;           
+    --accent-green: #2ecc71;     
+    --background-light: #f0f4f4;    
+    --text-primary: #2c3e50;        
     --white: #ffffff;
     --gray-light: #e9ecef;
     --gray-medium: #dee2e6;
     --orange-accent: #f39c12;
     --red-accent: #e74c3c;
-    
-    /* Transition and Animation */
     --transition-speed: 0.3s;
     --border-radius: 10px;
     --box-shadow: 0 10px 20px rgba(0, 128, 128, 0.08);
 }
 
-/* Marketplace Header Styles */
 .marketplace {
     padding-top: 0;
     background-color: var(--background-light);
@@ -159,7 +155,6 @@
     padding: 0 20px;
 }
 
-/* Filters Styles */
 .filters {
     background-color: var(--white);
     border-radius: var(--border-radius);
@@ -238,7 +233,6 @@
     box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.2);
 }
 
-/* Listings Grid Styles */
 .listings-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -389,7 +383,7 @@
     color: var(--white);
 }
 
-/* Empty Results Styles */
+
 .empty-results {
     text-align: center;
     padding: 50px 0;
@@ -411,7 +405,6 @@
     opacity: 0.7;
 }
 
-/* Pagination Styles */
 .pagination {
     display: flex;
     justify-content: center;
@@ -471,7 +464,6 @@
     color: var(--white);
 }
 
-/* Responsive Adjustments */
 @media (max-width: 992px) {
     .marketplace-header {
         padding: 80px 0 60px;
@@ -530,7 +522,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Filter and search functionality
+
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
     const locationFilter = document.getElementById('locationFilter');
@@ -538,16 +530,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const listingsGrid = document.getElementById('listingsGrid');
     const listingCards = document.querySelectorAll('.listing-card');
     const emptyResults = document.getElementById('emptyResults');
-    
-    // Function to filter and sort listings
+
     function filterAndSortListings() {
         const searchTerm = searchInput.value.toLowerCase();
         const categoryValue = categoryFilter.value.toLowerCase();
         const locationValue = locationFilter.value.toLowerCase();
         
         let visibleCount = 0;
-        
-        // Filter listings
+
         listingCards.forEach(card => {
             const title = card.querySelector('.listing-title').textContent.toLowerCase();
             const description = card.querySelector('.listing-description').textContent.toLowerCase();
@@ -567,15 +557,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 card.style.display = 'none';
             }
         });
-        
-        // Show/hide empty results message
         if (visibleCount === 0) {
             emptyResults.style.display = 'block';
         } else {
             emptyResults.style.display = 'none';
         }
-        
-        // Sort listings
         const sortValue = sortBySelect.value;
         const sortedCards = Array.from(listingCards).filter(card => card.style.display !== 'none');
         
@@ -598,27 +584,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 return nameA.localeCompare(nameB);
             });
         }
-        
-        // Reappend sorted cards
         sortedCards.forEach(card => {
             listingsGrid.appendChild(card);
         });
     }
-    
-    // Add event listeners
     searchInput.addEventListener('input', filterAndSortListings);
     categoryFilter.addEventListener('change', filterAndSortListings);
     locationFilter.addEventListener('change', filterAndSortListings);
     sortBySelect.addEventListener('change', filterAndSortListings);
-    
-    // Pagination functionality
     const paginationNumbers = document.querySelectorAll('.pagination-number');
     paginationNumbers.forEach(num => {
         num.addEventListener('click', function() {
             document.querySelector('.pagination-number.active').classList.remove('active');
             this.classList.add('active');
-            
-            // Here you would implement actual pagination logic when connected to a backend
+
         });
     });
     
