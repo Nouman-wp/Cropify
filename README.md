@@ -62,7 +62,7 @@ Cropify is a farmer's marketplace built for the **Google Solution Challenge 2025
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/cropify.git
+git clone https://github.com/Nouman-wp/Cropify.git
 cd cropify
 ```
 
