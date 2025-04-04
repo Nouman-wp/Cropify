@@ -1,8 +1,8 @@
 # 🌱 Cropify – Empowering Farmers | Google Solution Challenge 2025 🚀
 
-Cropify is a decentralized farmer's marketplace built for the **Google Solution Challenge 2025**. It enables **direct trading between farmers and consumers**, cutting out middlemen to ensure fair prices, transparency, and accessibility in agriculture.
+Cropify is a farmer's marketplace built for the **Google Solution Challenge 2025**. It enables **direct trading between farmers and consumers**, cutting out middlemen to ensure fair prices, transparency, and accessibility in agriculture.
 
-![Cropify Banner](public/images/readme-banner.png)
+![Home](public/images/readme-home.png)
 
 ---
 
@@ -30,14 +30,14 @@ Cropify is a decentralized farmer's marketplace built for the **Google Solution 
 
 ## 📸 Project Screenshots
 
-### 🏡 Home Page  
-![Home](public/images/readme-home.png)
+### 🏡 Buy Crops  
+![Cropify Buy](public/images/readme-buy.png)
 
-### 📋 Dashboard  
-![Dashboard](public/images/readme-dashboard.png)
+### 📋 Profile  
+![Dashboard](public/images/readme-profile.png)
 
-### 🌾 Crop Listings  
-![Listings](public/images/readme-crops.png)
+### 🌾 AI Market Listings  
+![Listings](public/images/readme-market.png)
 
 ---
 
